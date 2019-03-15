@@ -1,7 +1,8 @@
-package com.babob.sporcantam
+package com.babob.sporcantam.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.babob.sporcantam.R
 
 class MainActivity : AppCompatActivity() {
 

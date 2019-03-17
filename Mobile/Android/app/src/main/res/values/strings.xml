@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Spor Cantam</string>
+
+    <!-- Edit Text Hints -->
+    <string name="edit_text_email_hint">Email</string>
+    <string name="edit_text_password_hint">Password</string>
+
+    <!-- Button -->
+    <string name="button_login_text">Login</string>
+
+    <!-- Login Activity -->
+    <string name="login_activity_title">Login</string>
 </resources>

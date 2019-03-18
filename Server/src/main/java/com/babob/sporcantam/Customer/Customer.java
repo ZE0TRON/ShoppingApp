@@ -1,7 +1,9 @@
 package com.babob.sporcantam.Customer;
 import com.babob.sporcantam.User.User;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Customer extends User{
     private String address;
     private Integer cartID;

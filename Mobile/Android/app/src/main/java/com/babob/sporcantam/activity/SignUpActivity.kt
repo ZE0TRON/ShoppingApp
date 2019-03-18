@@ -3,12 +3,22 @@ package com.babob.sporcantam.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.activity_login.*
+import com.babob.sporcantam.utility.CheckerUtil
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.util.regex.Pattern
+import android.widget.ArrayAdapter
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.support.constraint.ConstraintSet
+
+
+
+
+
+
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -17,8 +27,45 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         title = getString(R.string.sign_up_activity_title)
-
+        initSpinner()
         button_signUpButton.setOnClickListener { signUp() }
+        spinner_signUpCustomerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                updateFrontend()
+            }
+
+        }
+    }
+
+    fun initSpinner(){
+        val spinnerArray = ArrayList<String>()
+        spinnerArray.add("Customer")
+        spinnerArray.add("Seller")
+
+        val adapter = ArrayAdapter(
+                this, android.R.layout.simple_spinner_item, spinnerArray)
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val sItems = spinner_signUpCustomerType
+        sItems.adapter = adapter
+
+        spinner_signUpCustomerType.setSelection(0)
+    }
+
+    fun updateFrontend(){
+        if(spinner_signUpCustomerType.selectedItemPosition == 1){
+            //seller
+            editText_signUpCompanyName.visibility = View.VISIBLE
+        }
+        else{
+            //customer
+            editText_signUpCompanyName.visibility = View.GONE
+
+        }
     }
 
     fun signUp(){
@@ -39,11 +86,11 @@ class SignUpActivity : AppCompatActivity() {
 
         }
 
-        if(! isEmailValid(email)){
+        if(! CheckerUtil.emailChecker(email)){
             Toast.makeText(this, getString(R.string.sign_up_activity_toast_invalid_email), Toast.LENGTH_SHORT).show()
             return
         }
-        if(password.length < 6){
+        if(! CheckerUtil.checkPassword(password)){
             Toast.makeText(this, getString(R.string.sign_up_activity_toast_invalid_password), Toast.LENGTH_SHORT).show()
             return
         }
@@ -57,18 +104,8 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    /**
-     * method is used for checking valid email id format.
-     *
-     * @param email
-     * @return boolean true for valid false for invalid
-     */
-    fun isEmailValid(email: String): Boolean {
-        val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
-        val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(email)
-        return matcher.matches()
-    }
+
+
 
     companion object {
         var isSignedUp = false

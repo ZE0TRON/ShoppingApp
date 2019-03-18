@@ -1,10 +1,13 @@
 package com.babob.sporcantam.Customer;
 import com.babob.sporcantam.User.User;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Customer extends User{
+    private Integer id;
     private String address;
     private Integer cartID;
     private Integer orderListID;

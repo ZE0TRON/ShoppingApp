@@ -5,7 +5,7 @@ import com.babob.sporcantam.User.User;
 public class Customer extends User{
     private String address;
     private int cartID;
-    private String orderListID;
+    private int orderListID;
 
     public int getCartID() {
         return cartID;
@@ -15,7 +15,7 @@ public class Customer extends User{
         return address;
     }
 
-    public String getOrderListID() {
+    public int getOrderListID() {
         return orderListID;
     }
 
@@ -27,7 +27,7 @@ public class Customer extends User{
         this.cartID = cartID;
     }
 
-    public void setOrderListID(String orderListID) {
+    public void setOrderListID(int orderListID) {
         this.orderListID = orderListID;
     }
 

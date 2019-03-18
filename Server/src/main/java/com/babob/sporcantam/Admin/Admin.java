@@ -2,22 +2,22 @@ package com.babob.sporcantam.Admin;
 import com.babob.sporcantam.Admin.Admin;
 
 public class Admin {
-    private int access_level ;
-    private int employeeID;
+    private Integer access_level ;
+    private Integer employeeID;
 
-    public int getAccess_level() {
+    public Integer getAccess_level() {
         return access_level;
     }
 
-    public int getEmployeeID() {
+    public Integer getEmployeeID() {
         return employeeID;
     }
 
-    public void setAccess_level(int access_level) {
+    public void setAccess_level(Integer access_level) {
         this.access_level = access_level;
     }
 
-    public void setEmployeeID(int employeeID) {
+    public void setEmployeeID(Integer employeeID) {
         this.employeeID = employeeID;
     }
 }

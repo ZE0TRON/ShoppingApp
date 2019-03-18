@@ -1,13 +1,15 @@
 package com.babob.sporcantam.Customer;
 import com.babob.sporcantam.User.User;
 
+import javax.persistence.Entity;
 
+@Entity
 public class Customer extends User{
     private String address;
-    private int cartID;
-    private int orderListID;
+    private Integer cartID;
+    private Integer orderListID;
 
-    public int getCartID() {
+    public Integer getCartID() {
         return cartID;
     }
 
@@ -15,7 +17,7 @@ public class Customer extends User{
         return address;
     }
 
-    public int getOrderListID() {
+    public Integer getOrderListID() {
         return orderListID;
     }
 
@@ -23,11 +25,11 @@ public class Customer extends User{
         this.address = address;
     }
 
-    public void setCartID(int cartID) {
+    public void setCartID(Integer cartID) {
         this.cartID = cartID;
     }
 
-    public void setOrderListID(int orderListID) {
+    public void setOrderListID(Integer orderListID) {
         this.orderListID = orderListID;
     }
 

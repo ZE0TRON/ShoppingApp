@@ -20,4 +20,5 @@
     <string name="sign_up_activity_toast_invalid_name">Please enter name and surname</string>
     <string name="sign_up_activity_toast_invalid_password">Password must be at least 6 characters long</string>
     <string name="login_activity_toast_empty_boxes">Please fill password and email boxes</string>
+    <string name="sign_up_activity_toast_invalid_company">Please enter company name</string>
 </resources>

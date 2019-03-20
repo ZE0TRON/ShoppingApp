@@ -1,26 +1,25 @@
 package com.babob.sporcantam.activity
 
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.Toast
 import com.babob.sporcantam.R
-import com.babob.sporcantam.utility.ActivityOpenerUtil
-import com.babob.sporcantam.utility.CheckerUtil
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.support.constraint.ConstraintSet
-
-
-
-
-
+import com.babob.sporcantam.utility.*
 
 
 class SignUpActivity : AppCompatActivity() {
+
+
+    var url = "http://www.example.com"
+    var isSending = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +67,24 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    fun signUp(){
+    private fun signUp(){
+        if(isSending){
+            return
+        }
+
         if( editText_signUpName.text.isEmpty() || editText_signUpSurname.text.isEmpty()){
             Toast.makeText(this, getString(R.string.sign_up_activity_toast_invalid_name), Toast.LENGTH_SHORT).show()
             return
+        }
+
+        var companyName = ""
+        //seller
+        if(editText_signUpCompanyName.visibility == View.VISIBLE){
+            if(editText_signUpCompanyName.text.isEmpty()){
+                Toast.makeText(this, getString(R.string.sign_up_activity_toast_invalid_company), Toast.LENGTH_SHORT).show()
+                return
+            }
+            companyName = editText_signUpCompanyName.text.toString()
         }
         val name = editText_signUpName.text.toString()
         val surname = editText_signUpSurname.text.toString()
@@ -95,13 +108,31 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        //TODO: Implement api communication
+        var userType = 0
+        if(companyName == ""){
+            userType = 1
+        }
 
-        givenEmail = editText_signUpEmail.text
-        isSignedUp = true
-        ActivityOpenerUtil.openLoginActivity(this)
-        finish()
+        isSending = true
+        AsyncUtil{
+            if(sendDataToApi(name,surname,companyName,email,password,userType)){
+                givenEmail = editText_signUpEmail.text
+                isSignedUp = true
+                ActivityOpenerUtil.openLoginActivity(this)
+                finish()
+            }
+            else{
+                runOnUiThread {
+                    Toast.makeText(this, "Cannot connect to the server. Please try again later", Toast.LENGTH_SHORT).show()
+                }
+            }
+            isSending = false
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+    }
+
+    private fun sendDataToApi(n:String, s:String, cn:String, eml:String, psw:String, typ:Int):Boolean{
+        return HttpUtil.sendPost(JsonUtil.signUpDataToJson(n,s,cn,eml,psw,typ.toString()), url)
     }
 
 

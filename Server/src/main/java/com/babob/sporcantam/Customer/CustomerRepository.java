@@ -12,4 +12,8 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query(
             value = "SELECT * FROM customer u WHERE u.sessionid = sessionID",nativeQuery = true)
     Collection<Customer> findBySessionID(String sessionID);
+
+    @Query(
+            value = "SELECT * FROM customer u WHERE u.email = email",nativeQuery = true)
+    Collection<Customer> findByEmail(String email);
 }

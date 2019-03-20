@@ -2,6 +2,7 @@ package com.babob.sporcantam.Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +17,7 @@ public class SellerController {
 
     @RequestMapping(method=POST,path="/add")  // Map ONLY GET Requests
     public @ResponseBody
-    String addNewUser (@RequestParam String email
+    String addNewUser (@CookieValue(name="JSESSIONID") String sessionID, @RequestParam String email
             ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name,@RequestParam String userType,
                        @RequestParam(value="company_name", defaultValue=" ") String company_name) {
         Seller seller = new Seller();
@@ -25,11 +26,13 @@ public class SellerController {
         seller.setLast_name(last_name);
         seller.setPassword(password);
         seller.setCompany_name(company_name);
+        seller.setSessionID(sessionID);
         try {
             sellerRepository.save(seller);
             return "success";
         }
         catch (Exception e){
+
             return "fail";
         }
     }

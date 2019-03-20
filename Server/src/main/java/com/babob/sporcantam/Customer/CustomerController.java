@@ -1,7 +1,8 @@
 package com.babob.sporcantam.Customer;
 
+import com.babob.sporcantam.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping(path="/customer") // This means URL's start with /demo (after Application path)
 public class CustomerController {
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(method=POST,path="/add") // Map ONLY GET Requests
     public @ResponseBody

@@ -3,6 +3,7 @@ import com.babob.sporcantam.User.User;
 
 import javax.persistence.Entity;
 
+
 @Entity
 public class Seller extends User{
     private String company_name;

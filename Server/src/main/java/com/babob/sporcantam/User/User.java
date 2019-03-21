@@ -1,19 +1,19 @@
 package com.babob.sporcantam.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
     private String email;
     private String first_name;
     private String last_name;
     private String password;
-
+    private String sessionID;
     public String getEmail() {
         return email;
     }
@@ -30,6 +30,13 @@ public class User {
         return password;
     }
 
+    public String getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
+    }
     public void setEmail(String email) {
         this.email = email;
     }

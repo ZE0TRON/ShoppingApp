@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Customer extends User{
-    private Integer id;
     private String address;
     private Integer cartID;
     private Integer orderListID;

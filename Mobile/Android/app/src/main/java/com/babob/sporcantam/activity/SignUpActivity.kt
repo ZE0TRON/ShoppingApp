@@ -17,8 +17,7 @@ import com.babob.sporcantam.utility.*
 
 class SignUpActivity : AppCompatActivity() {
 
-
-    var url = "http://www.example.com"
+    lateinit var sessionId:String
     var isSending = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +25,8 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         title = getString(R.string.sign_up_activity_title)
+
+        getSId()
         initSpinner()
         button_signUpButton.setOnClickListener { signUp() }
         spinner_signUpCustomerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -37,6 +38,17 @@ class SignUpActivity : AppCompatActivity() {
                 updateFrontend()
             }
 
+        }
+    }
+
+    private fun getSId(){
+        val id = SessionUtil.getSessionId(this)
+        if(id == null){
+            ActivityOpenerUtil.openMainActivity(this)
+            finish()
+        }
+        else{
+            sessionId = id
         }
     }
 
@@ -108,9 +120,9 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        var userType = 0
+        var userType = "Seller"
         if(companyName == ""){
-            userType = 1
+            userType = "Customer"
         }
 
         isSending = true
@@ -131,8 +143,8 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    private fun sendDataToApi(n:String, s:String, cn:String, eml:String, psw:String, typ:Int):Boolean{
-        return HttpUtil.sendPost(JsonUtil.signUpDataToJson(n,s,cn,eml,psw,typ.toString()), url)
+    private fun sendDataToApi(n:String, s:String, cn:String, eml:String, psw:String, typ:String):Boolean{
+        return HttpUtil.sendPost(JsonUtil.signUpDataToJson(n,s,cn,eml,psw,typ), "${getString(R.string.base_url)}/user/add", sessionId)
     }
 
 

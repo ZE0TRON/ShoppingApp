@@ -1,5 +1,6 @@
 package com.babob.sporcantam.utility
 
+import android.content.Context
 import android.os.SystemClock
 import android.util.Log
 import org.json.JSONObject
@@ -13,14 +14,15 @@ class HttpUtil {
         /**
          * Call it from AsyncTask or else the app will EXPLODE!
          */
-        fun sendPost(jsonParam: JSONObject, Url: String): Boolean {
+        fun sendPost(jsonParam: JSONObject, Url: String, sId:String): Boolean {
             Log.d("HTTP_UTIL", "Sending Post Request to: $Url")
             try {
                 val url = URL(Url)
                 val conn = url.openConnection() as HttpURLConnection
                 conn.requestMethod = "POST"
-                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8")
-                conn.setRequestProperty("Accept", "*/*")
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
+                //conn.setRequestProperty("Accept", "*/*")
+                conn.setRequestProperty("Cookie", sId)
 
                 conn.doOutput = true
                 conn.doInput = true
@@ -45,6 +47,7 @@ class HttpUtil {
 
             return true
         }
+
 
     }
 }

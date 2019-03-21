@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
 
-    var url = "http://www.example.com"
     var isSending = false
+    var loginType = 1
+    lateinit var sessionId:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +22,21 @@ class LoginActivity : AppCompatActivity() {
 
         title = getString(R.string.login_activity_title)
 
+        getSId()
         checkSignedUP()
         button_login.setOnClickListener { loginUser() }
+        button_switch_login_type.setOnClickListener{ changeLoginType() }
+    }
+
+    private fun getSId(){
+        val id = SessionUtil.getSessionId(this)
+        if(id == null){
+            ActivityOpenerUtil.openMainActivity(this)
+            finish()
+        }
+        else{
+            sessionId = id
+        }
     }
 
     fun loginUser(){
@@ -52,6 +66,20 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun changeLoginType(){
+        if(loginType == 1){
+            loginType = 2
+            textView_login_info.text = getString(R.string.sign_up_activity_info_seller)
+            button_switch_login_type.text = getString(R.string.sign_up_activity_info_customer)
+        }
+        else{
+            loginType = 1
+            textView_login_info.text = getString(R.string.sign_up_activity_info_customer)
+            button_switch_login_type.text = getString(R.string.sign_up_activity_info_seller)
+
+        }
+    }
+
     private fun checkSignedUP(){
         if(SignUpActivity.isSignedUp){
             editText_LoginEmail.text = SignUpActivity.givenEmail
@@ -59,6 +87,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendLoginRequest(email: String, password:String):Boolean{
-        return HttpUtil.sendPost(JsonUtil.loginDataToJson(email, password), url)
+        if(loginType == 1){
+            return HttpUtil.sendPost(JsonUtil.loginDataToJson(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+        }
+        return HttpUtil.sendPost(JsonUtil.loginDataToJson(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
     }
 }

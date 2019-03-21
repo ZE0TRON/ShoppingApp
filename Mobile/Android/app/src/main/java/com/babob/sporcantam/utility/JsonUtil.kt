@@ -9,12 +9,12 @@ class JsonUtil {
 
         fun signUpDataToJson(name:String, surname:String,companyName:String, email:String, password:String,userType:String ): JSONObject {
             return JSONObject(mapOf(
-                    "name" to name,
-                    "surname" to surname,
-                    "company" to companyName,
+                    "first_name" to name,
+                    "last_name" to surname,
+                    "company_name" to companyName,
                     "email" to email,
                     "password" to password,
-                    "type" to userType
+                    "UserType" to userType
             ))
         }
 

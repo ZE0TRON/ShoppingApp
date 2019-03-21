@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
+import com.babob.sporcantam.Utils.Response;
 import java.util.Collection;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -21,7 +21,7 @@ public class CustomerController {
 
     @RequestMapping(method=POST,path="/add") // Map ONLY GET Requests
     public @ResponseBody
-    String addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
+    Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
             ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name,@RequestParam String userType){
         Customer customer = new Customer();
         customer.setEmail(email);
@@ -31,45 +31,44 @@ public class CustomerController {
         customer.setSessionID(sessionID);
         try {
             customerRepository.save(customer);
-            return "success";
+            return new Response("Customer Created",true);
         }
         catch (Exception e){
-
-            return "false"+e.getMessage();
+            return new Response(e.getMessage(),false);
         }
     }
 
     @RequestMapping(method=POST,path="/email") // Map ONLY GET Requests
     public @ResponseBody
-    String getCustomer(@CookieValue(name = "JSESSIONID") String sessionID){
+    Response getCustomer(@CookieValue(name = "JSESSIONID") String sessionID){
         Collection<Customer> customerCollection = customerRepository.findBySessionID(sessionID);
         Customer customer = customerCollection.iterator().next();
         if (customer.getEmail()==null) {
-           return "Login first";
+            return new Response("Login first",false);
         }
-        return customer.getEmail();
+        return new Response(customer.getEmail(), true);
     }
 
     @RequestMapping(method=POST,path="/login")
     public @ResponseBody
-    String customerLogin(@RequestParam String email, @RequestParam String password,
+    Response customerLogin(@RequestParam String email, @RequestParam String password,
                          @CookieValue(name = "JSESSIONID") String sessionID){
         try{
             Customer customer = customerRepository.findByEmail(email).iterator().next(); //get first (and oly) customer
-            if(passwordEncoder.encode(password).equals(customer.getPassword()))
+            if(passwordEncoder.matches(password,customer.getPassword()))
             {
                 customer.setSessionID(sessionID);
-                customerRepository.updateSessionID(sessionID);
-                return "You have logged in successfully.";
+                customerRepository.save(customer);
+                return new Response("Login successful",true);
             }
 
             else{
-                return "Incorrect password!";
+                return new Response("Incorrect password",false);
             }
 
         }
         catch(Exception e){
-            return "This e-mail does not hold any account!";
+            return new Response("No such user",false);
         }
 
 

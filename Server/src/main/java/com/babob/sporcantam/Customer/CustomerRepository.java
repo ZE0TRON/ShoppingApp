@@ -16,8 +16,4 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query(
             value = "SELECT * FROM customer u WHERE u.email = email",nativeQuery = true)
     Collection<Customer> findByEmail(String email);
-
-    @Query(
-            value = "UPDATE customer SET sessionID = newSessionID WHERE u.email = email;\n",nativeQuery = true)
-    Collection<Customer> updateSessionID(String newSessionID);
 }

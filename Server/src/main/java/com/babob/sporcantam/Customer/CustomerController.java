@@ -8,7 +8,7 @@ import java.util.Collection;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping(path="/customer") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/customer")
 public class CustomerController {
 
     @Autowired
@@ -16,7 +16,7 @@ public class CustomerController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(method=POST,path="/add") // Map ONLY GET Requests
+    @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
             ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name,@RequestParam String userType){
@@ -35,7 +35,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(method=POST,path="/email") // Map ONLY GET Requests
+    @RequestMapping(method=POST,path="/email")
     public @ResponseBody
     Response getCustomer(@CookieValue(name = "JSESSIONID") String sessionID){
         Collection<Customer> customerCollection = customerRepository.findBySessionID(sessionID);

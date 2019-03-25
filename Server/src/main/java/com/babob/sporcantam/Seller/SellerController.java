@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
-@RequestMapping(path="/seller") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/seller")
 public class SellerController {
     @Autowired
     private SellerRepository sellerRepository;

@@ -144,7 +144,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun sendDataToApi(n:String, s:String, cn:String, eml:String, psw:String, typ:String):Boolean{
-        return HttpUtil.sendPost(JsonUtil.signUpDataToJson(n,s,cn,eml,psw,typ), "${getString(R.string.base_url)}/user/add", sessionId)
+        return HttpUtil.sendPost(UrlParamUtil.signUpDataToUrlParam(n,s,cn,eml,psw,typ), "${getString(R.string.base_url)}/user/add", sessionId)
     }
 
 

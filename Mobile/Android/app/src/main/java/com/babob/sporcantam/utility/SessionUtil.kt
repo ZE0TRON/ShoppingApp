@@ -8,7 +8,7 @@ class SessionUtil {
 
         fun getSessionId(context: Context):String?{
             if(sessionId == null){
-                getSessionId(context)
+                getSessionIdfromStorage(context)
             }
             return sessionId
         }

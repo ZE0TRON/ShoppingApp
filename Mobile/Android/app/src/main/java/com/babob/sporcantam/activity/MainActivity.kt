@@ -12,6 +12,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     var TAG = "Main Activity"
+    //TODO: Fix the sessionId Logic: Batuhan
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
             createAndSaveSessionId()
             finish()
         }
+        ActivityOpenerUtil.openSignUpActivity(this)
+
 
     }
 

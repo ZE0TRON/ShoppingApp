@@ -88,8 +88,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun sendLoginRequest(email: String, password:String):Boolean{
         if(loginType == 1){
-            return HttpUtil.sendPost(JsonUtil.loginDataToJson(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+            return HttpUtil.sendPost(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
         }
-        return HttpUtil.sendPost(JsonUtil.loginDataToJson(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+        return HttpUtil.sendPost(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
     }
 }

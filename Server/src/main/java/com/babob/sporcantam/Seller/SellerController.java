@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,6 +56,37 @@ public class SellerController {
 
         } catch (Exception e) {
             return new Response("No such user", false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/update")
+    public @ResponseBody
+    Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam(value="password", defaultValue=" ") String password
+            ,@RequestParam(value="first_name", defaultValue=" ") String first_name
+            ,@RequestParam(value="last_name", defaultValue=" ") String last_name
+            ,@RequestParam(value="address", defaultValue=" ") String IBAN
+            ,@RequestParam(value="address", defaultValue=" ") String phone_number
+            ,@RequestParam(value="address", defaultValue=" ") String company_address) {
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        try{
+            if(password!= " ")
+                seller.setPassword(passwordEncoder.encode(password));
+            if(first_name!= " ")
+                seller.setFirst_name(first_name);
+            if(last_name!= " ")
+                seller.setLast_name(last_name);
+            if(IBAN!= " ")
+                seller.setIBAN(IBAN);
+            if(company_address!= " ")
+                seller.setCompany_address(company_address);
+            if(phone_number!= " ")
+                seller.setPhone_number(phone_number);
+
+            return new Response("Seller information updated succesfully.",true);
+        }
+        catch (Exception e){
+            return new Response("Cannot update seller info!",false);
         }
     }
 }

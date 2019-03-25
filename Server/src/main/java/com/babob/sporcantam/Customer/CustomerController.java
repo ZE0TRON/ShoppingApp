@@ -1,13 +1,10 @@
 package com.babob.sporcantam.Customer;
-
-import com.babob.sporcantam.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 import java.util.Collection;
-
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -70,9 +67,30 @@ public class CustomerController {
         catch(Exception e){
             return new Response("No such user",false);
         }
-
-
     }
 
+    @RequestMapping(method=POST,path ="/update")
+    public @ResponseBody
+    Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam(value="password", defaultValue=" ") String password
+            ,@RequestParam(value="first_name", defaultValue=" ") String first_name
+            ,@RequestParam(value="last_name", defaultValue=" ") String last_name
+            ,@RequestParam(value="address", defaultValue=" ") String address) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        try{
+            if(password!= " ")
+                customer.setPassword(passwordEncoder.encode(password));
+            if(first_name!= " ")
+                customer.setFirst_name(first_name);
+            if(last_name!= " ")
+                customer.setLast_name(last_name);
+            if(address!= " ")
+                customer.setAddress(address);
+            return new Response("Customer information updated succesfully.",true);
 
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
 }

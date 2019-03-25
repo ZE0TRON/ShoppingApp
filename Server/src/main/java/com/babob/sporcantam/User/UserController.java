@@ -1,11 +1,11 @@
 package com.babob.sporcantam.User;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 
 @Controller    // This means that this class is a Controller
 @RequestMapping(path="/user",method = POST)

@@ -8,10 +8,14 @@ import java.util.Collection;
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
-            value = "SELECT * FROM item i WHERE u.item_title = item_title", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.item_title = item_title", nativeQuery = true)
     Collection<Item> findByTitle(String item_title);
 
     @Query(
-            value = "SELECT * FROM item i WHERE u.id = id", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.id = id", nativeQuery = true)
     Collection<Item> findByID(Long id);
+
+    @Query(
+            value = "SELECT * FROM item i.seller = seller", nativeQuery = true)
+    Collection<Item> findBySeller(String seller);
 }

@@ -1,5 +1,7 @@
 package com.babob.sporcantam.Seller;
 
+import com.babob.sporcantam.Item.Item;
+import com.babob.sporcantam.Item.ItemRepository;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import java.util.Collection;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -16,6 +18,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class SellerController {
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private ItemRepository itemRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -59,34 +63,40 @@ public class SellerController {
         }
     }
 
-    @RequestMapping(method=POST,path ="/update")
+    @RequestMapping(method = POST, path = "/update")
     public @ResponseBody
     Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam(value="password", defaultValue=" ") String password
-            ,@RequestParam(value="first_name", defaultValue=" ") String first_name
-            ,@RequestParam(value="last_name", defaultValue=" ") String last_name
-            ,@RequestParam(value="address", defaultValue=" ") String IBAN
-            ,@RequestParam(value="address", defaultValue=" ") String phone_number
-            ,@RequestParam(value="address", defaultValue=" ") String company_address) {
+            , @RequestParam(value = "password", defaultValue = " ") String password
+            , @RequestParam(value = "first_name", defaultValue = " ") String first_name
+            , @RequestParam(value = "last_name", defaultValue = " ") String last_name
+            , @RequestParam(value = "address", defaultValue = " ") String IBAN
+            , @RequestParam(value = "address", defaultValue = " ") String phone_number
+            , @RequestParam(value = "address", defaultValue = " ") String company_address) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
-        try{
-            if(password!= " ")
+        try {
+            if (password != " ")
                 seller.setPassword(passwordEncoder.encode(password));
-            if(first_name!= " ")
+            if (first_name != " ")
                 seller.setFirst_name(first_name);
-            if(last_name!= " ")
+            if (last_name != " ")
                 seller.setLast_name(last_name);
-            if(IBAN!= " ")
+            if (IBAN != " ")
                 seller.setIBAN(IBAN);
-            if(company_address!= " ")
+            if (company_address != " ")
                 seller.setCompany_address(company_address);
-            if(phone_number!= " ")
+            if (phone_number != " ")
                 seller.setPhone_number(phone_number);
 
-            return new Response("Seller information updated succesfully.",true);
+            return new Response("Seller information updated succesfully.", true);
+        } catch (Exception e) {
+            return new Response("Cannot update seller info!", false);
         }
-        catch (Exception e){
-            return new Response("Cannot update seller info!",false);
-        }
+    }
+
+    @RequestMapping(method = POST, path = "/my-items")
+    public Collection<Item> listItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
+        return items;
     }
 }

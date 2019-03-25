@@ -1,7 +1,7 @@
 package com.babob.sporcantam.Item;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -16,7 +16,7 @@ public class Item {
     private String description;
     private String shipping_info;
     private int stock_count;
-    private Date publish_date;
+    private LocalDate publish_date;
     private String UUID;
 
     public String getItem_title() {
@@ -43,11 +43,11 @@ public class Item {
         this.seller = seller;
     }
 
-    public Date getPublish_date() {
+    public LocalDate getPublish_date() {
         return publish_date;
     }
 
-    public void setPublish_date(Date publish_date) {
+    public void setPublish_date(LocalDate publish_date) {
         this.publish_date = publish_date;
     }
 

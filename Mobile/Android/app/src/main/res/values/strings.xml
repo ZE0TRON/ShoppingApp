@@ -31,4 +31,14 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Item Create Activity -->
+    <string name="item_create_item_title">Item Title</string>
+    <string name="item_create_price">Price</string>
+    <string name="item_create_seller">Seller</string>
+    <string name="item_create_description">Description</string>
+    <string name="item_create_shipping_info">Shipping Info</string>
+    <string name="item_create_stock_count">Stock Count</string>
+    <string name="item_create_date">Publishion Date</string>
+    <string name="item_create_page_title">NEW ITEM</string>
 </resources>

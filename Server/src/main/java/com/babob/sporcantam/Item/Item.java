@@ -3,8 +3,7 @@ package com.babob.sporcantam.Item;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@MappedSuperclass
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
 public class Item {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

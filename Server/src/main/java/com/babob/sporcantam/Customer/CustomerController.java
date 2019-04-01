@@ -19,7 +19,7 @@ public class CustomerController {
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
-            ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name,@RequestParam String userType){
+            ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name){
         Customer customer = new Customer();
         customer.setEmail(email);
         customer.setFirst_name(first_name);
@@ -72,10 +72,10 @@ public class CustomerController {
     @RequestMapping(method=POST,path ="/update")
     public @ResponseBody
     Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam(value="password", defaultValue=" ") String password
-            ,@RequestParam(value="first_name", defaultValue=" ") String first_name
-            ,@RequestParam(value="last_name", defaultValue=" ") String last_name
-            ,@RequestParam(value="address", defaultValue=" ") String address) {
+            ,@RequestParam(value="password", required = false, defaultValue=" ") String password
+            ,@RequestParam(value="first_name", required = false, defaultValue=" ") String first_name
+            ,@RequestParam(value="last_name", required = false, defaultValue=" ") String last_name
+            ,@RequestParam(value="address", required = false, defaultValue=" ") String address) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         try{
             if(password!= " ")

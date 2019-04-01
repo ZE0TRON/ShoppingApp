@@ -5,11 +5,9 @@ import com.babob.sporcantam.Item.ItemRepository;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.Collection;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -26,8 +24,8 @@ public class SellerController {
     @RequestMapping(method = POST, path = "/add")  // Map ONLY GET Requests
     public @ResponseBody
     Response addNewUser(@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
-            , @RequestParam String password, @RequestParam String first_name, @RequestParam String last_name, @RequestParam String userType,
-                        @RequestParam(value = "company_name") String company_name) {
+            , @RequestParam String password, @RequestParam String first_name, @RequestParam String last_name
+            , @RequestParam(value = "company_name") String company_name) {
         Seller seller = new Seller();
         seller.setEmail(email);
         seller.setFirst_name(first_name);
@@ -66,12 +64,12 @@ public class SellerController {
     @RequestMapping(method = POST, path = "/update")
     public @ResponseBody
     Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID
-            , @RequestParam(value = "password", defaultValue = " ") String password
-            , @RequestParam(value = "first_name", defaultValue = " ") String first_name
-            , @RequestParam(value = "last_name", defaultValue = " ") String last_name
-            , @RequestParam(value = "address", defaultValue = " ") String IBAN
-            , @RequestParam(value = "address", defaultValue = " ") String phone_number
-            , @RequestParam(value = "address", defaultValue = " ") String company_address) {
+            , @RequestParam(value = "password", required = false, defaultValue = " ") String password
+            , @RequestParam(value = "first_name", required = false, defaultValue = " ") String first_name
+            , @RequestParam(value = "last_name", required = false, defaultValue = " ") String last_name
+            , @RequestParam(value = "address", required = false, defaultValue = " ") String IBAN
+            , @RequestParam(value = "address", required = false, defaultValue = " ") String phone_number
+            , @RequestParam(value = "address", required = false, defaultValue = " ") String company_address) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         try {
             if (password != " ")
@@ -94,9 +92,25 @@ public class SellerController {
     }
 
     @RequestMapping(method = POST, path = "/my-items")
-    public Collection<Item> listItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
+    public Collection<Item> getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
         return items;
+    }
+
+    @RequestMapping(method = POST, path = "/my-items/{id}/update")
+    public String updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID,
+                                                 @PathVariable("id") long id) {
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
+        Item item = itemRepository.findByID(id).iterator().next();
+        if(items.contains(item)){
+            return "forward:/item/{id}/update";
+        }
+        else{
+            return "You have no item with id " + id;
+        }
+
+
     }
 }

@@ -17,7 +17,7 @@ class Item {
     private lateinit var publish_daate:LocalDate
     private lateinit var uuid:String
 
-    constructor(item_title: String, price: Float, seller: String, description: String, shipping_info: String, stock_count: Int, publish_date: LocalDate) {
+    constructor(item_title: String, price: Float, seller: String, description: String, shipping_info: String, stock_count: Int, publish_date: LocalDate, uuid: String) {
         this.item_title = item_title
         this.price = price
         this.seller = seller
@@ -25,15 +25,8 @@ class Item {
         this.shipping_info = shipping_info
         this.stock_count = stock_count
         this.publish_daate = publish_date
-        this.uuid = createuuid()
+        this.uuid = uuid
     }
-
-    fun createuuid(): String {
-        val uuid = UUID.randomUUID()
-        return uuid.toString()
-    }
-
-
 
 
 

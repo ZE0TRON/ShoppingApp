@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.widget.Toast
 import com.babob.sporcantam.R
+import com.babob.sporcantam.utility.HttpUtil
+import com.babob.sporcantam.utility.SessionUtil
+import com.babob.sporcantam.utility.UrlParamUtil
 import kotlinx.android.synthetic.main.activity_item_create.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ItemCreateActivity : AppCompatActivity() {
@@ -19,6 +20,11 @@ class ItemCreateActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item_create)
 
         button_ItemCreateAdd.setOnClickListener { }
+    }
+
+    fun createuuid(): String {
+        val uuid = UUID.randomUUID()
+        return uuid.toString()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -35,12 +41,6 @@ class ItemCreateActivity : AppCompatActivity() {
             return
         }
         val itemprice=editText_ItemCreatePrice.text.toString().toFloat()
-
-        if(editText_ItemCreateSeller.text.isEmpty()){
-            Toast.makeText(this,"Please enter seller of new item", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val itemseller=editText_ItemCreateSeller.text.toString()
 
         if(editText_ItemCreatDescription.text.isEmpty()){
             Toast.makeText(this,"Please enter description of new item", Toast.LENGTH_SHORT).show()
@@ -60,18 +60,18 @@ class ItemCreateActivity : AppCompatActivity() {
         }
         val itemstock=editText_ItemCreateStockCount.text.toString().toInt()
 
-        if(editText_ItemCreatePublishDate.text.isEmpty()){
-            Toast.makeText(this,"Please enter publish date of new item", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val itempublishdate = LocalDate.parse(editText_ItemCreatePublishDate.toString(), DateTimeFormatter.ISO_DATE)
 
-        sendNewItemRequest(itemtitle,itemprice,itemseller,itemdescription,itemshipping,itemstock,itempublishdate)
+        val uuid = createuuid()
+
+
+        sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid)
 
     }
 
-    fun sendNewItemRequest(item_title: String, price: Float, seller: String, description: String, shipping_info: String, stock_count: Int, publish_date: LocalDate){
 
+
+    fun sendNewItemRequest(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):Boolean{
+        return HttpUtil.sendPost(UrlParamUtil.createItemToUrlParam(item_title,price,description,shipping_info,stock_count,uuid), "${getString(R.string.base_url)}/item/add/", SessionUtil.getSessionId(this)!!)
     }
 
 }

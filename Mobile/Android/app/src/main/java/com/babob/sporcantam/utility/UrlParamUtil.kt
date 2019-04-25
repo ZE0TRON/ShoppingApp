@@ -20,14 +20,13 @@ class UrlParamUtil {
                     "&password=$password"
         }
 
-        fun createItemToUrlParam(item_title: String, price: String, seller: String, description: String, shipping_info: String, stock_count: String, publish_date: String):String{
+        fun createItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):String{
             return "item_title=$item_title" +
                     "&price=$price"+
-                    "&seller=$seller"+
                     "&description=$description"+
                     "&shipping_info=$shipping_info"+
                     "&stock_count=$stock_count"+
-                    "&publish_date=$publish_date"
+                    "&uuid=$uuid"
         }
     }
 }

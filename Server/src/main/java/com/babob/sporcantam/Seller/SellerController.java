@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -14,6 +15,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping(path="/seller")
 public class SellerController {
+    RestTemplate restTemplate = new RestTemplate();
     @Autowired
     private SellerRepository sellerRepository;
     @Autowired
@@ -91,16 +93,20 @@ public class SellerController {
         }
     }
 
-    @RequestMapping(method = POST, path = "/my-items")
-    public Collection<Item> getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
+    @RequestMapping(method = POST, path = "/show-items")
+    public @ResponseBody
+    Collection<Item> getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
+        System.out.println("I AM HEREEEE");
+        System.out.println(sessionID);
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
-        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
+        Collection<Item> items = itemRepository.findBySeller(seller.getCompany_name());
         return items;
     }
 
     @RequestMapping(method = POST, path = "/my-items/{id}/update")
     public String updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID,
                                                  @PathVariable("id") long id) {
+        System.out.println("I AM ALSOO HEREEEE");
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
         Item item = itemRepository.findByID(id).iterator().next();

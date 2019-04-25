@@ -16,6 +16,6 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     Collection<Item> findByID(Long id);
 
     @Query(
-            value = "SELECT * FROM item i.seller = seller", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.seller = seller", nativeQuery = true)
     Collection<Item> findBySeller(String seller);
 }

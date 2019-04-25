@@ -30,7 +30,10 @@ public class SellerController {
         seller.setEmail(email);
         seller.setFirst_name(first_name);
         seller.setLast_name(last_name);
+        System.out.println(password);
         seller.setPassword(passwordEncoder.encode(password));
+        System.out.println(passwordEncoder.encode(password));
+        System.out.println(passwordEncoder.encode(password));
         seller.setCompany_name(company_name);
         seller.setSessionID(sessionID);
         try {
@@ -47,7 +50,9 @@ public class SellerController {
     Response customerLogin(@RequestParam String email, @RequestParam String password,
                            @CookieValue(name = "JSESSIONID") String sessionID) {
         try {
-            Seller seller = sellerRepository.findByEmail(email).iterator().next(); //get first (and oly) customer
+            Seller seller = sellerRepository.findByEmail(email).iterator().next();
+            System.out.println(password);
+            System.out.println(seller.getPassword());//get first (and oly) customer
             if (passwordEncoder.matches(password, seller.getPassword())) {
                 seller.setSessionID(sessionID);
                 sellerRepository.save(seller);

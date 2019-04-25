@@ -32,7 +32,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/item_create_price"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemCreateItemTitle" />
@@ -74,7 +74,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/item_create_stock_count"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemCreateShippingInfo" />
@@ -101,5 +101,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemCreateStockCount"
-        tools:text="ADD" />
+        tools:text="add" />
 </android.support.constraint.ConstraintLayout>

@@ -59,7 +59,7 @@ class HttpUtil {
             return true
         }
 
-        fun sendPostLogin(urlParam: String, Url: String, sId:String): String {
+        fun sendPoststr(urlParam: String, Url: String, sId:String): String {
             Log.d("HTTP_UTIL", "Sending Post Request to: $Url")
             var returnValue = ""
             try {

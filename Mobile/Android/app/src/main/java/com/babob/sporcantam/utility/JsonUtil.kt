@@ -17,5 +17,18 @@ class JsonUtil {
 
             return false
         }
+
+        fun AddItemResponseToStringList(response: String):List<String>{
+            try {
+                val jsonObj = JSONObject(response)
+                val res1 = jsonObj.get("success") as Boolean
+                val res2 = jsonObj.get("msg") as String
+                return listOf(res1.toString(),res2)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            return listOf()
+        }
     }
 }

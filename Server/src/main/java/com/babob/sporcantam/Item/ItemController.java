@@ -24,15 +24,15 @@ public class ItemController {
     public @ResponseBody
     Response addNewItem(@CookieValue(name = "JSESSIONID") String sessionID
             , @RequestParam String item_title
-            , @RequestParam float price, @RequestParam String description
-            , @RequestParam String shipping_info, @RequestParam int stock_count
+            , @RequestParam Float price, @RequestParam String item_description
+            , @RequestParam String shipping_info, @RequestParam Integer stock_count
             , @RequestParam String UUID){
 
         Item item = new Item();
         item.setItem_title(item_title);
         item.setPrice(price);
         item.setSeller(sellerRepository.findBySessionID(sessionID).iterator().next().getCompany_name());
-        item.setDescription(description);
+        item.setDescription(item_description);
         item.setShipping_info(shipping_info);
         item.setStock_count(stock_count);
         item.setUUID(UUID);

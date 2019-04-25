@@ -11,10 +11,10 @@ public class Item {
     private Long id;
     private String item_title;
     private String seller;
-    private float price;
-    private String description;
+    private Float price;
+    private String item_description;
     private String shipping_info;
-    private int stock_count;
+    private Integer stock_count;
     private LocalDate publish_date;
     private String UUID;
 
@@ -26,7 +26,7 @@ public class Item {
         this.item_title = item_title;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
@@ -58,7 +58,7 @@ public class Item {
         this.shipping_info = shipping_info;
     }
 
-    public int getStock_count() {
+    public Integer getStock_count() {
         return stock_count;
     }
 
@@ -67,11 +67,11 @@ public class Item {
     }
 
     public String getDescription() {
-        return description;
+        return item_description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.item_description = description;
     }
 
     public String getUUID() {
@@ -86,7 +86,7 @@ public class Item {
     public String toString() {
         String string = "Item Title: " + item_title + "\nSeller: " + seller +
                 "\nPrice: " + price + "\nStock Count:" + stock_count + "\nShipping Info: " + shipping_info +
-                "\nUUID: " + UUID +"\nDescription: " + description +"\nPublish Date: " + publish_date;
+                "\nUUID: " + UUID +"\nDescription: " + item_description +"\nPublish Date: " + publish_date;
         return string;
     }
 }

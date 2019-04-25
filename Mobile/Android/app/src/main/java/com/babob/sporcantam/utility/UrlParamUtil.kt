@@ -1,5 +1,7 @@
 package com.babob.sporcantam.utility
 
+import java.util.Date
+
 class UrlParamUtil {
 
     companion object {
@@ -16,6 +18,15 @@ class UrlParamUtil {
         fun loginDataToUrlParam(email: String, password: String):String{
             return "email=$email" +
                     "&password=$password"
+        }
+
+        fun createItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):String{
+            return "item_title=$item_title" +
+                    "&price=$price"+
+                    "&item_description=$description"+
+                    "&shipping_info=$shipping_info"+
+                    "&stock_count=$stock_count"+
+                    "&UUID=$uuid"
         }
     }
 }

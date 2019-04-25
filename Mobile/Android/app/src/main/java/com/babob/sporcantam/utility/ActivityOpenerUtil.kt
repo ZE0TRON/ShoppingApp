@@ -2,9 +2,7 @@ package com.babob.sporcantam.utility
 
 import android.content.Context
 import android.content.Intent
-import com.babob.sporcantam.activity.LoginActivity
-import com.babob.sporcantam.activity.MainActivity
-import com.babob.sporcantam.activity.SignUpActivity
+import com.babob.sporcantam.activity.*
 
 class ActivityOpenerUtil {
 
@@ -19,7 +17,14 @@ class ActivityOpenerUtil {
 
         fun openMainActivity(context: Context){
             context.startActivity(Intent(context, MainActivity::class.java))
+        }
 
+        fun openMainPageActivity(context: Context){
+            context.startActivity(Intent(context, MainPageActivity::class.java))
+        }
+
+        fun openItemCreateActivity(context: Context){
+            context.startActivity(Intent(context, ItemCreateActivity::class.java))
         }
 
 

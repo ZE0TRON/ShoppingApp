@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.utility.*
@@ -14,6 +15,7 @@ class LoginActivity : AppCompatActivity() {
 
     var isSending = false
     var loginType = 1
+    var TAG = "LOGIN_ACTIVITY"
     lateinit var sessionId:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         checkSignedUP()
         button_login.setOnClickListener { loginUser() }
         button_switch_login_type.setOnClickListener{ changeLoginType() }
+        button_switchToSIgnUp.setOnClickListener { ActivityOpenerUtil.openSignUpActivity(this) }
     }
 
     private fun getSId(){
@@ -60,7 +63,11 @@ class LoginActivity : AppCompatActivity() {
 
         isSending = true
         AsyncUtil{
-            sendLoginRequest(email, password)
+            if(sendLoginRequest(email, password)){
+                ActivityOpenerUtil.openMainPageActivity(this)
+                isSending = false
+                runOnUiThread { finish() }
+            }
             isSending = false
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
@@ -87,9 +94,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendLoginRequest(email: String, password:String):Boolean{
+        val response: String
         if(loginType == 1){
-            return HttpUtil.sendPost(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+            response = HttpUtil.sendPostLogin(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
         }
-        return HttpUtil.sendPost(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+        else{
+            response = HttpUtil.sendPostLogin(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+        }
+        Log.d(TAG, response + JsonUtil.HandleStringResponse(response))
+        return JsonUtil.HandleStringResponse(response)
+
     }
 }

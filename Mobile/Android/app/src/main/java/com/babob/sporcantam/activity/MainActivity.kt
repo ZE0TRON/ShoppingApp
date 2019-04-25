@@ -20,12 +20,12 @@ class MainActivity : AppCompatActivity() {
 
         val sessionId = getSessionIdFromStorage()
         if(sessionId == null){
-            ActivityOpenerUtil.openSignUpActivity(this)
+            ActivityOpenerUtil.openLoginActivity(this)
             createAndSaveSessionId()
             finish()
         }
-        ActivityOpenerUtil.openSignUpActivity(this)
-
+        ActivityOpenerUtil.openLoginActivity(this)
+        finish()
 
     }
 

@@ -29,6 +29,7 @@ class SignUpActivity : AppCompatActivity() {
         getSId()
         initSpinner()
         button_signUpButton.setOnClickListener { signUp() }
+        button_signUpSwichLogin.setOnClickListener {ActivityOpenerUtil.openLoginActivity(this)}
         spinner_signUpCustomerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 

@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Spor Cantam</string>
-    <string name="base_url">http://134.209.226.138:8080</string>
+    <!-- string name="base_url">http://134.209.226.138:8080</string-->
+    <string name="base_url">http://192.168.43.215:8080</string>
+
 
     <!-- Edit Text Hints -->
     <string name="edit_text_email_hint" translatable="false">Email</string>

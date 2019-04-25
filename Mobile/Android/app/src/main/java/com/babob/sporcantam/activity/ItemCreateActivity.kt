@@ -1,11 +1,13 @@
 package com.babob.sporcantam.activity
 
+import android.os.AsyncTask
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.widget.Toast
 import com.babob.sporcantam.R
+import com.babob.sporcantam.utility.AsyncUtil
 import com.babob.sporcantam.utility.HttpUtil
 import com.babob.sporcantam.utility.SessionUtil
 import com.babob.sporcantam.utility.UrlParamUtil
@@ -19,7 +21,7 @@ class ItemCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_create)
 
-        button_ItemCreateAdd.setOnClickListener { }
+        button_ItemCreateAdd.setOnClickListener { addItem() }
     }
 
     fun createuuid(): String {
@@ -27,7 +29,7 @@ class ItemCreateActivity : AppCompatActivity() {
         return uuid.toString()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    //@RequiresApi(Build.VERSION_CODES.O)
     fun addItem(){
 
         if(editText_ItemCreateItemTitle.text.isEmpty()){
@@ -63,8 +65,9 @@ class ItemCreateActivity : AppCompatActivity() {
 
         val uuid = createuuid()
 
-
-        sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid)
+        AsyncUtil{
+            sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid)
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
     }
 

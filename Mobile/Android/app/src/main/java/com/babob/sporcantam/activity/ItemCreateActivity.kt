@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.widget.Toast
 import com.babob.sporcantam.R
-import com.babob.sporcantam.utility.AsyncUtil
-import com.babob.sporcantam.utility.HttpUtil
-import com.babob.sporcantam.utility.SessionUtil
-import com.babob.sporcantam.utility.UrlParamUtil
+import com.babob.sporcantam.utility.*
 import kotlinx.android.synthetic.main.activity_item_create.*
 import java.util.*
 
@@ -66,15 +63,22 @@ class ItemCreateActivity : AppCompatActivity() {
         val uuid = createuuid()
 
         AsyncUtil{
-            sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid)
+            val responseList = JsonUtil.AddItemResponseToStringList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid))
+            runOnUiThread {
+                Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
+                if(responseList[0] == "true"){
+                    ActivityOpenerUtil.openMainPageActivity(this)
+                    finish()
+                }
+            }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
     }
 
 
 
-    fun sendNewItemRequest(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):Boolean{
-        return HttpUtil.sendPost(UrlParamUtil.createItemToUrlParam(item_title,price,description,shipping_info,stock_count,uuid), "${getString(R.string.base_url)}/item/add/", SessionUtil.getSessionId(this)!!)
+    fun sendNewItemRequest(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):String{
+        return HttpUtil.sendPoststr(UrlParamUtil.createItemToUrlParam(item_title,price,description,shipping_info,stock_count,uuid), "${getString(R.string.base_url)}/item/add/", SessionUtil.getSessionId(this)!!)
     }
 
 }

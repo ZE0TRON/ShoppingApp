@@ -3,7 +3,6 @@ package com.babob.sporcantam.activity
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
 import com.babob.sporcantam.R
@@ -96,10 +95,10 @@ class LoginActivity : AppCompatActivity() {
     private fun sendLoginRequest(email: String, password:String):Boolean{
         val response: String
         if(loginType == 1){
-            response = HttpUtil.sendPostLogin(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+            response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
         }
         else{
-            response = HttpUtil.sendPostLogin(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+            response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
         }
         Log.d(TAG, response + JsonUtil.HandleStringResponse(response))
         return JsonUtil.HandleStringResponse(response)

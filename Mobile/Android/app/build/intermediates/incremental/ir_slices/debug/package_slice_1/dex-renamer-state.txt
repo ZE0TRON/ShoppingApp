@@ -1,0 +1,4 @@
+#Thu Apr 25 19:11:26 EET 2019
+base.0=/Users/ze0tron/ShoppingApp/Mobile/Android/app/build/intermediates/transforms/dexMerger/debug/1
+path.0=classes.dex
+renamed.0=classes.dex

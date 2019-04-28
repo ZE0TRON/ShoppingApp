@@ -43,12 +43,12 @@ class JsonUtil {
                     val itemJsonObj = arr.getJSONObject(i++)
                     val itemTitle = itemJsonObj.get("item_title") as String
                     val description = itemJsonObj.get("description") as String
-                    val price = itemJsonObj.get("price") as Float
+                    val price = itemJsonObj.get("price") as Double
                     val seller = itemJsonObj.get("seller") as String
                     val shipping = itemJsonObj.get("shipping_info") as String
                     val stockCount = itemJsonObj.get("stock_count") as Int
                     val uuid = itemJsonObj.get("uuid") as String
-                    val item = Item(itemTitle, price, seller, description, shipping, stockCount, uuid)
+                    val item = Item(itemTitle, price.toFloat(), seller, description, shipping, stockCount, uuid)
                     retList.add(item)
                 }
                 return retList

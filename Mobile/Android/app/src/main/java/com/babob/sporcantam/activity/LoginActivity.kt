@@ -67,7 +67,12 @@ class LoginActivity : AppCompatActivity() {
                 isSending = false
                 runOnUiThread { finish() }
             }
-            isSending = false
+            else{
+                isSending = false
+                runOnUiThread {
+                    Toast.makeText(this, "Wrong email or password", Toast.LENGTH_SHORT).show()
+                }
+            }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
     }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.widget.Toast
 import com.babob.sporcantam.R
+import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
 import kotlinx.android.synthetic.main.activity_item_create.*
 import java.util.*
@@ -17,6 +18,7 @@ class ItemCreateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_create)
+
 
         button_ItemCreateAdd.setOnClickListener { addItem() }
     }

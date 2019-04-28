@@ -16,7 +16,6 @@ public class UserController {
             ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name,@RequestParam String userType,
             @RequestParam(value="company_name", defaultValue=" ") String company_name) {
         if(userType.equals("Customer")){
-            System.out.println("I AM here");
             return "forward:/customer/add";
         }
         else {

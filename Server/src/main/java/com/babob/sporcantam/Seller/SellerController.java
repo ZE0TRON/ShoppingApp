@@ -2,6 +2,7 @@ package com.babob.sporcantam.Seller;
 
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.Utils.ItemList;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,17 @@ public class SellerController {
     private ItemRepository itemRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+    private Item findItem (Seller seller, String UUID) {
+        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
+        Item item = itemRepository.findByID(UUID).iterator().next();
+        if(items.contains(item)){
+            return item;
+        }
+        else return null;
+    }
+
 
     @RequestMapping(method = POST, path = "/add")  // Map ONLY GET Requests
     public @ResponseBody
@@ -97,23 +109,36 @@ public class SellerController {
     }
 
     @RequestMapping(method = POST, path = "/my-items")
-    public Collection<Item> getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
+    public @ResponseBody
+    ItemList getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
-        return items;
+        return new ItemList(items);
     }
 
-    @RequestMapping(method = POST, path = "/my-items/{id}/update")
+    @RequestMapping(method = POST, path = "/my-items/{UUID}/update")
     public String updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID,
-                                                 @PathVariable("id") long id) {
+                                                 @PathVariable("UUID") String UUID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
-        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
-        Item item = itemRepository.findByID(id).iterator().next();
-        if(items.contains(item)){
-            return "forward:/item/{id}/update";
+        Item item = findItem(seller,UUID);
+        if(item!= null){
+            return "forward:/item/"+UUID+"/update";
         }
         else{
-            return "You have no item with id " + id;
+            return "You have no item with id "+ UUID;
+        }
+    }
+
+    @RequestMapping(method = POST, path = "/my-items/{UUID}/delete")
+    public String deleteItem(@CookieValue(name = "JSESSIONID") String sessionID,
+                                 @PathVariable("UUID") String UUID) {
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        Item item = findItem(seller,UUID);
+        if(item!= null){
+            return "forward:/item/"+UUID+"/delete";
+        }
+        else{
+            return "You have no item with id "+ UUID;
         }
 
 

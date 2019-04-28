@@ -46,42 +46,52 @@ public class ItemController {
         }
     }
 
-    @RequestMapping(method = GET, path = "/{id}")
-    public String showItem(@PathVariable("id") long id) {
+    @RequestMapping(method = GET, path = "/{UUID}")
+    public @ResponseBody Item showItem(@PathVariable("UUID") String UUID) {
         try{
-            Item item = itemRepository.findByID(id).iterator().next();
-            return item.toString();
+            Item item = itemRepository.findByID(UUID).iterator().next();
+            return item;
         }catch (Exception e){
-            return "There is no item with id " + Long.toString(id);
+            return null;
         }
     }
 
-    @RequestMapping(method = POST, path = "/{id}/update")
+    @RequestMapping(method = POST, path = "/{UUID}/update")
     public @ResponseBody
-    Response updateItemInfo(@PathVariable("id") long id
+    Response updateItemInfo(@PathVariable("UUID") String UUID
         , @RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
         , @RequestParam(value = "price", required = false, defaultValue = "-1.0") float price
         , @RequestParam(value = "description", required = false, defaultValue = " ") String description
         , @RequestParam(value = "stock_count", required = false, defaultValue = "-1") int stock_count
         , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info) {
 
-        Item item = itemRepository.findByID(id).iterator().next();
+        Item item = itemRepository.findByID(UUID).iterator().next();
         try{
-            if(item_title != " ")
+            if(!item_title.equals(" "))
                 item.setItem_title(item_title);
             if(price != -1.0)
                 item.setPrice(price);
             if(stock_count != -1)
                 item.setStock_count(stock_count);
-            if(description != " ")
+            if(!description.equals(" "))
                 item.setDescription(description);
-            if(shipping_info != " ")
+            if(!shipping_info.equals(" "))
                 item.setShipping_info(shipping_info);
-
+                itemRepository.save(item);
             return new Response("Item information updated succesfully.",true);
 
         }catch (Exception e){
             return new Response("Cannot update item info!",false);
+        }
+    }
+    @RequestMapping(method = POST, path = "/{UUID}/delete")
+    public @ResponseBody Response deleteItem(@PathVariable("UUID") String UUID) {
+        try{
+            Item item = itemRepository.findByID(UUID).iterator().next();
+            itemRepository.delete(item);
+            return new Response("Item Deleted",true);
+        }catch (Exception e){
+            return new Response("Couldn't find the item",false);
         }
     }
 }

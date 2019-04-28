@@ -66,11 +66,17 @@ class ItemCreateActivity : AppCompatActivity() {
 
         AsyncUtil{
             val responseList = JsonUtil.AddItemResponseToStringList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid))
+            //TODO: Duplicate, fix = okan
             runOnUiThread {
-                Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
-                if(responseList[0] == "true"){
-                    ActivityOpenerUtil.openMainPageActivity(this)
-                    finish()
+                if(responseList.isEmpty()){
+                    Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
+                    if(responseList[0] == "true"){
+                        ActivityOpenerUtil.openSellerItemListActivity(this)
+                        finish()
+                    }
                 }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)

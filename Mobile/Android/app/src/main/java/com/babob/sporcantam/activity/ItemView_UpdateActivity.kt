@@ -1,12 +1,13 @@
 package com.babob.sporcantam.activity
 
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.activity_item_view__update.*
+import kotlinx.android.synthetic.main.activity_item_view_update.*
 
 class ItemView_UpdateActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class ItemView_UpdateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_view__update)
+        setContentView(R.layout.activity_item_view_update)
 
 
         val item: Item = intent.getSerializableExtra("item") as Item
@@ -26,7 +27,9 @@ class ItemView_UpdateActivity : AppCompatActivity() {
         fillFields(item)
 
         button_ItemView_UpdateActivityUpdateSave.setOnClickListener { helper(item.uuid) }
-        button_ItemView_UpdateActivityDelete.setOnClickListener { delete(item.uuid) }
+        button_ItemView_UpdateActivityDelete.setOnClickListener {
+            AsyncUtil{ delete(item.uuid) }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+             }
 
 
 
@@ -34,7 +37,7 @@ class ItemView_UpdateActivity : AppCompatActivity() {
     fun fillFields(item: Item){
         editText_ItemView_UpdateActivityItemTitle.setText(item.item_title)
         editText_ItemView_UpdateActivityDescription.setText(item.description)
-        editText_ItemView_UpdateActivityStock.setText(item.stock_count)
+        editText_ItemView_UpdateActivityStock.setText(item.stock_count.toString())
         editText_ItemView_UpdateActivityPrice.setText(item.price.toString())
         editText_ItemView_UpdateActivityShipping.setText(item.shipping_info)
         editText_ItemView_UpdateActivitySeller.setText(item.seller)
@@ -46,6 +49,7 @@ class ItemView_UpdateActivity : AppCompatActivity() {
             button_ItemView_UpdateActivityUpdateSave.text="Save"
         else
             button_ItemView_UpdateActivityUpdateSave.text="Update"
+
         button_ItemView_UpdateActivityDelete.isEnabled=!button_ItemView_UpdateActivityDelete.isEnabled
 
         editText_ItemView_UpdateActivityItemTitle.isEnabled=!editText_ItemView_UpdateActivityItemTitle.isEnabled
@@ -83,29 +87,43 @@ class ItemView_UpdateActivity : AppCompatActivity() {
             val pri=editText_ItemView_UpdateActivityPrice.text.toString().toFloat()
             val shi=editText_ItemView_UpdateActivityShipping.text.toString()
 
+            //TODO: Duplicate, fix = okan
             AsyncUtil{
                 val responseList = JsonUtil.UpdateItemResponseToStringList(updateItemRequest(tit,des,sto,pri,shi,uuid))
-                runOnUiThread {
-                    Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
-                    if(responseList[0] == "true"){
-                        changeEnable()
-                        this.update_save =!this.update_save
-                        finish()
+                if(responseList.isEmpty()){
+                    runOnUiThread {
+                        Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    runOnUiThread {
+                        Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
+                        if(responseList[0] == "true"){
+                            changeEnable()
+                            this.update_save =!this.update_save
+                            finish()
+                        }
                     }
                 }
 
-            }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         }
 
     }
 
     fun delete(uuid: String){
+        //TODO: Duplicate, fix = okan
         val responseList = JsonUtil.deleteItemResponseToStringList(deleteItemRequest(uuid))
+        if(responseList.isEmpty()){
+            runOnUiThread {
+                Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
+            }
+            return
+        }
         runOnUiThread {
             Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
             if(responseList[0] == "true"){
-                ActivityOpenerUtil.openMainPageActivity(this)
                 //TODO
                 //which will activity open?
                 finish()

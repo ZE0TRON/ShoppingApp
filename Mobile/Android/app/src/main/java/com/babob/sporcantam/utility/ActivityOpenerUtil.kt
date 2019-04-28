@@ -37,7 +37,7 @@ class ActivityOpenerUtil {
             val myIntent = Intent(context,ItemView_UpdateActivity::class.java)
             myIntent.putExtra("item",item)
 
-            context.startActivity(Intent(context, ItemCreateActivity::class.java))
+            context.startActivity(myIntent)
         }
 
     }

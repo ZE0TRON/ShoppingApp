@@ -28,6 +28,10 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context, ItemCreateActivity::class.java))
         }
 
+        fun openSellerItemListActivity(context: Context){
+            context.startActivity(Intent(context, SellerItemListActivity::class.java))
+        }
+
         fun openItemView_UpdateActivity(context: Context,item: Item){
 
             val myIntent = Intent(context,ItemView_UpdateActivity::class.java)

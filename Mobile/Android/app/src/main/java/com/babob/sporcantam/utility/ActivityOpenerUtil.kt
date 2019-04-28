@@ -3,6 +3,7 @@ package com.babob.sporcantam.utility
 import android.content.Context
 import android.content.Intent
 import com.babob.sporcantam.activity.*
+import com.babob.sporcantam.item.Item
 
 class ActivityOpenerUtil {
 
@@ -27,6 +28,17 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context, ItemCreateActivity::class.java))
         }
 
+        fun openSellerItemListActivity(context: Context){
+            context.startActivity(Intent(context, SellerItemListActivity::class.java))
+        }
+
+        fun openItemView_UpdateActivity(context: Context,item: Item){
+
+            val myIntent = Intent(context,ItemView_UpdateActivity::class.java)
+            myIntent.putExtra("item",item)
+
+            context.startActivity(Intent(context, ItemCreateActivity::class.java))
+        }
 
     }
 }

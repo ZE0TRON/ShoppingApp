@@ -12,10 +12,13 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     Collection<Item> findByTitle(String item_title);
 
     @Query(
-            value = "SELECT * FROM item i WHERE i.UUID = UUID", nativeQuery = true)
-    Collection<Item> findByID(String UUID);
+            value = "SELECT * FROM item c WHERE c.UUID = uuid", nativeQuery = true)
+    Collection<Item> findByUUID(String uuid);
 
     @Query(
-            value = "SELECT * FROM item i WHERE seller = seller", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.seller = seller", nativeQuery = true)
     Collection<Item> findBySeller(String seller);
+    @Query(
+            value = "DELETE  FROM item i WHERE i.UUID = UUID", nativeQuery = true)
+    void deleteByUUID(String UUID);
 }

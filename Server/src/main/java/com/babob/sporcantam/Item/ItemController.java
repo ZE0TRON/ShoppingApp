@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -49,7 +50,7 @@ public class ItemController {
     @RequestMapping(method = GET, path = "/{UUID}")
     public @ResponseBody Item showItem(@PathVariable("UUID") String UUID) {
         try{
-            Item item = itemRepository.findByID(UUID).iterator().next();
+            Item item = itemRepository.findByUUID(UUID).iterator().next();
             return item;
         }catch (Exception e){
             return null;
@@ -65,7 +66,7 @@ public class ItemController {
         , @RequestParam(value = "stock_count", required = false, defaultValue = "-1") int stock_count
         , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info) {
 
-        Item item = itemRepository.findByID(UUID).iterator().next();
+        Item item = itemRepository.findByUUID(UUID).iterator().next();
         try{
             if(!item_title.equals(" "))
                 item.setItem_title(item_title);
@@ -87,7 +88,15 @@ public class ItemController {
     @RequestMapping(method = POST, path = "/{UUID}/delete")
     public @ResponseBody Response deleteItem(@PathVariable("UUID") String UUID) {
         try{
-            Item item = itemRepository.findByID(UUID).iterator().next();
+            Iterator<Item> it = itemRepository.findByUUID(UUID).iterator();
+            Item item =  it.next();
+            System.out.println("Deleting the item with UUID"+item.getUUID());
+            while(it.hasNext()){
+                Item currentItem = it.next();
+                if(currentItem.getUUID().equals(UUID)){
+                    item = currentItem;
+                }
+            }
             itemRepository.delete(item);
             return new Response("Item Deleted",true);
         }catch (Exception e){

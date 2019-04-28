@@ -25,7 +25,7 @@ public class SellerController {
 
     private Item findItem (Seller seller, String UUID) {
         Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
-        Item item = itemRepository.findByID(UUID).iterator().next();
+        Item item = itemRepository.findByUUID(UUID).iterator().next();
         if(items.contains(item)){
             return item;
         }
@@ -135,6 +135,7 @@ public class SellerController {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Item item = findItem(seller,UUID);
         if(item!= null){
+            System.out.println("Forwarding item with UUID" +UUID);
             return "forward:/item/"+UUID+"/delete";
         }
         else{

@@ -28,5 +28,15 @@ class UrlParamUtil {
                     "&stock_count=$stock_count"+
                     "&UUID=$uuid"
         }
+
+
+        fun updateItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int):String{
+            return "item_title=$item_title" +
+                    "&price=$price"+
+                    "&item_description=$description"+
+                    "&shipping_info=$shipping_info"+
+                    "&stock_count=$stock_count"
+        }
+
     }
 }

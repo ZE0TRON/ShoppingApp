@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         isSending = true
         AsyncUtil{
             if(sendLoginRequest(email, password)){
-                ActivityOpenerUtil.openMainPageActivity(this)
+                ActivityOpenerUtil.openSellerItemListActivity(this)
                 isSending = false
                 runOnUiThread { finish() }
             }

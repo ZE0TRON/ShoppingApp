@@ -33,11 +33,7 @@ class ActivityOpenerUtil {
         }
 
         fun openItemView_UpdateActivity(context: Context,item: Item){
-
-            val myIntent = Intent(context,ItemView_UpdateActivity::class.java)
-            myIntent.putExtra("item",item)
-
-            context.startActivity(myIntent)
+            context.startActivity(Intent(context,ItemView_UpdateActivity::class.java).putExtra("item",item))
         }
 
     }

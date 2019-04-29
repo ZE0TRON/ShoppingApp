@@ -8,7 +8,7 @@ import org.json.JSONObject
 
 class JsonUtil {
     companion object {
-        fun HandleStringResponse(response: String): Boolean {
+        fun handleStringResponse(response: String): Boolean {
             try {
                 val jsonObj = JSONObject(response)
                 return jsonObj.get("success") as Boolean
@@ -20,7 +20,7 @@ class JsonUtil {
             return false
         }
 
-        fun AddItemResponseToStringList(response: String):List<String>{
+        fun generalServerResponseToList(response: String):List<String>{
             try {
                 val jsonObj = JSONObject(response)
                 val res1 = jsonObj.get("success") as Boolean
@@ -33,7 +33,7 @@ class JsonUtil {
             return listOf()
         }
 
-        fun GetItemResponseToList(response: String):ArrayList<Item>{
+        fun getItemResponseToList(response: String):ArrayList<Item>{
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Item>()
@@ -59,31 +59,6 @@ class JsonUtil {
             return arrayListOf()
         }
 
-        fun UpdateItemResponseToStringList(response: String):List<String>{
-            try {
-                val jsonObj = JSONObject(response)
-                val res1 = jsonObj.get("success") as Boolean
-                val res2 = jsonObj.get("msg") as String
-                return listOf(res1.toString(),res2)
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-            return listOf()
-        }
-
-        fun deleteItemResponseToStringList(response: String):List<String>{
-            try {
-                val jsonObj = JSONObject(response)
-                val res1 = jsonObj.get("success") as Boolean
-                val res2 = jsonObj.get("msg") as String
-                return listOf(res1.toString(),res2)
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-            return listOf()
-        }
 
     }
 }

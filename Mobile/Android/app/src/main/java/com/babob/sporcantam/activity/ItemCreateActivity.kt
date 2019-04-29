@@ -1,13 +1,10 @@
 package com.babob.sporcantam.activity
 
 import android.os.AsyncTask
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.widget.Toast
 import com.babob.sporcantam.R
-import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
 import kotlinx.android.synthetic.main.activity_item_create.*
 import java.util.*
@@ -65,7 +62,7 @@ class ItemCreateActivity : AppCompatActivity() {
         val uuid = createuuid()
 
         AsyncUtil{
-            val responseList = JsonUtil.AddItemResponseToStringList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid))
+            val responseList = JsonUtil.generalServerResponseToList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid))
             //TODO: Duplicate, fix = okan
             runOnUiThread {
                 if(responseList.isEmpty()){

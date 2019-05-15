@@ -105,8 +105,8 @@ class LoginActivity : AppCompatActivity() {
         else{
             response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
         }
-        Log.d(TAG, response + JsonUtil.HandleStringResponse(response))
-        return JsonUtil.HandleStringResponse(response)
+        Log.d(TAG, response + JsonUtil.handleStringResponse(response))
+        return JsonUtil.handleStringResponse(response)
 
     }
 }

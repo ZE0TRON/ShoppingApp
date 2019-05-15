@@ -57,7 +57,7 @@ class SellerItemListActivity : AppCompatActivity() {
     }
 
     fun updateList(){
-        dataset = JsonUtil.GetItemResponseToList(
+        dataset = JsonUtil.getItemResponseToList(
                 HttpUtil.sendPoststr(
                         "","${getString(R.string.base_url)}/seller/my-items", SessionUtil.getSessionId(this)!!))
 

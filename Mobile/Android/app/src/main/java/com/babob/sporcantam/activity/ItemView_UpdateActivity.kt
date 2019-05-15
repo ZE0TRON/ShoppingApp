@@ -87,20 +87,25 @@ class ItemView_UpdateActivity : AppCompatActivity() {
             val pri=editText_ItemView_UpdateActivityPrice.text.toString().toFloat()
             val shi=editText_ItemView_UpdateActivityShipping.text.toString()
 
-
+            //TODO: Duplicate, fix = okan
             AsyncUtil{
                 val responseList = JsonUtil.UpdateItemResponseToStringList(updateItemRequest(tit,des,sto,pri,shi,uuid))
-                val toastMessage = CheckerUtil.responseListChecker(responseList)
-                runOnUiThread{
-                    Toast.makeText(this,toastMessage,Toast.LENGTH_SHORT).show()
-                }
-                if(!responseList.isEmpty()){
-                    if(responseList[0]=="true"){
-                        changeEnable()
-                        this.update_save=!this.update_save
-                        finish()
+                if(responseList.isEmpty()){
+                    runOnUiThread {
+                        Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
                     }
                 }
+                else{
+                    runOnUiThread {
+                        Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
+                        if(responseList[0] == "true"){
+                            changeEnable()
+                            this.update_save =!this.update_save
+                            finish()
+                        }
+                    }
+                }
+
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         }
@@ -108,18 +113,22 @@ class ItemView_UpdateActivity : AppCompatActivity() {
     }
 
     fun delete(uuid: String){
-
+        //TODO: Duplicate, fix = okan
         val responseList = JsonUtil.deleteItemResponseToStringList(deleteItemRequest(uuid))
-        val toastMessage = CheckerUtil.responseListChecker(responseList)
-        runOnUiThread{
-            Toast.makeText(this,toastMessage,Toast.LENGTH_SHORT).show()
+        if(responseList.isEmpty()){
+            runOnUiThread {
+                Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
+            }
+            return
         }
-        if(!responseList.isEmpty()){
-            if(responseList[0]=="true"){
+        runOnUiThread {
+            Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
+            if(responseList[0] == "true"){
+                //TODO
+                //which will activity open?
                 finish()
             }
         }
-
 
     }
 

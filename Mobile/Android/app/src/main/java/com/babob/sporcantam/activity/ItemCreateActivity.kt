@@ -28,7 +28,6 @@ class ItemCreateActivity : AppCompatActivity() {
         return uuid.toString()
     }
 
-    //@RequiresApi(Build.VERSION_CODES.O)
     fun addItem(){
 
         if(editText_ItemCreateItemTitle.text.isEmpty()){

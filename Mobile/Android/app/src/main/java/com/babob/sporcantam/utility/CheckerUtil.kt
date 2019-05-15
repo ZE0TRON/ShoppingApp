@@ -25,17 +25,15 @@ class CheckerUtil {
             return true
         }
 
-        fun responseListChecker(rl:List<String>):String{
+        fun responseListChecker(rl:List<String>):List<String>{
 
             if (rl.isEmpty()){
-                return "Server Connection Problem"
+                return  listOf("connect","Server Connection Problem")
             }
             else{
-                return rl[1]
+                return rl
             }
 
-
-            return "1"
         }
 
     }

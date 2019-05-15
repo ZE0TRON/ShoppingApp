@@ -16,7 +16,6 @@ class ItemCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_create)
 
-
         button_ItemCreateAdd.setOnClickListener { addItem() }
     }
 
@@ -61,20 +60,16 @@ class ItemCreateActivity : AppCompatActivity() {
         val uuid = createuuid()
 
         AsyncUtil{
-            val responseList = JsonUtil.generalServerResponseToList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid))
-            //TODO: Duplicate, fix = okan
-            runOnUiThread {
-                if(responseList.isEmpty()){
-                    Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
-                    if(responseList[0] == "true"){
-                        ActivityOpenerUtil.openSellerItemListActivity(this)
-                        finish()
-                    }
-                }
+            val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,uuid)))
+
+            runOnUiThread{
+                Toast.makeText(this,responseList[1],Toast.LENGTH_SHORT).show()
             }
+            if(responseList[0] == "true"){
+                ActivityOpenerUtil.openSellerItemListActivity(this)
+                finish()
+            }
+
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
     }

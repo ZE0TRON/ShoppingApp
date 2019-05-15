@@ -87,24 +87,20 @@ class ItemView_UpdateActivity : AppCompatActivity() {
             val pri=editText_ItemView_UpdateActivityPrice.text.toString().toFloat()
             val shi=editText_ItemView_UpdateActivityShipping.text.toString()
 
-            //TODO: Duplicate, fix = okan
             AsyncUtil{
-                val responseList = JsonUtil.generalServerResponseToList(updateItemRequest(tit,des,sto,pri,shi,uuid))
-                if(responseList.isEmpty()){
-                    runOnUiThread {
-                        Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
-                    }
+                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(updateItemRequest(tit,des,sto,pri,shi,uuid)))
+
+                runOnUiThread {
+                    Toast.makeText(this, responseList.get(1), Toast.LENGTH_SHORT).show()
                 }
-                else{
-                    runOnUiThread {
-                        Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
-                        if(responseList[0] == "true"){
-                            changeEnable()
-                            this.update_save =!this.update_save
-                            finish()
-                        }
-                    }
+
+                if(responseList[0] == "true"){
+                    changeEnable()
+                    this.update_save =!this.update_save
+                    finish()
                 }
+
+
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
@@ -113,21 +109,17 @@ class ItemView_UpdateActivity : AppCompatActivity() {
     }
 
     fun delete(uuid: String){
-        //TODO: Duplicate, fix = okan
-        val responseList = JsonUtil.generalServerResponseToList(deleteItemRequest(uuid))
-        if(responseList.isEmpty()){
-            runOnUiThread {
-                Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
-            }
-            return
-        }
+
+        val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteItemRequest(uuid)))
+
         runOnUiThread {
-            Toast.makeText(this, responseList[1], Toast.LENGTH_SHORT).show()
-            if(responseList[0] == "true"){
-                //TODO
-                //which will activity open?
-                finish()
-            }
+            Toast.makeText(this, responseList.get(1), Toast.LENGTH_SHORT).show()
+        }
+
+        if(responseList[0]=="connect")
+            return
+        else{
+            finish()
         }
 
     }

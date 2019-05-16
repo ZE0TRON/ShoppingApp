@@ -20,8 +20,8 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context, MainActivity::class.java))
         }
 
-        fun openMainPageActivity(context: Context){
-            context.startActivity(Intent(context, MainPageActivity::class.java))
+        fun openMainPageActivity(context: Context, type: Int){
+            context.startActivity(Intent(context, MainPageActivity::class.java).putExtra("type", type))
         }
 
         fun openItemCreateActivity(context: Context){
@@ -34,6 +34,14 @@ class ActivityOpenerUtil {
 
         fun openItemView_UpdateActivity(context: Context,item: Item){
             context.startActivity(Intent(context,ItemView_UpdateActivity::class.java).putExtra("item",item))
+        }
+
+        fun openCustomerMainPageActivitty(context: Context){
+            context.startActivity(Intent(context, CustomerMainPageActivity::class.java))
+        }
+
+        fun openViewItemActivity(context: Context,item: Item){
+            context.startActivity(Intent(context,ViewItemActivity::class.java).putExtra("item",item))
         }
 
     }

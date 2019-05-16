@@ -31,14 +31,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getSId(){
-        val id = SessionUtil.getSessionId(this)
-        if(id == null){
-            ActivityOpenerUtil.openMainActivity(this)
-            finish()
-        }
-        else{
-            sessionId = id
-        }
+        val id = SessionUtil.createSessionId(this)
+        sessionId = id!!
     }
 
     fun loginUser(){
@@ -63,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         isSending = true
         AsyncUtil{
             if(sendLoginRequest(email, password)){
-                ActivityOpenerUtil.openSellerItemListActivity(this)
+                ActivityOpenerUtil.openMainPageActivity(this, loginType)
                 isSending = false
                 runOnUiThread { finish() }
             }

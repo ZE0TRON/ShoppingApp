@@ -5,10 +5,10 @@ import javax.persistence.Entity;
 @Entity
 public class Customer extends User{
     private String address;
-    private Integer cartID;
-    private Integer orderListID;
+    private Long cartID;
+    private Long orderListID;
 
-    public Integer getCartID() {
+    public Long getCartID() {
         return cartID;
     }
 
@@ -16,7 +16,7 @@ public class Customer extends User{
         return address;
     }
 
-    public Integer getOrderListID() {
+    public Long getOrderListID() {
         return orderListID;
     }
 
@@ -24,18 +24,18 @@ public class Customer extends User{
         this.address = address;
     }
 
-    public void setCartID(Integer cartID) {
+    public void setCartID(Long cartID) {
         this.cartID = cartID;
     }
 
-    public void setOrderListID(Integer orderListID) {
+    public void setOrderListID(Long orderListID) {
         this.orderListID = orderListID;
     }
 
     @Override
     public String toString() {
         String string = "";
-        string = string + "Cart ID :"+cartID+"\n Address: "+address+"\n Order List ID : "+orderListID+"\n Cart ID: "+cartID+"\n";
+        string = string + "CartItem ID :"+cartID+"\n Address: "+address+"\n Order List ID : "+orderListID+"\n CartItem ID: "+cartID+"\n";
         return super.toString()+string;
     }
 

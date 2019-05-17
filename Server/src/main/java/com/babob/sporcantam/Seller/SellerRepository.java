@@ -8,10 +8,10 @@ import java.util.Collection;
 @Repository
 public interface SellerRepository extends CrudRepository<Seller, Integer>{
     @Query(
-            value = "SELECT * FROM seller u WHERE u.sessionid = sessionID",nativeQuery = true)
+            value = "SELECT * FROM seller u WHERE u.sessionid = ?1",nativeQuery = true)
     Collection<Seller> findBySessionID(String sessionID);
 
     @Query(
-            value = "SELECT * FROM seller u WHERE u.email = email",nativeQuery = true)
+            value = "SELECT * FROM seller u WHERE u.email = ?1",nativeQuery = true)
     Collection<Seller> findByEmail(String email);
 }

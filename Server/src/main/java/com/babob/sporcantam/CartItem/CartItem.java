@@ -1,10 +1,12 @@
-package com.babob.sporcantam.Item;
+package com.babob.sporcantam.CartItem;
+
+import com.babob.sporcantam.Item.Item;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Item {
+public class CartItem {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -89,4 +91,28 @@ public class Item {
                 "\nUUID: " + UUID +"\nDescription: " + item_description +"\nPublish Date: " + publish_date;
         return string;
     }
+   public CartItem(Item item) {
+        this.item_description = item.getDescription();
+        this.item_title = item.getItem_title();
+        this.price = item.getPrice();
+        this.publish_date = item.getPublish_date();
+        this.seller = item.getSeller();
+        this.shipping_info = item.getShipping_info();
+        this.stock_count = item.getStock_count();
+        this.UUID = item.getUUID();
+    }
+    public CartItem(){}
+    public Long getShoppingCartID() {
+        return shoppingCartID;
+    }
+
+    public void setShoppingCartID(Long shoppingCartID) {
+        this.shoppingCartID = shoppingCartID;
+    }
+
+    private Long shoppingCartID;
+
+
+
+
 }

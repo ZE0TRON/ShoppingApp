@@ -10,10 +10,10 @@ import java.util.List;
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
     @Query(
-            value = "SELECT * FROM customer u WHERE u.sessionid = sessionID",nativeQuery = true)
+            value = "SELECT * FROM customer u WHERE u.sessionid = ?1",nativeQuery = true)
     Collection<Customer> findBySessionID(String sessionID);
 
     @Query(
-            value = "SELECT * FROM customer u WHERE u.email = email",nativeQuery = true)
+            value = "SELECT * FROM customer u WHERE u.email = ?1",nativeQuery = true)
     Collection<Customer> findByEmail(String email);
 }

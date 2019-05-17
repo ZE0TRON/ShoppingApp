@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -59,7 +60,7 @@ public class SellerController {
 
     @RequestMapping(method = POST, path = "/login")
     public @ResponseBody
-    Response customerLogin(@RequestParam String email, @RequestParam String password,
+    Response sellerLogin(@RequestParam String email, @RequestParam String password,
                            @CookieValue(name = "JSESSIONID") String sessionID) {
         try {
             Seller seller = sellerRepository.findByEmail(email).iterator().next();
@@ -84,24 +85,24 @@ public class SellerController {
             , @RequestParam(value = "password", required = false, defaultValue = " ") String password
             , @RequestParam(value = "first_name", required = false, defaultValue = " ") String first_name
             , @RequestParam(value = "last_name", required = false, defaultValue = " ") String last_name
-            , @RequestParam(value = "address", required = false, defaultValue = " ") String IBAN
-            , @RequestParam(value = "address", required = false, defaultValue = " ") String phone_number
-            , @RequestParam(value = "address", required = false, defaultValue = " ") String company_address) {
+            , @RequestParam(value = "IBAN", required = false, defaultValue = " ") String IBAN
+            , @RequestParam(value = "phone_number", required = false, defaultValue = " ") String phone_number
+            , @RequestParam(value = "company_address", required = false, defaultValue = " ") String company_address) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         try {
-            if (password != " ")
+            if (!password.equals(" "))
                 seller.setPassword(passwordEncoder.encode(password));
-            if (first_name != " ")
+            if (!first_name.equals(" "))
                 seller.setFirst_name(first_name);
-            if (last_name != " ")
+            if (!last_name.equals(" "))
                 seller.setLast_name(last_name);
-            if (IBAN != " ")
+            if (!IBAN.equals(" "))
                 seller.setIBAN(IBAN);
-            if (company_address != " ")
+            if (!company_address.equals(" "))
                 seller.setCompany_address(company_address);
-            if (phone_number != " ")
+            if (!phone_number.equals(" "))
                 seller.setPhone_number(phone_number);
-
+            sellerRepository.save(seller);
             return new Response("Seller information updated succesfully.", true);
         } catch (Exception e) {
             return new Response("Cannot update seller info!", false);
@@ -112,8 +113,16 @@ public class SellerController {
     public @ResponseBody
     ItemList getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        System.out.println("Seller is "+seller.getCompany_name());
+        System.out.println("Session id is "+sessionID);
         Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
         return new ItemList(items);
+    }
+    @RequestMapping(method = POST, path = "/")
+    public @ResponseBody
+    Seller getSeller(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        return seller;
     }
 
     @RequestMapping(method = POST, path = "/my-items/{UUID}/update")

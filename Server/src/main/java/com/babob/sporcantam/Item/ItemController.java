@@ -1,12 +1,14 @@
 package com.babob.sporcantam.Item;
 
 import com.babob.sporcantam.Seller.SellerRepository;
+import com.babob.sporcantam.Utils.ItemList;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Iterator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -66,7 +68,15 @@ public class ItemController {
         , @RequestParam(value = "stock_count", required = false, defaultValue = "-1") int stock_count
         , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info) {
 
-        Item item = itemRepository.findByUUID(UUID).iterator().next();
+        Iterator<Item> it = itemRepository.findByUUID(UUID).iterator();
+        Item item =  it.next();
+        System.out.println("Deleting the item with UUID"+item.getUUID());
+        while(it.hasNext()){
+            Item currentItem = it.next();
+            if(currentItem.getUUID().equals(UUID)){
+                item = currentItem;
+            }
+        }
         try{
             if(!item_title.equals(" "))
                 item.setItem_title(item_title);
@@ -102,6 +112,14 @@ public class ItemController {
         }catch (Exception e){
             return new Response("Couldn't find the item",false);
         }
+    }
+    @RequestMapping(method = POST, path = "/getItems")
+    public @ResponseBody
+    ItemList getItems() {
+        Collection<Item> items = itemRepository.getAllItems();
+        ItemList itemList = new ItemList(items);
+        return itemList;
+
     }
 }
 

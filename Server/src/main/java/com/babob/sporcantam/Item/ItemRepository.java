@@ -8,17 +8,21 @@ import java.util.Collection;
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
-            value = "SELECT * FROM item i WHERE i.item_title = item_title", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.item_title = ?1", nativeQuery = true)
     Collection<Item> findByTitle(String item_title);
 
     @Query(
-            value = "SELECT * FROM item c WHERE c.UUID = uuid", nativeQuery = true)
+            value = "SELECT * FROM item c WHERE c.UUID = ?1", nativeQuery = true)
     Collection<Item> findByUUID(String uuid);
 
     @Query(
-            value = "SELECT * FROM item i WHERE i.seller = seller", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.seller = ?1", nativeQuery = true)
     Collection<Item> findBySeller(String seller);
     @Query(
-            value = "DELETE  FROM item i WHERE i.UUID = UUID", nativeQuery = true)
+            value = "SELECT * FROM item", nativeQuery = true)
+    Collection<Item> getAllItems();
+    @Query(
+            value = "DELETE  FROM item i WHERE i.UUID = ?1", nativeQuery = true)
     void deleteByUUID(String UUID);
+
 }

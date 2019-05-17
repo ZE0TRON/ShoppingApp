@@ -46,6 +46,7 @@ class SellerItemListActivity : AppCompatActivity() {
         }
 
         button_openAddItem.setOnClickListener { ActivityOpenerUtil.openItemCreateActivity(this) }
+        button_updateSellerInfo.setOnClickListener { ActivityOpenerUtil.openUpdateSellerInfoActivity(this) }
     }
 
     override fun onResume() {

@@ -5,16 +5,11 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import com.babob.sporcantam.R
 import com.babob.sporcantam.adapter.RecyclerCustomerItemAdapter
-import com.babob.sporcantam.adapter.RecyclerSellerItemAdapter
 import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.utility.AsyncUtil
-import com.babob.sporcantam.utility.HttpUtil
-import com.babob.sporcantam.utility.JsonUtil
-import com.babob.sporcantam.utility.SessionUtil
-import kotlinx.android.synthetic.main.activity_seller_item_list.*
+import com.babob.sporcantam.utility.*
+import kotlinx.android.synthetic.main.activity_customer_main_page.*
 
 class CustomerMainPageActivity : AppCompatActivity() {
 
@@ -48,6 +43,9 @@ class CustomerMainPageActivity : AppCompatActivity() {
 
 
         }
+
+        button_showShoppingCart.setOnClickListener { ActivityOpenerUtil.openShoppingCartActivity(this) }
+        button_updateCustomerProfile.setOnClickListener { ActivityOpenerUtil.openUpdateCustomerInfoActivity(this) }
     }
 
     override fun onResume() {
@@ -61,7 +59,7 @@ class CustomerMainPageActivity : AppCompatActivity() {
     fun updateList(){
         dataset = JsonUtil.getItemResponseToList(
                 HttpUtil.sendPoststr(
-                        "","${getString(R.string.base_url)}/getItems", SessionUtil.getSessionId(this)!!))
+                        "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
 
         //viewAdapter = RecyclerCallViewAdapter(dataset)
         runOnUiThread {

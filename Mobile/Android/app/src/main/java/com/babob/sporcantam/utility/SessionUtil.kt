@@ -16,6 +16,7 @@ class SessionUtil {
             if(sessionId == null){
                 createSessionId(context)
             }
+            Log.d("ses", sessionId)
             return sessionId
         }
 

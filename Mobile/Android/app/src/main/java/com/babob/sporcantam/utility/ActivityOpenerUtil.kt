@@ -44,5 +44,18 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context,ViewItemActivity::class.java).putExtra("item",item))
         }
 
+        fun openShoppingCartActivity(context: Context){
+            context.startActivity(Intent(context, ShoppingCartActivity::class.java))
+        }
+
+        fun openUpdateCustomerInfoActivity(context: Context){
+            context.startActivity(Intent(context, UpdateCustomerInfoActivity::class.java))
+        }
+
+        fun openUpdateSellerInfoActivity(context: Context){
+            context.startActivity(Intent(context, updateSellerInfoActivity::class.java))
+        }
+
+
     }
 }

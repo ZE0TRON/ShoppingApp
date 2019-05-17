@@ -1,7 +1,9 @@
 package com.babob.sporcantam.utility
 
 import android.util.Log
+import com.babob.sporcantam.item.Customer
 import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.item.Seller
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -57,6 +59,37 @@ class JsonUtil {
                 e.printStackTrace()
             }
             return arrayListOf()
+        }
+
+        fun customerInfoResponseToCustomer(response: String):Customer{
+            try{
+                val jsonObj = JSONObject(response)
+                val customer = Customer()
+                customer.firstName = jsonObj.getString("first_name")
+                customer.lastName = jsonObj.getString("last_name")
+                customer.address = jsonObj.getString("address")
+                return customer
+            }catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            return Customer()
+        }
+
+        fun sellerInfoResponseToSeller(response: String): Seller {
+            try{
+                val jsonObj = JSONObject(response)
+                val seller = Seller()
+                seller.firstName = jsonObj.getString("first_name")
+                seller.lastName = jsonObj.getString("last_name")
+                seller.address = jsonObj.getString("company_address")
+                seller.IBAN = jsonObj.getString("iban")
+                seller.phoneNumber = jsonObj.getString("phone_number")
+
+                return seller
+            }catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            return Seller()
         }
 
 

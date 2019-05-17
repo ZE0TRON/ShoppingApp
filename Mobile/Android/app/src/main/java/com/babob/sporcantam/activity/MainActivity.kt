@@ -18,28 +18,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sessionId = getSessionIdFromStorage()
-        if(sessionId == null){
-            ActivityOpenerUtil.openLoginActivity(this)
-            createAndSaveSessionId()
-            finish()
-        }
         ActivityOpenerUtil.openLoginActivity(this)
         finish()
 
     }
 
-
-    private fun getSessionIdFromStorage():String?{
-        val prefs = getSharedPreferences("storage", Context.MODE_PRIVATE)
-        return prefs.getString("sId", null)
-    }
-
-    private fun createAndSaveSessionId(){
-        val uuid = UUID.randomUUID().toString()
-        val editor = getSharedPreferences("storage", Context.MODE_PRIVATE).edit()
-        editor.putString("sId", uuid)
-        editor.apply()
-        Log.i(TAG,"created new UUID: $uuid")
-    }
 }

@@ -24,5 +24,19 @@ class CheckerUtil {
             }
             return true
         }
+
+        fun responseListChecker(rl:List<String>):String{
+
+            if (rl.isEmpty()){
+                return "Server Connection Problem"
+            }
+            else{
+                return rl[1]
+            }
+
+
+            return "1"
+        }
+
     }
 }

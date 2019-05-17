@@ -19,7 +19,6 @@
         app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toEndOf="@+id/button_ItemView_UpdateActivityDelete"
         app:layout_constraintTop_toTopOf="@+id/button_ItemView_UpdateActivityDelete"
-        tools:enabled="false"
         tools:text="@string/item_create_item_title" />
 
     <TextView
@@ -41,7 +40,6 @@
         android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelDescription"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelDescription"
-        tools:enabled="false"
         tools:text="@string/item_create_description" />
 
     <Button
@@ -63,7 +61,7 @@
         android:text="X"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:enabled="false" />
+        />
 
     <TextView
         android:id="@+id/textView_ItemView_UpdateActivtyStock"
@@ -84,7 +82,6 @@
         android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivtyStock"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivtyStock"
-        tools:enabled="false"
         tools:text="@string/item_create_stock_count" />
 
     <TextView
@@ -106,7 +103,6 @@
         android:inputType="numberDecimal"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
-        tools:enabled="false"
         tools:text="@string/item_create_price" />
 
     <TextView
@@ -128,7 +124,6 @@
         android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
-        tools:enabled="false"
         tools:text="@string/item_create_shipping_info" />
 
     <TextView
@@ -150,6 +145,5 @@
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
-        tools:enabled="false"
         tools:text="@string/item_create_seller" />
 </android.support.constraint.ConstraintLayout>

@@ -43,14 +43,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun getSId(){
-        val id = SessionUtil.getSessionId(this)
-        if(id == null){
-            ActivityOpenerUtil.openMainActivity(this)
-            finish()
-        }
-        else{
-            sessionId = id
-        }
+        val id = SessionUtil.createSessionId(this)
+        sessionId = id!!
     }
 
     fun initSpinner(){

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.updateSellerInfoActivity">
+
+    <EditText
+        android:id="@+id/editText_updateSellerFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="First Name"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_updateSellerLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Last Name"
+        app:layout_constraintStart_toStartOf="@+id/editText_updateSellerFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerFirstName" />
+
+    <EditText
+        android:id="@+id/editText_updateSellerIBAN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="IBAN"
+        app:layout_constraintStart_toStartOf="@+id/editText_updateSellerLastName"
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerLastName" />
+
+    <EditText
+        android:id="@+id/editText_updateSellerPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="phone Number"
+        app:layout_constraintStart_toStartOf="@+id/editText_updateSellerIBAN"
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerIBAN" />
+
+    <EditText
+        android:id="@+id/editText_updateSellerAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Address"
+        app:layout_constraintStart_toStartOf="@+id/editText_updateSellerPhoneNumber"
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerPhoneNumber" />
+
+    <Button
+        android:id="@+id/button_updateSellerUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerAddress" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="First Name: "
+        app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerFirstName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText_updateSellerFirstName" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name: "
+        app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerLastName"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/editText_updateSellerLastName" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IBAN: "
+        app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerIBAN"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/editText_updateSellerIBAN" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number: "
+        app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerPhoneNumber"
+        app:layout_constraintStart_toStartOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/editText_updateSellerPhoneNumber" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company Address: "
+        app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerAddress"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/editText_updateSellerAddress" />
+</android.support.constraint.ConstraintLayout>

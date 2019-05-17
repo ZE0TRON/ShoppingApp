@@ -1,14 +1,16 @@
 package com.babob.sporcantam.utility
 
 import android.util.Log
+import com.babob.sporcantam.item.Customer
 import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.item.Seller
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
 class JsonUtil {
     companion object {
-        fun HandleStringResponse(response: String): Boolean {
+        fun handleStringResponse(response: String): Boolean {
             try {
                 val jsonObj = JSONObject(response)
                 return jsonObj.get("success") as Boolean
@@ -20,7 +22,7 @@ class JsonUtil {
             return false
         }
 
-        fun AddItemResponseToStringList(response: String):List<String>{
+        fun generalServerResponseToList(response: String):List<String>{
             try {
                 val jsonObj = JSONObject(response)
                 val res1 = jsonObj.get("success") as Boolean
@@ -33,7 +35,7 @@ class JsonUtil {
             return listOf()
         }
 
-        fun GetItemResponseToList(response: String):ArrayList<Item>{
+        fun getItemResponseToList(response: String):ArrayList<Item>{
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Item>()
@@ -59,31 +61,37 @@ class JsonUtil {
             return arrayListOf()
         }
 
-        fun UpdateItemResponseToStringList(response: String):List<String>{
-            try {
+        fun customerInfoResponseToCustomer(response: String):Customer{
+            try{
                 val jsonObj = JSONObject(response)
-                val res1 = jsonObj.get("success") as Boolean
-                val res2 = jsonObj.get("msg") as String
-                return listOf(res1.toString(),res2)
-
-            } catch (e: JSONException) {
+                val customer = Customer()
+                customer.firstName = jsonObj.getString("first_name")
+                customer.lastName = jsonObj.getString("last_name")
+                customer.address = jsonObj.getString("address")
+                return customer
+            }catch (e: JSONException) {
                 e.printStackTrace()
             }
-            return listOf()
+            return Customer()
         }
 
-        fun deleteItemResponseToStringList(response: String):List<String>{
-            try {
+        fun sellerInfoResponseToSeller(response: String): Seller {
+            try{
                 val jsonObj = JSONObject(response)
-                val res1 = jsonObj.get("success") as Boolean
-                val res2 = jsonObj.get("msg") as String
-                return listOf(res1.toString(),res2)
+                val seller = Seller()
+                seller.firstName = jsonObj.getString("first_name")
+                seller.lastName = jsonObj.getString("last_name")
+                seller.address = jsonObj.getString("company_address")
+                seller.IBAN = jsonObj.getString("iban")
+                seller.phoneNumber = jsonObj.getString("phone_number")
 
-            } catch (e: JSONException) {
+                return seller
+            }catch (e: JSONException) {
                 e.printStackTrace()
             }
-            return listOf()
+            return Seller()
         }
+
 
     }
 }

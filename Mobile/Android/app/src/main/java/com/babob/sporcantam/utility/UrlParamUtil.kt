@@ -1,5 +1,8 @@
 package com.babob.sporcantam.utility
 
+import com.babob.sporcantam.item.Customer
+import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.item.Seller
 import java.util.Date
 
 class UrlParamUtil {
@@ -36,6 +39,24 @@ class UrlParamUtil {
                     "&item_description=$description"+
                     "&shipping_info=$shipping_info"+
                     "&stock_count=$stock_count"
+        }
+
+        fun itemToAddCartParam(item:Item):String{
+            return "itemID=${item.uuid}"
+        }
+
+        fun customerToUrlParam(customer: Customer):String{
+            return "first_name=${customer.firstName}" +
+                    "&last_name=${customer.lastName}"+
+                    "&address=${customer.address}"
+        }
+
+        fun sellertoUrlParam(seller: Seller):String{
+            return "first_name=${seller.firstName}" +
+                    "&last_name=${seller.lastName}"+
+                    "&company_address=${seller.address}"+
+                    "&IBAN=${seller.IBAN}"+
+                    "&phone_number=${seller.phoneNumber}"
         }
 
     }

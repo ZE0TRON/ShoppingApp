@@ -15,9 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.SellerItemListActivity"></activity>
+        <activity android:name=".activity.ViewItemActivity"></activity>
+        <activity android:name=".activity.ShoppingCartActivity" />
+        <activity android:name=".activity.UpdateCustomerInfoActivity" />
+        <activity android:name=".activity.CustomerMainPageActivity" />
+        <activity android:name=".activity.updateSellerInfoActivity" />
+        <activity android:name=".activity.SellerItemListActivity" />
         <activity android:name=".activity.MainPageActivity" />
-        <activity android:name=".activity.ItemView_UpdateActivity"></activity>
+        <activity android:name=".activity.ItemView_UpdateActivity" />
         <activity android:name=".activity.ShowItemActivity" />
         <activity android:name=".activity.ItemCreateActivity" />
         <activity android:name=".activity.MainActivity">

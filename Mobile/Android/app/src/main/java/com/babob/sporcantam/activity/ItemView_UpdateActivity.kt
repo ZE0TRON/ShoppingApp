@@ -89,7 +89,7 @@ class ItemView_UpdateActivity : AppCompatActivity() {
 
             //TODO: Duplicate, fix = okan
             AsyncUtil{
-                val responseList = JsonUtil.UpdateItemResponseToStringList(updateItemRequest(tit,des,sto,pri,shi,uuid))
+                val responseList = JsonUtil.generalServerResponseToList(updateItemRequest(tit,des,sto,pri,shi,uuid))
                 if(responseList.isEmpty()){
                     runOnUiThread {
                         Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()
@@ -114,7 +114,7 @@ class ItemView_UpdateActivity : AppCompatActivity() {
 
     fun delete(uuid: String){
         //TODO: Duplicate, fix = okan
-        val responseList = JsonUtil.deleteItemResponseToStringList(deleteItemRequest(uuid))
+        val responseList = JsonUtil.generalServerResponseToList(deleteItemRequest(uuid))
         if(responseList.isEmpty()){
             runOnUiThread {
                 Toast.makeText(this, "cannot connect to the server", Toast.LENGTH_SHORT).show()

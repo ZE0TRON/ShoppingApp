@@ -17,6 +17,7 @@ public class Item {
     protected Integer stock_count;
     protected LocalDate publish_date;
     protected String UUID;
+    protected String category;
 
     public String getItem_title() {
         return item_title;
@@ -82,11 +83,20 @@ public class Item {
         this.UUID = UUID;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         String string = "Item Title: " + item_title + "\nSeller: " + seller +
                 "\nPrice: " + price + "\nStock Count:" + stock_count + "\nShipping Info: " + shipping_info +
-                "\nUUID: " + UUID +"\nDescription: " + item_description +"\nPublish Date: " + publish_date;
+                "\nUUID: " + UUID +"\nDescription: " + item_description +"\nPublish Date: " + publish_date +
+                "\nCategory: " + category;
         return string;
     }
 }

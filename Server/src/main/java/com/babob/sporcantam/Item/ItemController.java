@@ -29,7 +29,8 @@ public class ItemController {
             , @RequestParam String item_title
             , @RequestParam Float price, @RequestParam String item_description
             , @RequestParam String shipping_info, @RequestParam Integer stock_count
-            , @RequestParam String UUID){
+            , @RequestParam String UUID
+            , @RequestParam String category){
 
         Item item = new Item();
         item.setItem_title(item_title);
@@ -40,6 +41,7 @@ public class ItemController {
         item.setStock_count(stock_count);
         item.setUUID(UUID);
         item.setPublish_date(LocalDate.now());
+        item.setCategory(category);
 
         try {
             itemRepository.save(item);
@@ -66,17 +68,12 @@ public class ItemController {
         , @RequestParam(value = "price", required = false, defaultValue = "-1.0") float price
         , @RequestParam(value = "description", required = false, defaultValue = " ") String description
         , @RequestParam(value = "stock_count", required = false, defaultValue = "-1") int stock_count
-        , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info) {
+        , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info
+        , @RequestParam(value = "category", required = false, defaultValue = " ") String category) {
 
         Iterator<Item> it = itemRepository.findByUUID(UUID).iterator();
         Item item =  it.next();
-        System.out.println("Deleting the item with UUID"+item.getUUID());
-        while(it.hasNext()){
-            Item currentItem = it.next();
-            if(currentItem.getUUID().equals(UUID)){
-                item = currentItem;
-            }
-        }
+
         try{
             if(!item_title.equals(" "))
                 item.setItem_title(item_title);
@@ -88,7 +85,9 @@ public class ItemController {
                 item.setDescription(description);
             if(!shipping_info.equals(" "))
                 item.setShipping_info(shipping_info);
-                itemRepository.save(item);
+            if(!category.equals(" "))
+                item.setCategory(category);
+            itemRepository.save(item);
             return new Response("Item information updated succesfully.",true);
 
         }catch (Exception e){
@@ -100,13 +99,6 @@ public class ItemController {
         try{
             Iterator<Item> it = itemRepository.findByUUID(UUID).iterator();
             Item item =  it.next();
-            System.out.println("Deleting the item with UUID"+item.getUUID());
-            while(it.hasNext()){
-                Item currentItem = it.next();
-                if(currentItem.getUUID().equals(UUID)){
-                    item = currentItem;
-                }
-            }
             itemRepository.delete(item);
             return new Response("Item Deleted",true);
         }catch (Exception e){
@@ -119,7 +111,14 @@ public class ItemController {
         Collection<Item> items = itemRepository.getAllItems();
         ItemList itemList = new ItemList(items);
         return itemList;
+    }
 
+    @RequestMapping(method = POST, path = "/getItems")
+    public @ResponseBody
+    ItemList getItemsByCategory(@RequestParam String category) {
+        Collection<Item> items = itemRepository.getItemsByCategory(category);
+        ItemList itemList = new ItemList(items);
+        return itemList;
     }
 }
 

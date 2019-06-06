@@ -19,7 +19,7 @@ class ViewItemActivity : AppCompatActivity() {
 
         val item: Item = intent.getSerializableExtra("item") as Item
 
-        AsyncUtil{
+        /*AsyncUtil{
             val response = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
                 UrlParamUtil.itemUUIDParam(item),
                     "${getString(R.string.base_url)}/item/view", SessionUtil.getSessionId(this)!!)))
@@ -31,7 +31,7 @@ class ViewItemActivity : AppCompatActivity() {
 
 
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
+        TODO: delet this */
         fillFields(item)
 
         button_viewItemAddToCart.setOnClickListener { addToCart(item) }

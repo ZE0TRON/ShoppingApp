@@ -12,6 +12,10 @@ public interface SellerRepository extends CrudRepository<Seller, Integer>{
     Collection<Seller> findBySessionID(String sessionID);
 
     @Query(
+            value = "SELECT * FROM seller u WHERE u.id = ?1",nativeQuery = true)
+    Collection<Seller> findBySellerID(Long sellerID);
+
+    @Query(
             value = "SELECT * FROM seller u WHERE u.email = ?1",nativeQuery = true)
     Collection<Seller> findByEmail(String email);
 }

@@ -19,9 +19,11 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
             value = "SELECT * FROM item i WHERE i.seller = ?1", nativeQuery = true)
     Collection<Item> findBySeller(String seller);
+
     @Query(
             value = "SELECT * FROM item", nativeQuery = true)
     Collection<Item> getAllItems();
+
     @Query(
             value = "DELETE  FROM item i WHERE i.UUID = ?1", nativeQuery = true)
     void deleteByUUID(String UUID);
@@ -33,5 +35,9 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
             value = "SELECT * FROM item i WHERE i.UUID IN :UUID_list", nativeQuery = true)
     Collection<Item> findByUUIDList(@Param("UUID_list") Collection<String> UUID_list);
+    @Query(
+            value = "SELECT * FROM item i WHERE i.category = ?1", nativeQuery = true)
+    Collection<Item> getItemsByCategory(String category);
+
 
 }

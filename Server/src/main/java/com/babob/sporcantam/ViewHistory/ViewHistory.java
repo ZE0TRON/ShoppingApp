@@ -4,7 +4,7 @@ import javax.persistence.*;
 @Entity
 public class ViewHistory {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
     private String customer_email;
@@ -26,7 +26,7 @@ public class ViewHistory {
         this.customer_email = customer_email;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -35,5 +35,6 @@ public class ViewHistory {
         String string = "Customer e-mail: " + customer_email + "\nUUID: " + UUID;
         return string;
     }
-
 }
+
+

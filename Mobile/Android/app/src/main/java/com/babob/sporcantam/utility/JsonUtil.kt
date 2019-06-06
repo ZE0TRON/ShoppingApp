@@ -14,7 +14,6 @@ class JsonUtil {
             try {
                 val jsonObj = JSONObject(response)
                 return jsonObj.get("success") as Boolean
-
             } catch (e: JSONException) {
                 e.printStackTrace()
             }

@@ -5,6 +5,7 @@ import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class CustomerController {
     private ItemRepository itemRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private ViewHistoryRepository viewHistoryRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
@@ -184,4 +187,15 @@ public class CustomerController {
             return new Response("Cannot update customer info!",false);
         }
     }
+
+    @RequestMapping(method=POST,path ="/showViewHistory")
+    public @ResponseBody
+    Collection<Item> showViewHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_uuids = viewHistoryRepository.findUUIDsByCustomerEmail(customer_email);
+        Collection<Item> history_items = itemRepository.findByUUIDList(history_uuids);
+        return history_items;
+    }
+
 }

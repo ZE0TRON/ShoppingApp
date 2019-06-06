@@ -1,6 +1,7 @@
 package com.babob.sporcantam.Item;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -24,5 +25,13 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
             value = "DELETE  FROM item i WHERE i.UUID = ?1", nativeQuery = true)
     void deleteByUUID(String UUID);
+
+//    @Query(
+//            value = "SELECT * FROM item i WHERE i.UUID IN (?1)", nativeQuery = true)
+//    Collection<Item> findByUUIDList(Collection<String> UUID_list);
+
+    @Query(
+            value = "SELECT * FROM item i WHERE i.UUID IN :UUID_list", nativeQuery = true)
+    Collection<Item> findByUUIDList(@Param("UUID_list") Collection<String> UUID_list);
 
 }

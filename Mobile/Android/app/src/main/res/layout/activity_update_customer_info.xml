@@ -43,13 +43,13 @@
 
     <Button
         android:id="@+id/button_updateCustomerUpdate"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/light_green"
         android:text="Update"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"

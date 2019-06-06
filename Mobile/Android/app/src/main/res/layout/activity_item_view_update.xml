@@ -46,10 +46,10 @@
 
     <Button
         android:id="@+id/button_ItemView_UpdateActivityUpdateSave"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:background="@color/light_pink"
         android:text="Update"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,11 +57,11 @@
 
     <Button
         android:id="@+id/button_ItemView_UpdateActivityDelete"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="41dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
-        android:background="@color/light_pink"
         android:enabled="false"
         android:text="X"
         android:textColor="@color/colorAccent"

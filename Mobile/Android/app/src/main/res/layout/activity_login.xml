@@ -8,9 +8,17 @@
     tools:context=".activity.LoginActivity">
 
     <ImageView
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        tools:ignore="MissingConstraints" /> <!-- TODO: Delet this -->
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/customer"
+        app:layout_constraintBottom_toTopOf="@+id/textView_login_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_LoginEmail"

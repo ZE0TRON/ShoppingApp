@@ -3,6 +3,7 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
 import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
@@ -30,6 +31,8 @@ public class CustomerController {
     private CartItemRepository cartItemRepository;
     @Autowired
     private ViewHistoryRepository viewHistoryRepository;
+    @Autowired
+    private OrderHistoryRepository orderHistoryRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
@@ -198,4 +201,13 @@ public class CustomerController {
         return history_items;
     }
 
+//    TODO:Return collection<Order>
+    @RequestMapping(method=POST,path ="/showOrderHistory")
+    public @ResponseBody
+    Collection<String> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
+        return history_sale_ids;
+    }
 }

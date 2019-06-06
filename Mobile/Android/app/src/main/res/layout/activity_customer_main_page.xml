@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     tools:context=".activity.CustomerMainPageActivity">
 
     <Button
@@ -27,7 +28,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycelerCustomerItemsView"
-        android:layout_width="0dp"
+        android:layout_width="396dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"

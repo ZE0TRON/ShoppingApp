@@ -57,7 +57,7 @@ public class AdminController {
     }
     @RequestMapping(method=POST,path="/sale/confirm")
     public @ResponseBody
-    Response confirmSale(@RequestParam Long saleID,
+    Response confirmSale(@RequestParam String saleID,
                         @CookieValue(name = "JSESSIONID") String sessionID){
         try{
             Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
@@ -109,7 +109,7 @@ public class AdminController {
     }
     @RequestMapping(method=POST,path ="/customer/update")
     public @ResponseBody
-    Response updateCustomerInfo(@CookieValue(name = "JSESSIONID") String sessionID
+    Response manipulateCustomer(@CookieValue(name = "JSESSIONID") String sessionID
             ,@RequestParam(value = "customer_email", required = false, defaultValue = " ") String customer_email
             ,@RequestParam(value="password", required = false, defaultValue=" ") String password
             ,@RequestParam(value="first_name", required = false, defaultValue=" ") String first_name
@@ -141,7 +141,7 @@ public class AdminController {
 
     @RequestMapping(method = POST, path = "/item/update")
     public @ResponseBody
-    Response updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID
+    Response manipulateItem(@CookieValue(name = "JSESSIONID") String sessionID
             ,@RequestParam(value = "item_UUID", required = false, defaultValue = " ") String UUID
             , @RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
             , @RequestParam(value = "price", required = false, defaultValue = "-1.0") float price
@@ -171,6 +171,84 @@ public class AdminController {
 
         }catch (Exception e){
             return new Response("Cannot update item info!",false);
+        }
+    }
+    @RequestMapping(method=POST,path ="/order/delete")
+    public @ResponseBody
+    Response deleteOrder(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam String saleID)
+         {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return new Response("Cannot update seller info!", false);
+            }
+            Order order = orderRepository.findByOrderID(saleID).iterator().next();
+            orderRepository.delete(order);
+            return new Response("Order deleted", true);
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
+    @RequestMapping(method=POST,path ="/customer/delete")
+    public @ResponseBody
+    Response deleteCustomer(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam String email)
+    {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return new Response("Cannot update seller info!", false);
+            }
+            Customer customer = customerRepository.findByEmail(email).iterator().next();
+            customerRepository.delete(customer);
+            return new Response("Customer deleted", true);
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/seller/delete")
+    public @ResponseBody
+    Response deleteSeller(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam String email)
+    {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return new Response("Cannot update seller info!", false);
+            }
+            Seller seller = sellerRepository.findByEmail(email).iterator().next();
+            sellerRepository.delete(seller);
+            return new Response("Seller deleted", true);
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/item/delete")
+    public @ResponseBody
+    Response deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam String UUID)
+    {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return new Response("Cannot update seller info!", false);
+            }
+            Item item = itemRepository.findByUUID(UUID).iterator().next();
+            itemRepository.delete(item);
+            return new Response("Item deleted", true);
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
         }
     }
 

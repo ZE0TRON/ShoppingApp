@@ -9,9 +9,8 @@ import java.util.Collection;
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Integer> {
     @Query(
-            value = "SELECT * FROM admin u WHERE u.id = ?1",nativeQuery = true)
-    Collection<Order> findByOrderID(Long orderID);
-
+            value = "SELECT * FROM admin u WHERE u.orderID = ?1",nativeQuery = true)
+    Collection<Order> findByOrderID(String orderID);
 
 
 }

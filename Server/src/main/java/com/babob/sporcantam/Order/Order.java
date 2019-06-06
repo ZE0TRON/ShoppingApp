@@ -14,11 +14,11 @@ public class Order {
         this.id = id;
     }
 
-    public List<Long> getItems() {
+    public List<String> getItems() {
         return items;
     }
 
-    public void setItems(List<Long> items) {
+    public void setItems(List<String> items) {
         this.items = items;
     }
 
@@ -42,7 +42,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private List<Long> items;
+
+    public String getOrder_id() {
+        return order_id;
+    }
+
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
+    }
+
+    private String order_id;
+    private List<String> items;
     private Long customerID;
     private boolean confirmed;
 

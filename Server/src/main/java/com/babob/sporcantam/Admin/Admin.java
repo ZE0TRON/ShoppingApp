@@ -1,21 +1,18 @@
 package com.babob.sporcantam.Admin;
 import com.babob.sporcantam.Admin.Admin;
+import com.babob.sporcantam.User.User;
 
-public class Admin {
-    private Integer access_level ;
+import javax.persistence.Entity;
+
+
+@Entity
+public class Admin extends User {
     private Integer employeeID;
-
-    public Integer getAccess_level() {
-        return access_level;
-    }
 
     public Integer getEmployeeID() {
         return employeeID;
     }
 
-    public void setAccess_level(Integer access_level) {
-        this.access_level = access_level;
-    }
 
     public void setEmployeeID(Integer employeeID) {
         this.employeeID = employeeID;

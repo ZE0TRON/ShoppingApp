@@ -3,6 +3,8 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.Seller.Seller;
+import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -19,6 +24,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(path="/customer")
 public class CustomerController {
 
+    @Autowired
+    private SellerRepository sellerRepository;
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -191,6 +198,47 @@ public class CustomerController {
             if(address!= " ")
                 customer.setAddress(address);
             customerRepository.save(customer);
+            return new Response("Customer information updated succesfully.",true);
+
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/checkout")
+    public @ResponseBody
+    Response updateCustomerInfo(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam(value="password", required = false, defaultValue=" ") Long cartID,
+    ) {
+
+        try{
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            Collection<CartItem> items = cartItemRepository.getItemsById(cartID);
+            Iterator<CartItem> it = items.iterator();
+            ArrayList<String> shipping_list =new  ArrayList<String>();
+            ArrayList<Seller> sellerList = new ArrayList<Seller>();
+            double item_cost = 0;
+            double total = 0;
+            int shipping_count = 0;
+            while(it.hasNext()){
+               CartItem item = it.next();
+               if(!shipping_list.contains(item.getShipping_info())){
+                   shipping_count+=1;
+                   shipping_list.add(item.getShipping_info());
+                }
+               item_cost+= item.getPrice();
+               Seller seller = sellerRepository.findBySellerID(item.getSeller());
+            }
+            total = item_cost+shipping_count*5;
+            if(customer.getBalance()>= total){
+                customer.setBalance(customer.getBalance()-total);
+                it = items.iterator();
+
+            }
+            else {
+                return new Response("Insufficent balance",false);
+            }
             return new Response("Customer information updated succesfully.",true);
 
         }

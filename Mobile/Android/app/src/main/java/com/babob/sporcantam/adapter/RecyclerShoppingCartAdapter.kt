@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.babob.sporcantam.R
+import com.babob.sporcantam.activity.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
 
@@ -62,7 +63,11 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         }
         holder.checkBox.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title + " Checkbox")
-
+            if(holder.checkBox.isChecked){
+                ShoppingCartActivity.addToList(dataset[position])
+            } else {
+                ShoppingCartActivity.deleteFromList(dataset[position])
+            }
         }
 
     }

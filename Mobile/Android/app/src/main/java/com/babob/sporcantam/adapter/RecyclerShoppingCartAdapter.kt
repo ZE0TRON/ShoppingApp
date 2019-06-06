@@ -7,7 +7,9 @@ import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -24,10 +26,13 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         var textTitle: TextView
         var textPrice: TextView
         var textCount: TextView
+        var checkBox: CheckBox
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
+            checkBox = linearLayout.findViewById(R.id.checkBox_shoppingCart)
+            checkBox.visibility = View.VISIBLE
         }
     }
 
@@ -56,7 +61,10 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
             Log.d("Recycle adapter", dataset[position].item_title)
             showAlertDialog(dataset[position], position)
         }
+        holder.checkBox.setOnClickListener {
+            Log.d("Recycle adapter", dataset[position].item_title + " Checkbox")
 
+        }
 
     }
 

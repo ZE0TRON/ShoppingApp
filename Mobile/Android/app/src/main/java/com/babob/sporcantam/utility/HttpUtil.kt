@@ -47,7 +47,7 @@ class HttpUtil {
                 os.flush()
                 os.close()
                 Log.i("STATUS", conn.responseCode.toString())
-                Log.i("MSG", conn.responseMessage)
+                Log.i("MSG", conn.responseMessage.toString())
 
                 conn.disconnect()
 
@@ -89,7 +89,7 @@ class HttpUtil {
                 os.flush()
                 os.close()
                 Log.i("STATUS", conn.responseCode.toString())
-                Log.i("MSG", conn.responseMessage)
+                Log.i("MSG", conn.responseMessage.toString())
 
 
                 val br = BufferedReader(InputStreamReader(conn.getInputStream()))

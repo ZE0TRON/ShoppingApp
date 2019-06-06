@@ -14,7 +14,6 @@ import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
 
 class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Context) :
         RecyclerView.Adapter<RecyclerShoppingCartAdapter.ViewHolder>(){
@@ -66,7 +65,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
     private fun deleteItem(item: Item, position: Int){
         AsyncUtil{
             val response = JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
-                    UrlParamUtil.itemToAddCartParam(item),
+                    UrlParamUtil.itemUUIDParam(item),
                     "${context.getString(R.string.base_url)}/customer/removeFromCart", SessionUtil.getSessionId(context)!!))
             when {
                 response.size < 2 -> (context as Activity).runOnUiThread{ Toast.makeText(context, "Cannot connect to the server", Toast.LENGTH_SHORT).show() }

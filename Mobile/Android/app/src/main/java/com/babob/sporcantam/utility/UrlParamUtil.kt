@@ -23,12 +23,13 @@ class UrlParamUtil {
                     "&password=$password"
         }
 
-        fun createItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, uuid: String):String{
+        fun createItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int, item_category: String,uuid: String):String{
             return "item_title=$item_title" +
                     "&price=$price"+
                     "&item_description=$description"+
                     "&shipping_info=$shipping_info"+
                     "&stock_count=$stock_count"+
+                    "&category=$item_category"+
                     "&UUID=$uuid"
         }
 
@@ -41,7 +42,7 @@ class UrlParamUtil {
                     "&stock_count=$stock_count"
         }
 
-        fun itemToAddCartParam(item:Item):String{
+        fun itemUUIDParam(item:Item):String{
             return "itemID=${item.uuid}"
         }
 

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.ViewItemActivity"></activity>
+        <activity android:name=".activity.ViewHistoryActivity"></activity>
+        <activity android:name=".activity.ViewItemActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.UpdateCustomerInfoActivity" />
         <activity android:name=".activity.CustomerMainPageActivity" />

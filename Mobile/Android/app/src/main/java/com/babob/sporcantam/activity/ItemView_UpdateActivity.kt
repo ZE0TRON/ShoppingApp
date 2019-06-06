@@ -25,7 +25,6 @@ class ItemView_UpdateActivity : AppCompatActivity() {
         val item: Item = intent.getSerializableExtra("item") as Item
 
         fillFields(item)
-
         button_ItemView_UpdateActivityUpdateSave.setOnClickListener { helper(item.uuid) }
         button_ItemView_UpdateActivityDelete.setOnClickListener {
             AsyncUtil{ delete(item.uuid) }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)

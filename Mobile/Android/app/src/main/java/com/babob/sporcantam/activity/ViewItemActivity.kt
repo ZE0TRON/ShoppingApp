@@ -19,6 +19,19 @@ class ViewItemActivity : AppCompatActivity() {
 
         val item: Item = intent.getSerializableExtra("item") as Item
 
+        AsyncUtil{
+            val response = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
+                UrlParamUtil.itemUUIDParam(item),
+                    "${getString(R.string.base_url)}/item/view", SessionUtil.getSessionId(this)!!)))
+
+            runOnUiThread {
+                Toast.makeText(this, response[1], Toast.LENGTH_SHORT).show()
+            }
+
+
+
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
         fillFields(item)
 
         button_viewItemAddToCart.setOnClickListener { addToCart(item) }
@@ -37,7 +50,7 @@ class ViewItemActivity : AppCompatActivity() {
     fun addToCart(item:Item){
         AsyncUtil{
             val response = JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
-                    UrlParamUtil.itemToAddCartParam(item),
+                    UrlParamUtil.itemUUIDParam(item),
                     "${getString(R.string.base_url)}/customer/addToCart", SessionUtil.getSessionId(this)!!))
             when {
                 response.size < 2 -> runOnUiThread { Toast.makeText(this, "Cannot connect to the server", Toast.LENGTH_SHORT).show() }

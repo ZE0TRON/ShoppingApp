@@ -163,10 +163,10 @@ public class CustomerController {
     public @ResponseBody
     Response customerLogout( @CookieValue(name = "JSESSIONID") String sessionID){
         try{
-            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next(); //get first (and oly) customer
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next(); //get first (and only) customer
             customer.setSessionID(null);
             customerRepository.save(customer);
-            return new Response("Logget out successfully.",false);
+            return new Response("Logged out successfully.",true);
         }
         catch(Exception e){
             return new Response("Could not logout.",false);

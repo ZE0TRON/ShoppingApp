@@ -29,6 +29,7 @@ class ViewItemActivity : AppCompatActivity() {
         textView_viewItemTitle.text = item.item_title
         textView_viewItemPriceNum.text = item.price.toString()
         textView_viewItemSeller.text = item.seller
+        textView_viewItemShipping.text = item.shipping_info
         textView_viewItemStockCount.text = item.stock_count.toString()
 
     }

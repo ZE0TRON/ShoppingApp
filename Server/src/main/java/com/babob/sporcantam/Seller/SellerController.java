@@ -79,6 +79,20 @@ public class SellerController {
         }
     }
 
+    @RequestMapping(method=POST,path="/logout")
+    public @ResponseBody
+    Response sellerLogout( @CookieValue(name = "JSESSIONID") String sessionID){
+        try{
+            Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next(); //get first (and only) seller
+            seller.setSessionID(null);
+            sellerRepository.save(seller);
+            return new Response("Logged out successfully.",true);
+        }
+        catch(Exception e){
+            return new Response("Could not logout.",false);
+        }
+    }
+
     @RequestMapping(method = POST, path = "/update")
     public @ResponseBody
     Response updateSellerInfo(@CookieValue(name = "JSESSIONID") String sessionID

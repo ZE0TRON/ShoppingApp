@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     tools:context=".activity.updateSellerInfoActivity">
 
     <EditText
         android:id="@+id/editText_updateSellerFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="136dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="First Name"
@@ -69,17 +70,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/light_green"
         android:text="Update"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateSellerAddress"
+        app:layout_constraintVertical_bias="0.358" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:text="First Name: "
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerFirstName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editText_updateSellerFirstName" />
@@ -88,7 +96,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Last Name: "
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerLastName"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/editText_updateSellerLastName" />
@@ -98,6 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IBAN: "
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerIBAN"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="@+id/editText_updateSellerIBAN" />
@@ -107,6 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Phone Number: "
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerPhoneNumber"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/editText_updateSellerPhoneNumber" />
@@ -116,6 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Company Address: "
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateSellerAddress"
         app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/editText_updateSellerAddress" />

@@ -5,6 +5,7 @@
     android:id="@+id/textView_viewItemPrice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     tools:context=".activity.ViewItemActivity">
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_marginEnd="32dp"
         android:text="Title"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +120,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:background="@color/light_green"
         android:text="Add To Cart"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/textView_viewItemTitle"
         app:layout_constraintStart_toStartOf="@+id/textView_viewItemTitle"
         app:layout_constraintTop_toBottomOf="@+id/textView_viewItemSeller" />

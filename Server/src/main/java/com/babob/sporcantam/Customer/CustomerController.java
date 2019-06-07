@@ -236,7 +236,7 @@ public class CustomerController {
                    shipping_list.add(item.getShipping_info());
                 }
                itemIDs.add(item.getUUID());
-               item_cost += item.getPrice();
+               item_cost += item.getPrice()+((item.getPrice()/100)*18);
                Seller seller = sellerRepository.findByCompanyName(item.getSeller()).iterator().next();
                seller.setBalance(seller.getBalance()+item.getPrice());
                sellerList.add(seller);

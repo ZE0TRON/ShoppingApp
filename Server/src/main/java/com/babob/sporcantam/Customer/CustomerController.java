@@ -3,12 +3,16 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.OrderHistory.OrderHistory;
+import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.ViewHistory.ViewHistory;
+import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +28,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 
 @Controller
 @RequestMapping(path="/customer")
@@ -39,7 +45,10 @@ public class CustomerController {
     private ItemRepository itemRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired    
+    private ViewHistoryRepository viewHistoryRepository;
     @Autowired
+    private OrderHistoryRepository orderHistoryRepository;
     private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
@@ -213,6 +222,40 @@ public class CustomerController {
         }
     }
 
+
+    @RequestMapping(method=POST,path ="/showViewHistory")
+    public @ResponseBody
+    Collection<Item> showViewHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_uuids = viewHistoryRepository.findUUIDsByCustomerEmail(customer_email);
+        Collection<Item> history_items = itemRepository.findByUUIDList(history_uuids);
+        return history_items;
+    }
+
+    @RequestMapping(method=POST,path ="/showOrderHistory")
+    public @ResponseBody
+    Collection<Order> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
+        Collection<Order> order_list = orderRepository.findByOrderIDList(history_sale_ids);
+        return order_list;
+    }
+
+    @RequestMapping(method=GET,path ="/showOrder/{order_id}")
+    public @ResponseBody
+    Order showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Order order = orderRepository.findByOrderID(order_id).iterator().next();
+        if(!order.getCustomerEmail().equals(customer_email)){
+            return null;
+        }
+        return order;
+    }
+
+
     @RequestMapping(method=POST,path ="/checkout")
     public @ResponseBody
     Response checkout(@CookieValue(name = "JSESSIONID") String sessionID
@@ -254,8 +297,16 @@ public class CustomerController {
                 Order order = new Order();
                 order.setItems(itemIDs);
                 order.setCustomerEmail(customer.getEmail());
+                order.setOrder_id(order.getId().toString());
                 orderRepository.save(order);
-                // TODO: add to order history
+                OrderHistory new_orderhistory = new OrderHistory();
+                new_orderhistory.setCustomer_email(customer.getEmail());
+                new_orderhistory.setSale_id(order.getOrder_id());
+                orderHistoryRepository.save(new_orderhistory);
+                it = items.iterator();
+                while(it.hasNext()){
+                    cartItemRepository.delete(it.next()); //empty the cart.
+                }
                 return new Response("Order has given",true);
             }
             else {

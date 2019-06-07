@@ -1,8 +1,14 @@
 package com.babob.sporcantam.Item;
 
+import com.babob.sporcantam.Customer.Customer;
+import com.babob.sporcantam.Customer.CustomerController;
+import com.babob.sporcantam.Customer.CustomerRepository;
+import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.ItemList;
 import com.babob.sporcantam.Utils.Response;
+import com.babob.sporcantam.ViewHistory.ViewHistory;
+import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +28,12 @@ public class ItemController {
     private ItemRepository itemRepository;
     @Autowired
     private SellerRepository sellerRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private ViewHistoryRepository viewHistoryRepository;
+    @Autowired
+    private OrderHistoryRepository orderHistoryRepository;
 
     @RequestMapping(method = POST, path = "/add")
     public @ResponseBody
@@ -52,9 +64,20 @@ public class ItemController {
     }
 
     @RequestMapping(method = GET, path = "/{UUID}")
-    public @ResponseBody Item showItem(@PathVariable("UUID") String UUID) {
+    public @ResponseBody Item showItem(@PathVariable("UUID") String UUID
+            , @CookieValue(name = "JSESSIONID") String sessionID) {
         try{
             Item item = itemRepository.findByUUID(UUID).iterator().next();
+            if(sessionID!=null){ //if its not non-registered user.
+                Collection<Customer> customerList = customerRepository.findBySessionID(sessionID);
+                if(!customerList.isEmpty()){
+                    Customer customer =  customerList.iterator().next();
+                    ViewHistory new_history = new ViewHistory();
+                    new_history.setUUID(UUID);
+                    new_history.setCustomer_email(customer.getEmail());
+                    viewHistoryRepository.save(new_history);
+                }
+            }
             return item;
         }catch (Exception e){
             return null;
@@ -113,10 +136,32 @@ public class ItemController {
         return itemList;
     }
 
-    @RequestMapping(method = POST, path = "/getItems")
+    @RequestMapping(method = GET, path = "/{category}")
     public @ResponseBody
-    ItemList getItemsByCategory(@RequestParam String category) {
+    ItemList getItemsByCategory(@PathVariable("category") String category) {
         Collection<Item> items = itemRepository.getItemsByCategory(category);
+        ItemList itemList = new ItemList(items);
+        return itemList;
+    }
+
+    @RequestMapping(method = POST, path = "/searchItems")
+    public @ResponseBody
+    ItemList searchItems(@RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
+            ,@RequestParam(value = "category", required = false, defaultValue = " ") String category) {
+        Collection<Item> items;
+        if(item_title.equals(" ") && category.equals(" ")){
+            items= itemRepository.getAllItems();
+        }
+        else if(item_title.equals(" ")){
+            items = itemRepository.getItemsByCategory(category);
+        }
+        else if(category.equals(" ")){
+            items = itemRepository.getItemByNameContaining(item_title);
+        }
+        else{
+            items = itemRepository.getItemByNameContainingAndCategory(item_title, category);
+        }
+
         ItemList itemList = new ItemList(items);
         return itemList;
     }

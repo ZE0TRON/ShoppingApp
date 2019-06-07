@@ -3,12 +3,15 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.ViewHistory.ViewHistory;
+import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,7 +42,10 @@ public class CustomerController {
     private ItemRepository itemRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired    
+    private ViewHistoryRepository viewHistoryRepository;
     @Autowired
+    private OrderHistoryRepository orderHistoryRepository;
     private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
@@ -212,6 +218,29 @@ public class CustomerController {
             return new Response("Cannot update customer info!",false);
         }
     }
+
+
+    @RequestMapping(method=POST,path ="/showViewHistory")
+    public @ResponseBody
+    Collection<Item> showViewHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_uuids = viewHistoryRepository.findUUIDsByCustomerEmail(customer_email);
+        Collection<Item> history_items = itemRepository.findByUUIDList(history_uuids);
+        return history_items;
+    }
+
+//    TODO:Return collection<Order>
+    @RequestMapping(method=POST,path ="/showOrderHistory")
+    public @ResponseBody
+    Collection<String> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
+        return history_sale_ids;
+    }
+
+
 
     @RequestMapping(method=POST,path ="/checkout")
     public @ResponseBody

@@ -36,7 +36,6 @@
             android:src="@drawable/ic_photo_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintRight_toRightOf="textView_recItemTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_recItemTitle" />
 

@@ -43,6 +43,7 @@ class ItemCreateActivity : AppCompatActivity() {
         setContentView(com.babob.sporcantam.R.layout.activity_item_create)
 
         initSpinners()
+        requestStoragePermission()
 
         button_ItemCreateAdd.setOnClickListener { addItem() }
 
@@ -219,9 +220,10 @@ class ItemCreateActivity : AppCompatActivity() {
 
         val uuid = createuuid()
 
+        //TODO: add image checker
         AsyncUtil{
             val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,itemCategory,uuid)))
-
+            MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this)
             runOnUiThread{
                 Toast.makeText(this,responseList[1],Toast.LENGTH_SHORT).show()
             }

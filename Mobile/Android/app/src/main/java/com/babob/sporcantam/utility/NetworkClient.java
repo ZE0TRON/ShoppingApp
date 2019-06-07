@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkClient {
 
-    private static final String BASE_URL = "http://134.209.226.138:8080/customer/uploadFile";
+    private static final String BASE_URL = "http://134.209.226.138:8080/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient(Context context) {

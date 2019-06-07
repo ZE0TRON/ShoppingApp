@@ -14,7 +14,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 
 public class MultiHttpSenderUtil {
-    static private void uploadToServer(String filePath, Context context) {
+    static public void uploadToServer(String filePath, Context context) {
         Retrofit retrofit = NetworkClient.getRetrofitClient( context);
 
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
@@ -26,7 +26,7 @@ public class MultiHttpSenderUtil {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
 
         // Create MultipartBody.Part using file request-body,file name and part name
-        MultipartBody.Part part = MultipartBody.Part.createFormData("upload", file.getName(), fileReqBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
 
         //Create request body with text description and text media type
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");

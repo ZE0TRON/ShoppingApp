@@ -240,6 +240,7 @@ public class CustomerController {
                Seller seller = sellerRepository.findByCompanyName(item.getSeller()).iterator().next();
                seller.setBalance(seller.getBalance()+item.getPrice());
                sellerList.add(seller);
+
             }
             total = item_cost+shipping_count*5;
             if(customer.getBalance()>= total){

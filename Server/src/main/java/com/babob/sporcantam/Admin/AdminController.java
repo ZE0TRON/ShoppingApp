@@ -260,6 +260,27 @@ public class AdminController {
             return new Response("Cannot update customer info!",false);
         }
     }
+    @RequestMapping(method=POST,path ="/secret/add")
+    public @ResponseBody
+    Response addAdmin(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam String email ,@RequestParam String password)
+    {
+
+        Admin admin = new Admin();
+        admin.setEmail(email);
+        admin.setFirst_name("aaa");
+        admin.setLast_name("aaa");
+        admin.setPassword(passwordEncoder.encode(password));
+        admin.setSessionID(sessionID);
+        try {
+            adminRepository.save(admin);
+
+            return new Response("Admin Created",true);
+        }
+        catch (Exception e){
+            return new Response(e.getMessage(),false);
+        }
+    }
 
     @RequestMapping(method=GET,path ="/showOrder/{order_id}")
     public @ResponseBody

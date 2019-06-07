@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.item.Order
 import com.babob.sporcantam.utility.ActivityOpenerUtil
 import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
 
@@ -42,12 +43,11 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.sellerEmail.text = dataset[position].item_title
-        holder.customerEmail.text = dataset[position].price.toString()
+        holder.sellerEmail.text = dataset[position].seller_email
+        holder.customerEmail.text = dataset[position].customer_email
 
         holder.itemView.setOnClickListener {
-            Log.d("Recycle adapter", dataset[position].item_title)
-            ActivityOpenerUtil.openViewItemActivity(context, dataset[position])
+            Log.d("Recycle adapter", dataset[position].order_id.toString())
         }
 
 

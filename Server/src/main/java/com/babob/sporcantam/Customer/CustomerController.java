@@ -13,8 +13,10 @@ import com.babob.sporcantam.Utils.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Array;
 import java.text.DateFormat;
@@ -42,12 +44,8 @@ public class CustomerController {
     private CartItemRepository cartItemRepository;
     @Autowired
     private OrderRepository orderRepository;
-    private final StorageService storageService;
 
-    @Autowired
-    public CustomerController(StorageService storageService) {
-        this.storageService = storageService;
-    }
+
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
@@ -338,6 +336,12 @@ public class CustomerController {
         } catch (Exception e) {
             return new Response("Cannot update customer info!", false);
         }
+    }
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
+        modelMap.addAttribute("file", file);
+        System.out.println(file.getName());
+        return "fileUploadView";
     }
     @RequestMapping(method = POST, path = "/getBalance")
     public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID

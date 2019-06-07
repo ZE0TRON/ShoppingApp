@@ -11,7 +11,7 @@ import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
 import kotlinx.android.synthetic.main.activity_customer_main_page.*
 
-class CustomerMainPageActivity : AppCompatActivity() {
+class  CustomerMainPageActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     lateinit var viewAdapter: RecyclerView.Adapter<*>

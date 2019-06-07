@@ -34,12 +34,13 @@ class UrlParamUtil {
         }
 
 
-        fun updateItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int):String{
+        fun updateItemToUrlParam(item_title: String, price: Float, description: String, shipping_info: String, stock_count: Int,category: String):String{
             return "item_title=$item_title" +
                     "&price=$price"+
                     "&item_description=$description"+
                     "&shipping_info=$shipping_info"+
-                    "&stock_count=$stock_count"
+                    "&stock_count=$stock_count"+
+                    "&category=$category"
         }
 
         fun itemUUIDParam(item:Item):String{

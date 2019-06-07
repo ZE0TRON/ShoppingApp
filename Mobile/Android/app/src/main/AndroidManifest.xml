@@ -16,24 +16,33 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activity.SplashScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.ViewHistoryActivity" />
         <activity android:name=".activity.ViewItemActivity" />
+        <activity
+            android:name=".activity.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AdminMainPageActivty" />
+        <activity android:name=".activity.ViewHistoryActivity" />
+        <activity android:name=".activity.CustomerViewItemActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.UpdateCustomerInfoActivity" />
         <activity android:name=".activity.CustomerMainPageActivity" />
         <activity android:name=".activity.updateSellerInfoActivity" />
         <activity android:name=".activity.SellerItemListActivity" />
         <activity android:name=".activity.MainPageActivity" />
-        <activity android:name=".activity.ItemView_UpdateActivity" />
+        <activity android:name=".activity.SellerItemView_UpdateActivity" />
         <activity android:name=".activity.ShowItemActivity" />
         <activity android:name=".activity.ItemCreateActivity" />
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service

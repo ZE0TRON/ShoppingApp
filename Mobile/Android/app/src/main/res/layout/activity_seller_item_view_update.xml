@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
-    tools:context=".activity.ItemView_UpdateActivity">
+    tools:context=".activity.SellerItemView_UpdateActivity">
 
     <EditText
         android:id="@+id/editText_ItemView_UpdateActivityItemTitle"
@@ -38,9 +38,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
+        android:layout_marginEnd="66dp"
         android:ems="10"
         android:enabled="false"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelDescription"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelDescription"
         tools:text="@string/item_create_description" />
@@ -73,7 +75,7 @@
         android:id="@+id/textView_ItemView_UpdateActivtyStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Stock Count:"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
@@ -85,9 +87,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginEnd="65dp"
         android:ems="10"
         android:enabled="false"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivtyStock"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivtyStock"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivtyStock"
         tools:text="@string/item_create_stock_count" />
@@ -96,7 +101,7 @@
         android:id="@+id/textView_ItemView_UpdateActivityLabelPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Price:"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
@@ -108,9 +113,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
+        android:layout_marginEnd="66dp"
         android:ems="10"
         android:enabled="false"
         android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
         tools:text="@string/item_create_price" />
@@ -119,35 +127,23 @@
         android:id="@+id/textView_ItemView_UpdateActivityLabelShipping"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Shipping Info"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityPrice" />
 
-    <EditText
-        android:id="@+id/editText_ItemView_UpdateActivityShipping"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:ems="10"
-        android:enabled="false"
-        android:inputType="text"
-        app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
-        app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
-        tools:text="@string/item_create_shipping_info" />
-
     <TextView
         android:id="@+id/textView_ItemView_UpdateActivityLabelSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Seller"
         android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
-        app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityShipping" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_ItemView_UpdateShipping" />
 
     <EditText
         android:id="@+id/editText_ItemView_UpdateActivitySeller"
@@ -158,7 +154,38 @@
         android:ems="10"
         android:enabled="false"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
         app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
         app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
         tools:text="@string/item_create_seller" />
+
+    <TextView
+        android:id="@+id/textView_ItemView_UpdateActivityCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Category"
+        app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
+        app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivitySeller" />
+
+    <Spinner
+        android:id="@+id/spinner_ItemView_UpdateCategory"
+        android:layout_width="211dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="52dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivityCategory"
+        app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityCategory"
+        app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityCategory" />
+
+    <Spinner
+        android:id="@+id/spinner_ItemView_UpdateShipping"
+        android:layout_width="213dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="68dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
+        app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelShipping" />
 </android.support.constraint.ConstraintLayout>

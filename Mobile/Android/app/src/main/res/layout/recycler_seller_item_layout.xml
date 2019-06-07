@@ -48,7 +48,7 @@
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView_recItemTitle"
-            tools:layout_editor_absoluteY="350dp" />
+            app:layout_constraintTop_toTopOf="@+id/textView_recItemPrice" />
 
         <TextView
             android:id="@+id/textView_recItemPrice"

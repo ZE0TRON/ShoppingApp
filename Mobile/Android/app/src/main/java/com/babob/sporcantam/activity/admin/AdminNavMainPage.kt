@@ -1,4 +1,4 @@
-package com.babob.sporcantam.activity
+package com.babob.sporcantam.activity.admin
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar

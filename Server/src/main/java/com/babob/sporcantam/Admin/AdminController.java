@@ -6,8 +6,11 @@ import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
 import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
+import com.babob.sporcantam.OrderItem.OrderItem;
+import com.babob.sporcantam.OrderItem.OrderItemRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
+import com.babob.sporcantam.Utils.OrderItemList;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Collection;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
@@ -33,6 +39,9 @@ public class AdminController {
     private CustomerRepository customerRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @RequestMapping(method=POST,path="/login")
     public @ResponseBody
     Response adminLogin(@RequestParam String email, @RequestParam String password,
@@ -252,4 +261,11 @@ public class AdminController {
         }
     }
 
+    @RequestMapping(method=GET,path ="/showOrder/{order_id}")
+    public @ResponseBody
+    OrderItemList showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
+        Collection<OrderItem> orderItems = orderItemRepository.getOrderItems(order_id);
+        OrderItemList items = new OrderItemList(orderItems);
+        return items;
+    }
 }

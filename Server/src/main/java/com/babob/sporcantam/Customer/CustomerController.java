@@ -6,6 +6,7 @@ import com.babob.sporcantam.Item.ItemRepository;
 import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.ViewHistory.ViewHistory;
 import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -224,4 +225,6 @@ public class CustomerController {
         Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
         return history_sale_ids;
     }
+
+
 }

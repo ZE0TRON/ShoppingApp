@@ -28,6 +28,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 
 @Controller
 @RequestMapping(path="/customer")
@@ -231,7 +233,6 @@ public class CustomerController {
         return history_items;
     }
 
-//    TODO:Return collection<Order>
     @RequestMapping(method=POST,path ="/showOrderHistory")
     public @ResponseBody
     Collection<Order> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
@@ -242,6 +243,17 @@ public class CustomerController {
         return order_list;
     }
 
+    @RequestMapping(method=GET,path ="/showOrder/{order_id}")
+    public @ResponseBody
+    Order showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
+        Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+        String customer_email = customer.getEmail();
+        Order order = orderRepository.findByOrderID(order_id).iterator().next();
+        if(!order.getCustomerEmail().equals(customer_email)){
+            return null;
+        }
+        return order;
+    }
 
 
     @RequestMapping(method=POST,path ="/checkout")

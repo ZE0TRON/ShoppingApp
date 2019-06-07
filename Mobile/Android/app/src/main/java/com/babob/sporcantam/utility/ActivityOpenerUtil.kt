@@ -3,6 +3,7 @@ package com.babob.sporcantam.utility
 import android.content.Context
 import android.content.Intent
 import com.babob.sporcantam.activity.*
+import com.babob.sporcantam.activity.admin.*
 import com.babob.sporcantam.item.Item
 
 class ActivityOpenerUtil {
@@ -56,6 +57,25 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context, updateSellerInfoActivity::class.java))
         }
 
+        fun openManipulateCustomersActivity(context: Context){
+            context.startActivity(Intent(context, ManipulateCustomersActivity::class.java))
+        }
+
+        fun openManipulateItemsActivity(context: Context){
+            context.startActivity(Intent(context, ManipulateItemsActivity::class.java))
+        }
+
+        fun openManipulateOrdersActivity(context: Context){
+            context.startActivity(Intent(context, ManipulateOrdersActivity::class.java))
+        }
+
+        fun openManipulateSellersActivity(context: Context){
+            context.startActivity(Intent(context, ManipulateSellersActivity::class.java))
+        }
+
+        fun openAdminNavMainPage(context: Context){
+            context.startActivity(Intent(context, AdminNavMainPage::class.java))
+        }
 
     }
 }

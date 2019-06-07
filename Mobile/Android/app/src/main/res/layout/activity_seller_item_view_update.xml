@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Description:"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/button_ItemView_UpdateActivityDelete"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityItemTitle" />
@@ -76,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Stock Count:"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelDescription"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityDescription" />
@@ -101,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Price:"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivtyStock"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityStock" />
@@ -126,6 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Shipping Info"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelPrice"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivityPrice" />
@@ -136,6 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Seller"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
         app:layout_constraintTop_toBottomOf="@+id/spinner_ItemView_UpdateShipping" />
@@ -145,6 +150,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:enabled="false"
         android:inputType="textPersonName"
@@ -159,6 +165,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Category"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="@+id/textView_ItemView_UpdateActivityLabelSeller"
         app:layout_constraintTop_toBottomOf="@+id/editText_ItemView_UpdateActivitySeller" />
 

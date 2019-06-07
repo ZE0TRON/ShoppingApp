@@ -15,10 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.admin.ManipulateOrdersActivity"></activity>
+        <activity android:name=".activity.admin.ManipulateSellersActivity" />
+        <activity android:name=".activity.admin.ManipulateCustomersActivity" />
+        <activity android:name=".activity.admin.ManipulateItemsActivity" />
         <activity
-            android:name=".activity.AdminNavMainPage"
+            android:name=".activity.admin.AdminNavMainPage"
             android:label="@string/title_activity_admin_nav_main_page"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -38,7 +42,7 @@
         <activity android:name=".activity.MainPageActivity" />
         <activity android:name=".activity.SellerItemView_UpdateActivity" />
         <activity android:name=".activity.ItemCreateActivity" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
 
         <service
             android:name=".service.BackgroundService"

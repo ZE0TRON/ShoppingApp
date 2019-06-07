@@ -45,6 +45,6 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     Collection<Item> getItemByNameContaining(String item_title);
 
     @Query(
-            value = "SELECT * FROM item i WHERE i.item_title LIKE %?1% AND i.category = category", nativeQuery = true)
+            value = "SELECT * FROM item i WHERE i.item_title LIKE %?1% AND i.category = ?2", nativeQuery = true)
     Collection<Item> getItemByNameContainingAndCategory(String item_title, String category);
 }

@@ -13,6 +13,7 @@ import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.Utils.OrderItemList;
 import com.babob.sporcantam.ViewHistory.ViewHistory;
 import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CustomerController {
     @Autowired
     private OrderHistoryRepository orderHistoryRepository;
     @Autowired
-    private OrderItemRepository orderItemsRepository;
+    private OrderItemRepository orderItemRepository;
     @Autowired
     private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
@@ -250,14 +251,16 @@ public class CustomerController {
 
     @RequestMapping(method=GET,path ="/showOrder/{order_id}")
     public @ResponseBody
-    Order showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
+    OrderItemList showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
         Order order = orderRepository.findByOrderID(order_id).iterator().next();
         if(!order.getCustomerEmail().equals(customer_email)){
             return null;
         }
-        return order;
+        Collection<OrderItem> orderItems = orderItemRepository.getOrderItems(order_id);
+        OrderItemList items = new OrderItemList(orderItems);
+        return items;
     }
 
 
@@ -320,7 +323,7 @@ public class CustomerController {
 
                 Iterator<OrderItem> oit = orderItems.iterator();
                 while(oit.hasNext()){
-                    orderItemsRepository.save(oit.next());
+                    orderItemRepository.save(oit.next());
                 }
                 return new Response("Order has given",true);
             }

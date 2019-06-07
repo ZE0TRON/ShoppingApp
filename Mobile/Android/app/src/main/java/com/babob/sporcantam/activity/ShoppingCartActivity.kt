@@ -110,9 +110,21 @@ class ShoppingCartActivity : AppCompatActivity() {
         }
 
         fun updatePrice(){
-            val taxAndShip = ((totalPrice * 0.18) + (itemList.size * 5)).format(2)
+            val taxAndShip = ((totalPrice * 0.18) + calculateShipping()).format(2)
             textViewTax!!.text = "$taxAndShip $"
             textViewPrice!!.text = "${(totalPrice + taxAndShip.toFloat()).format(2)} $"
+        }
+
+        fun calculateShipping():Int{
+            val shippingList = arrayListOf<String>()
+            var ret = 0
+            itemList.forEach {
+                if(! shippingList.contains(it.shipping_info)){
+                    shippingList.add(it.shipping_info)
+                    ret += 5
+                }
+            }
+            return ret
         }
 
         fun Float.format(digits: Int) = java.lang.String.format("%.${digits}f", this)

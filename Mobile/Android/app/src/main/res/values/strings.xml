@@ -30,8 +30,6 @@
     <string name="title_activity_general">GeneralActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -44,6 +42,6 @@
     <string name="item_create_stock_count">Stock Count</string>
     <string name="item_create_date">Publishion Date</string>
     <string name="item_create_page_title">NEW ITEM</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="shipping_tax"><![CDATA[Shipping & Tax :]]></string>
+    <string name="title_activity_admin_nav_main_page">AdminNavMainPage</string>
 </resources>

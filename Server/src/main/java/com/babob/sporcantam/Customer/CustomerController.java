@@ -332,4 +332,15 @@ public class CustomerController {
             return new Response("Cannot update customer info!", false);
         }
     }
+    @RequestMapping(method = POST, path = "/getBalance")
+    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+    ) {
+        try {
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            return customer.getBalance();
+        }
+        catch (Exception e) {
+            return 0.0;
+        }
+    }
 }

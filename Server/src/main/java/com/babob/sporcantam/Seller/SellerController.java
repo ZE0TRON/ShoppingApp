@@ -189,4 +189,15 @@ public class SellerController {
             return new Response("Seller not found", false);
         }
     }
+    @RequestMapping(method = POST, path = "/getBalance")
+    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+                               ) {
+        try {
+            Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+            return seller.getBalance();
+        }
+        catch (Exception e) {
+            return 0.0;
+        }
+    }
 }

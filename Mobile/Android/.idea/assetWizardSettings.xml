@@ -34,6 +34,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="1cea02" />
+                            <entry key="opacityPercent" value="89" />
                             <entry key="outputName" value="ic_person_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\bengi\Desktop\angellist-brands.svg" />
                           </map>

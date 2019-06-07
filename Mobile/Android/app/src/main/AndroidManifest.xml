@@ -25,13 +25,20 @@
         </activity>
         <activity android:name=".activity.ViewHistoryActivity" />
         <activity android:name=".activity.ViewItemActivity" />
+        <activity
+            android:name=".activity.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.AdminMainPageActivty" />
+        <activity android:name=".activity.ViewHistoryActivity" />
+        <activity android:name=".activity.CustomerViewItemActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
         <activity android:name=".activity.UpdateCustomerInfoActivity" />
         <activity android:name=".activity.CustomerMainPageActivity" />
         <activity android:name=".activity.updateSellerInfoActivity" />
         <activity android:name=".activity.SellerItemListActivity" />
         <activity android:name=".activity.MainPageActivity" />
-        <activity android:name=".activity.ItemView_UpdateActivity" />
+        <activity android:name=".activity.SellerItemView_UpdateActivity" />
         <activity android:name=".activity.ShowItemActivity" />
         <activity android:name=".activity.ItemCreateActivity" />
         <activity android:name=".activity.MainActivity">

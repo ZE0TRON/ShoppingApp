@@ -7,13 +7,13 @@ import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.activity_view_item.*
+import kotlinx.android.synthetic.main.activity_customer_view_item.*
 
-class ViewItemActivity : AppCompatActivity() {
+class CustomerViewItemActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_item)
+        setContentView(R.layout.activity_customer_view_item)
 
         title = "View Item"
 
@@ -43,6 +43,7 @@ class ViewItemActivity : AppCompatActivity() {
         textView_viewItemPriceNum.text = item.price.toString()
         textView_viewItemSeller.text = item.seller
         textView_viewItemShipping.text = item.shipping_info
+        textView_itemViewCategory.text = item.category
         textView_viewItemStockCount.text = item.stock_count.toString()
 
     }

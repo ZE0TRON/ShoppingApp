@@ -33,7 +33,7 @@ class ActivityOpenerUtil {
         }
 
         fun openItemView_UpdateActivity(context: Context,item: Item){
-            context.startActivity(Intent(context,ItemView_UpdateActivity::class.java).putExtra("item",item))
+            context.startActivity(Intent(context,SellerItemView_UpdateActivity::class.java).putExtra("item",item))
         }
 
         fun openCustomerMainPageActivitty(context: Context){
@@ -41,7 +41,7 @@ class ActivityOpenerUtil {
         }
 
         fun openViewItemActivity(context: Context,item: Item){
-            context.startActivity(Intent(context,ViewItemActivity::class.java).putExtra("item",item))
+            context.startActivity(Intent(context,CustomerViewItemActivity::class.java).putExtra("item",item))
         }
 
         fun openShoppingCartActivity(context: Context){

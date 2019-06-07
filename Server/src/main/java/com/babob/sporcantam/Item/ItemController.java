@@ -143,6 +143,28 @@ public class ItemController {
         ItemList itemList = new ItemList(items);
         return itemList;
     }
+
+    @RequestMapping(method = POST, path = "/searchItems")
+    public @ResponseBody
+    ItemList searchItems(@RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
+            ,@RequestParam(value = "category", required = false, defaultValue = " ") String category) {
+        Collection<Item> items;
+        if(item_title.equals(" ") && category.equals(" ")){
+            items= itemRepository.getAllItems();
+        }
+        else if(item_title.equals(" ")){
+            items = itemRepository.getItemsByCategory(category);
+        }
+        else if(category.equals(" ")){
+            items = itemRepository.getItemByNameContaining(item_title);
+        }
+        else{
+            items = itemRepository.getItemByNameContainingAndCategory(item_title, category);
+        }
+
+        ItemList itemList = new ItemList(items);
+        return itemList;
+    }
 }
 
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public interface ItemRepository extends CrudRepository<Item, Integer>{
+public interface ItemRepository extends CrudRepository<Item, Integer> {
     @Query(
             value = "SELECT * FROM item i WHERE i.item_title = ?1", nativeQuery = true)
     Collection<Item> findByTitle(String item_title);
@@ -35,9 +35,16 @@ public interface ItemRepository extends CrudRepository<Item, Integer>{
     @Query(
             value = "SELECT * FROM item i WHERE i.UUID IN :UUID_list", nativeQuery = true)
     Collection<Item> findByUUIDList(@Param("UUID_list") Collection<String> UUID_list);
+
     @Query(
             value = "SELECT * FROM item i WHERE i.category = ?1", nativeQuery = true)
     Collection<Item> getItemsByCategory(String category);
 
+    @Query(
+            value = "SELECT * FROM item i WHERE i.item_title LIKE %?1%", nativeQuery = true)
+    Collection<Item> getItemByNameContaining(String item_title);
 
+    @Query(
+            value = "SELECT * FROM item i WHERE i.item_title LIKE %?1% AND i.category = category", nativeQuery = true)
+    Collection<Item> getItemByNameContainingAndCategory(String item_title, String category);
 }

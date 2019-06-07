@@ -14,20 +14,20 @@ public class Order {
         this.id = id;
     }
 
-    public List<Long> getItems() {
+    public List<String> getItems() {
         return items;
     }
 
-    public void setItems(List<Long> items) {
+    public void setItems(List<String> items) {
         this.items = items;
     }
 
-    public Long getCustomerID() {
-        return customerID;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setCustomerID(Long customerID) {
-        this.customerID = customerID;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     public boolean isConfirmed() {
@@ -42,8 +42,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private List<Long> items;
-    private Long customerID;
+    private List<String> items;
+    private String customerEmail;
     private boolean confirmed;
 
 }

@@ -18,4 +18,7 @@ public interface SellerRepository extends CrudRepository<Seller, Integer>{
     @Query(
             value = "SELECT * FROM seller u WHERE u.email = ?1",nativeQuery = true)
     Collection<Seller> findByEmail(String email);
+    @Query(
+            value = "SELECT * FROM seller u WHERE u.company_name = ?1",nativeQuery = true)
+    Collection<Seller> findByCompanyName(String company_name);
 }

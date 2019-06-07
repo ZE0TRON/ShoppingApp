@@ -3,6 +3,8 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.Order.Order;
+import com.babob.sporcantam.Order.OrderRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
@@ -14,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -34,6 +34,8 @@ public class CustomerController {
     private ItemRepository itemRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
@@ -208,16 +210,17 @@ public class CustomerController {
 
     @RequestMapping(method=POST,path ="/checkout")
     public @ResponseBody
-    Response updateCustomerInfo(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam(value="password", required = false, defaultValue=" ") Long cartID,
-    ) {
+    Response checkout(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam Long cartID) {
 
         try{
             Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
             Collection<CartItem> items = cartItemRepository.getItemsById(cartID);
             Iterator<CartItem> it = items.iterator();
             ArrayList<String> shipping_list =new  ArrayList<String>();
-            ArrayList<Seller> sellerList = new ArrayList<Seller>();
+            Set<Seller> sellerList = new HashSet<Seller>();
+            ArrayList<String> itemIDs = new ArrayList<String>();
+
             double item_cost = 0;
             double total = 0;
             int shipping_count = 0;
@@ -227,19 +230,31 @@ public class CustomerController {
                    shipping_count+=1;
                    shipping_list.add(item.getShipping_info());
                 }
-               item_cost+= item.getPrice();
-               Seller seller = sellerRepository.findBySellerID(item.getSeller());
+               itemIDs.add(item.getUUID());
+               item_cost += item.getPrice();
+               Seller seller = sellerRepository.findByCompanyName(item.getSeller()).iterator().next();
+               seller.setBalance(seller.getBalance()+item.getPrice());
+               sellerList.add(seller);
             }
             total = item_cost+shipping_count*5;
             if(customer.getBalance()>= total){
                 customer.setBalance(customer.getBalance()-total);
-                it = items.iterator();
-
+                Iterator<Seller> sit = sellerList.iterator();
+                while(sit.hasNext()){
+                    Seller seller = sit.next();
+                    sellerRepository.save(seller);
+                }
+                customerRepository.save(customer);
+                Order order = new Order();
+                order.setItems(itemIDs);
+                order.setCustomerEmail(customer.getEmail());
+                orderRepository.save(order);
+                // TODO: add to order history
+                return new Response("Order has given",true);
             }
             else {
                 return new Response("Insufficent balance",false);
             }
-            return new Response("Customer information updated succesfully.",true);
 
         }
         catch (Exception e){

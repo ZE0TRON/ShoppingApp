@@ -136,9 +136,9 @@ public class ItemController {
         return itemList;
     }
 
-    @RequestMapping(method = POST, path = "/getItems")
+    @RequestMapping(method = GET, path = "/{category}")
     public @ResponseBody
-    ItemList getItemsByCategory(@RequestParam String category) {
+    ItemList getItemsByCategory(@PathVariable("category") String category) {
         Collection<Item> items = itemRepository.getItemsByCategory(category);
         ItemList itemList = new ItemList(items);
         return itemList;

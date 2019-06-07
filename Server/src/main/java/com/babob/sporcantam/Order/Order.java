@@ -14,13 +14,6 @@ public class Order {
         this.id = id;
     }
 
-    public List<String> getItems() {
-        return items;
-    }
-
-    public void setItems(List<String> items) {
-        this.items = items;
-    }
 
     public String getCustomerEmail() {
         return customerEmail;
@@ -42,7 +35,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private List<String> items;
     private String customerEmail;
 
     public String getOrder_id() {

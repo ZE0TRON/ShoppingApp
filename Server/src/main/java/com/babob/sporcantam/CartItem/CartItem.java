@@ -23,7 +23,6 @@ public class CartItem {
     public String getItem_title() {
         return item_title;
     }
-
     public void setItem_title(String item_title) {
         this.item_title = item_title;
     }

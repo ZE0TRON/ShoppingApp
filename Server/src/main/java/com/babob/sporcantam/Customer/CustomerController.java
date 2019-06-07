@@ -306,7 +306,6 @@ public class CustomerController {
                 }
                 customerRepository.save(customer);
 
-                order.setItems(itemIDs);
                 order.setCustomerEmail(customer.getEmail());
 
                 orderRepository.save(order);

@@ -25,7 +25,10 @@ import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -47,6 +50,9 @@ public class CustomerController {
     private CustomerRepository customerRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private HttpServletRequest request;
+
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
@@ -408,10 +414,28 @@ public class CustomerController {
         }
     }
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
-        modelMap.addAttribute("file", file);
-        System.out.println(file.getName());
-        return "fileUploadView";
+    public String submit(@RequestParam("file") MultipartFile file) {
+       // modelMap.addAttribute("file", file);
+
+        System.out.println("I am here");
+
+        String uploadsDir = "/uploads/";
+        String realPathtoUploads =  "/root/uploads/";//request.getServletContext().getRealPath(uploadsDir);
+        System.out.println("here too");
+        String orgName = file.getOriginalFilename();
+        System.out.println("directory here33");
+        String filePath = realPathtoUploads + orgName;
+        File dest = new File(filePath);
+        System.out.println("directory setted");
+        try {
+            file.transferTo(dest);
+            System.out.println("file transferred");
+        }catch(Exception e){
+            System.out.println("I have failed");
+            System.out.println(e.getMessage());
+            return "Failed";
+        }
+        return "FileSaved";
     }
     @RequestMapping(method = POST, path = "/getBalance")
     public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID

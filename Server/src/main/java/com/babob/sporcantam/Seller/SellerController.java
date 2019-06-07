@@ -129,10 +129,16 @@ public class SellerController {
     @RequestMapping(method = POST, path = "/my-items")
     public @ResponseBody
     ItemList getItemsOfUser(@CookieValue(name = "JSESSIONID") String sessionID) {
-        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
-        System.out.println("Seller is "+seller.getCompany_name());
-        System.out.println("Session id is "+sessionID);
-        Collection<Item> items= itemRepository.findBySeller(seller.getCompany_name());
+        Collection<Item> items;
+        try {
+            Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+            System.out.println("Seller is " + seller.getCompany_name());
+            System.out.println("Session id is " + sessionID);
+            items = itemRepository.findBySeller(seller.getCompany_name());
+        }
+        catch (Exception e){
+            return null;
+        }
         return new ItemList(items);
     }
     @RequestMapping(method = POST, path = "/")

@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-
+    compile 'org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE'
     // Use MySQL Connector-J
     compile 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'

@@ -9,6 +9,7 @@ import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
+import com.babob.sporcantam.Utils.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,12 @@ public class CustomerController {
     private CartItemRepository cartItemRepository;
     @Autowired
     private OrderRepository orderRepository;
+    private final StorageService storageService;
+
+    @Autowired
+    public CustomerController(StorageService storageService) {
+        this.storageService = storageService;
+    }
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email

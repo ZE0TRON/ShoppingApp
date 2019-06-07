@@ -78,6 +78,9 @@ public class SellerController {
             return new Response("No such user", false);
         }
     }
+    void makePayment(String IBAN, double amount){
+
+    }
 
     @RequestMapping(method=POST,path="/logout")
     public @ResponseBody
@@ -166,5 +169,35 @@ public class SellerController {
         }
 
 
+    }
+
+
+    @RequestMapping(method = POST, path = "/withdraw")
+    public Response deleteItem(@CookieValue(name = "JSESSIONID") String sessionID,
+                             @RequestParam Double balance) {
+        try{
+        Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+        if(seller.getBalance()<balance) {
+            return new Response("Insufficient balance", false);
+        }
+        seller.setBalance(seller.getBalance()-balance);
+        makePayment(seller.getIBAN(),balance);
+        return new Response("Money successfully transferred to your account ", true);
+
+        }
+        catch(Exception e) {
+            return new Response("Seller not found", false);
+        }
+    }
+    @RequestMapping(method = POST, path = "/getBalance")
+    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+                               ) {
+        try {
+            Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
+            return seller.getBalance();
+        }
+        catch (Exception e) {
+            return 0.0;
+        }
     }
 }

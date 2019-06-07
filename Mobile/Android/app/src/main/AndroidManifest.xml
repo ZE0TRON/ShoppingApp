@@ -15,7 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.SplashScreen"
+        <activity
+            android:name=".activity.AdminNavMainPage"
+            android:label="@string/title_activity_admin_nav_main_page"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activity.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ViewHistoryActivity" />
-        <activity android:name=".activity.ViewItemActivity" />
-        <activity
-            android:name=".activity.Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activity.AdminMainPageActivty" />
         <activity android:name=".activity.ViewHistoryActivity" />
         <activity android:name=".activity.CustomerViewItemActivity" />
         <activity android:name=".activity.ShoppingCartActivity" />
@@ -39,11 +37,8 @@
         <activity android:name=".activity.SellerItemListActivity" />
         <activity android:name=".activity.MainPageActivity" />
         <activity android:name=".activity.SellerItemView_UpdateActivity" />
-        <activity android:name=".activity.ShowItemActivity" />
         <activity android:name=".activity.ItemCreateActivity" />
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
 
         <service
             android:name=".service.BackgroundService"

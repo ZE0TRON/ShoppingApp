@@ -3,6 +3,7 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.OrderHistory.OrderHistory;
 import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
@@ -233,11 +234,12 @@ public class CustomerController {
 //    TODO:Return collection<Order>
     @RequestMapping(method=POST,path ="/showOrderHistory")
     public @ResponseBody
-    Collection<String> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+    Collection<Order> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
         Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
-        return history_sale_ids;
+        Collection<Order> order_list = orderRepository.findByOrderIDList(history_sale_ids);
+        return order_list;
     }
 
 
@@ -282,8 +284,16 @@ public class CustomerController {
                 Order order = new Order();
                 order.setItems(itemIDs);
                 order.setCustomerEmail(customer.getEmail());
+                order.setOrder_id(order.getId().toString());
                 orderRepository.save(order);
-                // TODO: add to order history
+                OrderHistory new_orderhistory = new OrderHistory();
+                new_orderhistory.setCustomer_email(customer.getEmail());
+                new_orderhistory.setSale_id(order.getOrder_id());
+                orderHistoryRepository.save(new_orderhistory);
+                it = items.iterator();
+                while(it.hasNext()){
+                    cartItemRepository.delete(it.next()); //empty the cart.
+                }
                 return new Response("Order has given",true);
             }
             else {

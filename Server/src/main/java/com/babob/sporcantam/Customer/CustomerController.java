@@ -7,6 +7,8 @@ import com.babob.sporcantam.OrderHistory.OrderHistory;
 import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
 import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
+import com.babob.sporcantam.OrderItem.OrderItem;
+import com.babob.sporcantam.OrderItem.OrderItemRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
@@ -49,6 +51,9 @@ public class CustomerController {
     private ViewHistoryRepository viewHistoryRepository;
     @Autowired
     private OrderHistoryRepository orderHistoryRepository;
+    @Autowired
+    private OrderItemRepository orderItemsRepository;
+    @Autowired
     private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
@@ -266,6 +271,9 @@ public class CustomerController {
             Collection<CartItem> items = cartItemRepository.getItemsById(cartID);
             Iterator<CartItem> it = items.iterator();
             ArrayList<String> shipping_list =new  ArrayList<String>();
+            ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
+            Order order = new Order();
+            order.setOrder_id(order.getId().toString());
             Set<Seller> sellerList = new HashSet<Seller>();
             ArrayList<String> itemIDs = new ArrayList<String>();
 
@@ -283,6 +291,9 @@ public class CustomerController {
                Seller seller = sellerRepository.findByCompanyName(item.getSeller()).iterator().next();
                seller.setBalance(seller.getBalance()+item.getPrice());
                sellerList.add(seller);
+               OrderItem orderItem = new OrderItem(item);
+               orderItem.setOrder_id(order.getOrder_id());
+               orderItems.add(orderItem);
 
             }
             total = item_cost+shipping_count*5;
@@ -294,10 +305,10 @@ public class CustomerController {
                     sellerRepository.save(seller);
                 }
                 customerRepository.save(customer);
-                Order order = new Order();
+
                 order.setItems(itemIDs);
                 order.setCustomerEmail(customer.getEmail());
-                order.setOrder_id(order.getId().toString());
+
                 orderRepository.save(order);
                 OrderHistory new_orderhistory = new OrderHistory();
                 new_orderhistory.setCustomer_email(customer.getEmail());
@@ -306,6 +317,11 @@ public class CustomerController {
                 it = items.iterator();
                 while(it.hasNext()){
                     cartItemRepository.delete(it.next()); //empty the cart.
+                }
+
+                Iterator<OrderItem> oit = orderItems.iterator();
+                while(oit.hasNext()){
+                    orderItemsRepository.save(oit.next());
                 }
                 return new Response("Order has given",true);
             }

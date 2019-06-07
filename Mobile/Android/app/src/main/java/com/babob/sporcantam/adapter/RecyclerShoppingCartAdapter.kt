@@ -59,7 +59,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)
-            showAlertDialog(dataset[position], position)
+            showAlertDialog(dataset[position], position, holder.checkBox.isChecked)
         }
         holder.checkBox.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title + " Checkbox")
@@ -75,7 +75,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataset.size
 
-    private fun deleteItem(item: Item, position: Int){
+    private fun deleteItem(item: Item, position: Int, isChecked: Boolean){
         AsyncUtil{
             val response = JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
                     UrlParamUtil.itemUUIDParam(item),
@@ -84,6 +84,9 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
                 response.size < 2 -> (context as Activity).runOnUiThread{ Toast.makeText(context, "Cannot connect to the server", Toast.LENGTH_SHORT).show() }
                 response[0] == "true" -> (context as Activity).runOnUiThread {
                     Toast.makeText(context, "Item deleted from cart", Toast.LENGTH_SHORT).show()
+                    if(isChecked){
+                        ShoppingCartActivity.deleteFromList(item)
+                    }
                     dataset.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, dataset.size)
@@ -93,7 +96,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    fun showAlertDialog(item: Item, position: Int){
+    fun showAlertDialog(item: Item, position: Int, isChecked:Boolean){
         // Initialize a new instance of
         val builder = AlertDialog.Builder(context)
 
@@ -106,7 +109,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         // Set a positive button and its click listener on alert dialog
         builder.setPositiveButton("YES"){ dialog, which ->
             // Do something when user press the positive button
-            deleteItem(item, position)
+            deleteItem(item, position, isChecked)
         }
 
         // Display a negative button on alert dialog

@@ -43,4 +43,5 @@
     <string name="item_create_stock_count">Stock Count</string>
     <string name="item_create_date">Publishion Date</string>
     <string name="item_create_page_title">NEW ITEM</string>
+    <string name="shipping_tax"><![CDATA[Shipping & Tax :]]></string>
 </resources>

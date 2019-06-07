@@ -31,7 +31,8 @@ class ShoppingCartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart)
-        textView = textView_shoppingCart_price
+        textViewPrice = textView_shoppingCart_price
+        textViewTax = textView_shoppingCart_priceShoppingTax
 
         title = "Shopping Cart"
 
@@ -57,7 +58,8 @@ class ShoppingCartActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        textView = textView_shoppingCart_price
+        textViewPrice = textView_shoppingCart_price
+        textViewTax = textView_shoppingCart_priceShoppingTax
         resetList()
         AsyncUtil{
             updateList()
@@ -80,7 +82,8 @@ class ShoppingCartActivity : AppCompatActivity() {
     companion object {
         var itemList:ArrayList<Item> = ArrayList()
         var totalPrice:Float = 0f
-        var textView: TextView? = null
+        var textViewPrice: TextView? = null
+        var textViewTax: TextView? = null
 
         fun addToList(item: Item){
             itemList.add(item)
@@ -107,10 +110,13 @@ class ShoppingCartActivity : AppCompatActivity() {
         }
 
         fun updatePrice(){
-            textView!!.text = "${totalPrice.format(2)} $"
+            val taxAndShip = ((totalPrice * 0.18) + (itemList.size * 5)).format(2)
+            textViewTax!!.text = "$taxAndShip $"
+            textViewPrice!!.text = "${(totalPrice + taxAndShip.toFloat()).format(2)} $"
         }
 
         fun Float.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+        fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
 
     }
 }

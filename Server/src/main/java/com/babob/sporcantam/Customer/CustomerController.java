@@ -3,6 +3,10 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.Order.Order;
+import com.babob.sporcantam.Order.OrderRepository;
+import com.babob.sporcantam.Seller.Seller;
+import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 
-import java.util.Collection;
+import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -20,6 +30,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class CustomerController {
 
     @Autowired
+    private SellerRepository sellerRepository;
+    @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,6 +39,8 @@ public class CustomerController {
     private ItemRepository itemRepository;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private OrderRepository orderRepository;
     @RequestMapping(method=POST,path="/add")
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
@@ -196,6 +210,137 @@ public class CustomerController {
         }
         catch (Exception e){
             return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/checkout")
+    public @ResponseBody
+    Response checkout(@CookieValue(name = "JSESSIONID") String sessionID
+            ,@RequestParam Long cartID) {
+
+        try{
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            Collection<CartItem> items = cartItemRepository.getItemsById(cartID);
+            Iterator<CartItem> it = items.iterator();
+            ArrayList<String> shipping_list =new  ArrayList<String>();
+            Set<Seller> sellerList = new HashSet<Seller>();
+            ArrayList<String> itemIDs = new ArrayList<String>();
+
+            double item_cost = 0;
+            double total = 0;
+            int shipping_count = 0;
+            while(it.hasNext()){
+               CartItem item = it.next();
+               if(!shipping_list.contains(item.getShipping_info())){
+                   shipping_count+=1;
+                   shipping_list.add(item.getShipping_info());
+                }
+               itemIDs.add(item.getUUID());
+               item_cost += item.getPrice();
+               Seller seller = sellerRepository.findByCompanyName(item.getSeller()).iterator().next();
+               seller.setBalance(seller.getBalance()+item.getPrice());
+               sellerList.add(seller);
+            }
+            total = item_cost+shipping_count*5;
+            if(customer.getBalance()>= total){
+                customer.setBalance(customer.getBalance()-total);
+                Iterator<Seller> sit = sellerList.iterator();
+                while(sit.hasNext()){
+                    Seller seller = sit.next();
+                    sellerRepository.save(seller);
+                }
+                customerRepository.save(customer);
+                Order order = new Order();
+                order.setItems(itemIDs);
+                order.setCustomerEmail(customer.getEmail());
+                orderRepository.save(order);
+                // TODO: add to order history
+                return new Response("Order has given",true);
+            }
+            else {
+                return new Response("Insufficent balance",false);
+            }
+
+        }
+        catch (Exception e){
+            return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    boolean isCardValid(String card){
+        if (card == null)
+            return false;
+        char checkDigit = card.charAt(card.length() - 1);
+        if (card == null)
+            return false;
+        String digit;
+        /* convert to array of int for simplicity */
+        int[] digits = new int[card.length()];
+        for (int i = 0; i < card.length(); i++) {
+            digits[i] = Character.getNumericValue(card.charAt(i));
+        }
+
+        /* double every other starting from right - jumping from 2 in 2 */
+        for (int i = digits.length - 1; i >= 0; i -= 2)	{
+            digits[i] += digits[i];
+
+            /* taking the sum of digits grater than 10 - simple trick by substract 9 */
+            if (digits[i] >= 10) {
+                digits[i] = digits[i] - 9;
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < digits.length; i++) {
+            sum += digits[i];
+        }
+        /* multiply by 9 step */
+        sum = sum * 9;
+
+        /* convert to string to be easier to take the last digit */
+        digit = sum + "";
+        digit =  digit.substring(digit.length() - 1);
+        return checkDigit == digit.charAt(0);
+    }
+
+
+    @RequestMapping(method=POST,path ="/addBalance")
+    public @ResponseBody
+    Response checkout(@CookieValue(name = "JSESSIONID")String sessionID,@RequestParam String cardNumber,@RequestParam String cvc, @RequestParam String expireDate,@RequestParam Double balance) {
+
+        try {
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            if(cardNumber.length()!=16){
+                return new Response("Invalid payment info", false);
+            }
+            if(cvc.length()!=3){
+                return new Response("Invalid payment info", false);
+            }
+            if(!isCardValid(cardNumber)){
+                return new Response("Invalid payment info", false);
+            }
+            Date date = new Date();
+            String expireString = "00-"+expireDate;
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date expireDateTime = dateFormat.parse(expireString, new ParsePosition(0));
+            if(expireDateTime.before(date)){
+                return new Response("Card expired", false);
+            }
+            customer.setBalance(customer.getBalance()+balance);
+            customerRepository.save(customer);
+            return new Response("Balance successfully added",true);
+        } catch (Exception e) {
+            return new Response("Cannot update customer info!", false);
+        }
+    }
+    @RequestMapping(method = POST, path = "/getBalance")
+    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+    ) {
+        try {
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            return customer.getBalance();
+        }
+        catch (Exception e) {
+            return 0.0;
         }
     }
 }

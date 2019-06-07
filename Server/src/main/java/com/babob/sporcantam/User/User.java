@@ -14,6 +14,15 @@ public class User {
     private String last_name;
     private String password;
     private String sessionID;
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    private double balance;
     public String getEmail() {
         return email;
     }

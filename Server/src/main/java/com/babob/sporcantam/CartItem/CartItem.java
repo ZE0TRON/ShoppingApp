@@ -19,7 +19,7 @@ public class CartItem {
     protected Integer stock_count;
     protected LocalDate publish_date;
     protected String UUID;
-
+    private Long shoppingCartID;
     public String getItem_title() {
         return item_title;
     }
@@ -110,7 +110,7 @@ public class CartItem {
         this.shoppingCartID = shoppingCartID;
     }
 
-    private Long shoppingCartID;
+
 
 
 

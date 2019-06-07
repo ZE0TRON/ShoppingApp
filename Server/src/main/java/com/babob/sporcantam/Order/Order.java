@@ -22,12 +22,12 @@ public class Order {
         this.items = items;
     }
 
-    public Long getCustomerID() {
-        return customerID;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setCustomerID(Long customerID) {
-        this.customerID = customerID;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     public boolean isConfirmed() {
@@ -42,6 +42,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+    private List<String> items;
+    private String customerEmail;
 
     public String getOrder_id() {
         return order_id;
@@ -52,8 +54,6 @@ public class Order {
     }
 
     private String order_id;
-    private List<String> items;
-    private Long customerID;
     private boolean confirmed;
 
 }

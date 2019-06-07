@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -259,6 +264,72 @@ public class CustomerController {
         }
         catch (Exception e){
             return new Response("Cannot update customer info!",false);
+        }
+    }
+
+    boolean isCardValid(String card){
+        if (card == null)
+            return false;
+        char checkDigit = card.charAt(card.length() - 1);
+        if (card == null)
+            return false;
+        String digit;
+        /* convert to array of int for simplicity */
+        int[] digits = new int[card.length()];
+        for (int i = 0; i < card.length(); i++) {
+            digits[i] = Character.getNumericValue(card.charAt(i));
+        }
+
+        /* double every other starting from right - jumping from 2 in 2 */
+        for (int i = digits.length - 1; i >= 0; i -= 2)	{
+            digits[i] += digits[i];
+
+            /* taking the sum of digits grater than 10 - simple trick by substract 9 */
+            if (digits[i] >= 10) {
+                digits[i] = digits[i] - 9;
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < digits.length; i++) {
+            sum += digits[i];
+        }
+        /* multiply by 9 step */
+        sum = sum * 9;
+
+        /* convert to string to be easier to take the last digit */
+        digit = sum + "";
+        digit =  digit.substring(digit.length() - 1);
+        return checkDigit == digit.charAt(0);
+    }
+
+
+    @RequestMapping(method=POST,path ="/addBalance")
+    public @ResponseBody
+    Response checkout(@CookieValue(name = "JSESSIONID")String sessionID,@RequestParam String cardNumber,@RequestParam String cvc, @RequestParam String expireDate,@RequestParam Double balance) {
+
+        try {
+            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
+            if(cardNumber.length()!=16){
+                return new Response("Invalid payment info", false);
+            }
+            if(cvc.length()!=3){
+                return new Response("Invalid payment info", false);
+            }
+            if(!isCardValid(cardNumber)){
+                return new Response("Invalid payment info", false);
+            }
+            Date date = new Date();
+            String expireString = "00-"+expireDate;
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date expireDateTime = dateFormat.parse(expireString, new ParsePosition(0));
+            if(expireDateTime.before(date)){
+                return new Response("Card expired", false);
+            }
+            customer.setBalance(customer.getBalance()+balance);
+            customerRepository.save(customer);
+            return new Response("Balance successfully added",true);
+        } catch (Exception e) {
+            return new Response("Cannot update customer info!", false);
         }
     }
 }

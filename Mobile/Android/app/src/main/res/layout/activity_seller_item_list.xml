@@ -15,6 +15,7 @@
         android:layout_marginTop="32dp"
         android:background="@color/light_pink"
         android:text="Add Item"
+        android:textStyle="bold"
         android:textColor="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

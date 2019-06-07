@@ -9,6 +9,16 @@ public class Item {
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    private String picture;
     protected String item_title;
     protected String seller;
     protected Float price;
@@ -18,6 +28,7 @@ public class Item {
     protected LocalDate publish_date;
     protected String UUID;
     protected String category;
+
 
     public String getItem_title() {
         return item_title;

@@ -4,20 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activity.customer.CustomerMainActivity"
     tools:showIn="@layout/app_bar_customer_main">
 
+    <item
+        android:id="@+id/action_search"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Enter Tags"
+        android:icon="@drawable/ic_search"
+        android:title="search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:showAsAction="ifRoom|collapseActionView" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycelerCustomerItemsView"
         android:layout_width="395dp"
-        android:layout_height="659dp"
+        android:layout_height="521dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 </android.support.constraint.ConstraintLayout>

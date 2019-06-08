@@ -1,17 +1,28 @@
 package com.babob.sporcantam.activity
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.activity_item_create.*
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_seller_item_view_update.*
-import java.util.ArrayList
+import java.io.IOException
+import java.util.*
 
 class SellerItemView_UpdateActivity : AppCompatActivity() {
 
@@ -21,6 +32,11 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
     false-> update page
     */
 
+    private val PICK_IMAGE_REQUEST = 1
+    private val STORAGE_PERMISSION_CODE = 123
+    private var bitmap: Bitmap? = null
+    private var filePath: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seller_item_view_update)
@@ -29,52 +45,40 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
         val item: Item = intent.getSerializableExtra("item") as Item
 
         initSpinners(item)
+        requestStoragePermission()
         fillFields(item)
 
-        button_ItemView_UpdateActivityUpdateSave.setOnClickListener { helper(item.uuid) }
+        button_ItemView_UpdateActivityUpdateSave.setOnClickListener {
+            //AsyncUtil{helper(item.uuid)}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            helper(item.uuid)
+        }
         button_ItemView_UpdateActivityDelete.setOnClickListener {
             AsyncUtil{ delete(item.uuid) }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
              }
 
-
+        button_ItemView_UpdatePhoto.setOnClickListener { showFileChooser() }
 
     }
 
     fun initSpinners(item:Item){
         val spinnerShippingArray = ArrayList<String>()
-        spinnerShippingArray.add("Yurtdisi Kargo")
-        spinnerShippingArray.add("Keras Kargo")
-        spinnerShippingArray.add("BST Kargo")
+        SpinnerHelperUtil.transportationHelper(spinnerShippingArray)
 
-        val adapter = ArrayAdapter(
-                this, android.R.layout.simple_spinner_item, spinnerShippingArray)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerShippingArray)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val sItems = spinner_ItemView_UpdateShipping
         sItems.adapter = adapter
 
-        spinner_ItemView_UpdateShipping.setSelection(spinnerShippingArray.indexOf(item.shipping_info))
+        sItems.setSelection(spinnerShippingArray.indexOf(item.shipping_info))
 
         val spinnerCategoryArray = ArrayList<String>()
-        spinnerCategoryArray.add("Running")
-        spinnerCategoryArray.add("Clothes")
-        spinnerCategoryArray.add("Fitness")
-        spinnerCategoryArray.add("Hiking")
-        spinnerCategoryArray.add("Ski")
-        spinnerCategoryArray.add("Snowboard")
-        spinnerCategoryArray.add("Soccer")
-        spinnerCategoryArray.add("Basketball")
-        spinnerCategoryArray.add("Swimming")
-        spinnerCategoryArray.add("Cycling")
-        spinnerCategoryArray.add("Tennis")
+        SpinnerHelperUtil.categoryHelper(spinnerCategoryArray)
 
         val adapter2 = ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerCategoryArray)
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val sItems2=spinner_ItemView_UpdateCategory
         sItems2.adapter=adapter2
-
-        Log.d("SellerItemView", item.category)
-        Log.d("SellerItemView", (spinnerCategoryArray.indexOf(item.category).toString()))
 
         sItems2.setSelection(spinnerCategoryArray.indexOf(item.category))
 
@@ -86,30 +90,40 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
         editText_ItemView_UpdateActivityStock.setText(item.stock_count.toString())
         editText_ItemView_UpdateActivityPrice.setText(item.price.toString())
         editText_ItemView_UpdateActivitySeller.setText(item.seller)
+
+        val url = "${getString(R.string.base_url)}/customer/downloadFile/"+item.uuid
+
+        Glide.with(this).load(url).into(imageView_ItemView_UpdatePhoto)
+
     }
 
     fun changeEnable() {
 
-        if (button_ItemView_UpdateActivityUpdateSave.text=="Update")
-            button_ItemView_UpdateActivityUpdateSave.text="Save"
-        else
-            button_ItemView_UpdateActivityUpdateSave.text="Update"
+        runOnUiThread {
+            if (button_ItemView_UpdateActivityUpdateSave.text == "Update")
+                button_ItemView_UpdateActivityUpdateSave.text = "Save"
+            else
+                button_ItemView_UpdateActivityUpdateSave.text = "Update"
 
-        button_ItemView_UpdateActivityDelete.isEnabled=!button_ItemView_UpdateActivityDelete.isEnabled
+            button_ItemView_UpdateActivityDelete.isEnabled = !button_ItemView_UpdateActivityDelete.isEnabled
+            if (button_ItemView_UpdatePhoto.visibility == View.VISIBLE)
+                button_ItemView_UpdatePhoto.visibility = View.INVISIBLE
+            else
+                button_ItemView_UpdatePhoto.visibility = View.VISIBLE
 
-        editText_ItemView_UpdateActivityItemTitle.isEnabled=!editText_ItemView_UpdateActivityItemTitle.isEnabled
-        editText_ItemView_UpdateActivityDescription.isEnabled=!editText_ItemView_UpdateActivityDescription.isEnabled
-        editText_ItemView_UpdateActivityStock.isEnabled=!editText_ItemView_UpdateActivityStock.isEnabled
-        editText_ItemView_UpdateActivityPrice.isEnabled=!editText_ItemView_UpdateActivityPrice.isEnabled
-        //editText_ItemView_UpdateActivityShipping.isEnabled=!editText_ItemView_UpdateActivityShipping.isEnabled
-        spinner_ItemView_UpdateShipping.isEnabled!=spinner_ItemView_UpdateShipping.isEnabled
-        spinner_ItemCreateCategory.isEnabled!=spinner_ItemView_UpdateCategory.isEnabled
+            editText_ItemView_UpdateActivityItemTitle.isEnabled = !editText_ItemView_UpdateActivityItemTitle.isEnabled
+            editText_ItemView_UpdateActivityDescription.isEnabled = !editText_ItemView_UpdateActivityDescription.isEnabled
+            editText_ItemView_UpdateActivityStock.isEnabled = !editText_ItemView_UpdateActivityStock.isEnabled
+            editText_ItemView_UpdateActivityPrice.isEnabled = !editText_ItemView_UpdateActivityPrice.isEnabled
+            spinner_ItemView_UpdateShipping.isEnabled != spinner_ItemView_UpdateShipping.isEnabled
+            spinner_ItemView_UpdateCategory.isEnabled != spinner_ItemView_UpdateCategory.isEnabled
 
-
+        }
     }
 
 
     fun helper(uuid:String){
+        Log.d("UpdateItem", uuid)
         if(update_save){
             changeEnable()
             this.update_save =!this.update_save
@@ -137,6 +151,7 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
 
             AsyncUtil{
                 val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(updateItemRequest(tit,des,sto,pri,shi,cat,uuid)))
+                MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this,uuid)
 
                 runOnUiThread{
                     Toast.makeText(this,responseList[1],Toast.LENGTH_SHORT).show()
@@ -179,5 +194,76 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
     fun updateItemRequest(t:String,d:String,st:Int,p:Float,sh:String,c:String,uu:String):String{
         return HttpUtil.sendPoststr(UrlParamUtil.updateItemToUrlParam(t,p,d,sh,st,c), "${getString(R.string.base_url)}/seller/my-items/"+uu+"/update", SessionUtil.getSessionId(this)!!)
     }
+
+
+    private fun showFileChooser() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            filePath = data.data
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+                imageView_ItemView_UpdatePhoto.setImageBitmap(bitmap)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+    fun getPath(uri: Uri): String {
+        var cursor = contentResolver.query(uri, null, null, null, null)
+        cursor!!.moveToFirst()
+        var document_id = cursor.getString(0)
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1)
+        cursor.close()
+
+        cursor = contentResolver.query(
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Images.Media._ID + " = ? ", arrayOf(document_id), null)
+        cursor!!.moveToFirst()
+        val path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
+        cursor.close()
+
+        return path
+    }
+
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            return
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), STORAGE_PERMISSION_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show()
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+
 
 }

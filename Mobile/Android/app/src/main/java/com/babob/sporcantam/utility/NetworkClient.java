@@ -2,11 +2,11 @@ package com.babob.sporcantam.utility;
 
 import android.content.Context;
 
-import com.babob.sporcantam.R;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class NetworkClient {
 

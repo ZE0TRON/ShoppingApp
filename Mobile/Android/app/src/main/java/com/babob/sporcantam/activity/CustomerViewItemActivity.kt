@@ -1,8 +1,8 @@
 package com.babob.sporcantam.activity
 
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
@@ -19,19 +19,6 @@ class CustomerViewItemActivity : AppCompatActivity() {
 
         val item: Item = intent.getSerializableExtra("item") as Item
 
-        /*AsyncUtil{
-            val response = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
-                UrlParamUtil.itemUUIDParam(item),
-                    "${getString(R.string.base_url)}/item/view", SessionUtil.getSessionId(this)!!)))
-
-            runOnUiThread {
-                Toast.makeText(this, response[1], Toast.LENGTH_SHORT).show()
-            }
-
-
-
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        TODO: delet this */
         fillFields(item)
 
         button_viewItemAddToCart.setOnClickListener { addToCart(item) }

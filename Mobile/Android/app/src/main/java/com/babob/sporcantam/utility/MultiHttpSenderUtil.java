@@ -3,18 +3,17 @@ package com.babob.sporcantam.utility;
 import android.content.Context;
 
 import java.io.File;
-import java.io.IOException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 public class MultiHttpSenderUtil {
-    static public void uploadToServer(String filePath, Context context) {
+    static public void uploadToServer(String filePath, Context context,String uuid) {
         Retrofit retrofit = NetworkClient.getRetrofitClient( context);
 
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
@@ -26,7 +25,7 @@ public class MultiHttpSenderUtil {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
 
         // Create MultipartBody.Part using file request-body,file name and part name
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", uuid+".jpg", fileReqBody);
 
         //Create request body with text description and text media type
         RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "image-type");

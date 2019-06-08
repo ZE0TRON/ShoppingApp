@@ -14,11 +14,10 @@ class MainPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
         val type: Int = intent.getSerializableExtra("type") as Int
-        if(type == 2){
-            ActivityOpenerUtil.openSellerItemListActivity(this)
-        }
-        else{
-            ActivityOpenerUtil.openCustomerMainPageActivitty(this)
+        when (type) {
+            2 -> ActivityOpenerUtil.openSellerItemListActivity(this)
+            3 -> ActivityOpenerUtil.openAdminNavMainPage(this)
+            else -> ActivityOpenerUtil.openCustomerMainPageActivitty(this)
         }
         finish()
 

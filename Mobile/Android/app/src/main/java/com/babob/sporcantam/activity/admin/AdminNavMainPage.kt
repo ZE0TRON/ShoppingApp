@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.babob.sporcantam.R
+import com.babob.sporcantam.utility.ActivityOpenerUtil
 import kotlinx.android.synthetic.main.activity_admin_nav_main_page.*
 import kotlinx.android.synthetic.main.app_bar_admin_nav_main_page.*
 
@@ -59,23 +60,17 @@ class AdminNavMainPage : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_manipulate_customers -> {
+                ActivityOpenerUtil.openManipulateCustomersActivity(this)
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_manipulate_sellers -> {
+                ActivityOpenerUtil.openManipulateSellersActivity(this)
             }
-            R.id.nav_slideshow -> {
-
+            R.id.nav_manipulate_items -> {
+                ActivityOpenerUtil.openManipulateItemsActivity(this)
             }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
+            R.id.nav_manipulate_orders -> {
+                ActivityOpenerUtil.openManipulateOrdersActivity(this)
             }
         }
 

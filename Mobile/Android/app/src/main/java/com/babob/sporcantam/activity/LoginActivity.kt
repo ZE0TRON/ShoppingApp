@@ -59,7 +59,12 @@ class LoginActivity : AppCompatActivity() {
         isSending = true
         AsyncUtil{
             if(sendLoginRequest(email, password)){
-                ActivityOpenerUtil.openMainPageActivity(this, loginType)
+                if(adminLogin){
+                    ActivityOpenerUtil.openMainPageActivity(this, 3)
+                }
+                else {
+                    ActivityOpenerUtil.openMainPageActivity(this, loginType)
+                }
                 isSending = false
                 runOnUiThread { finish() }
             }

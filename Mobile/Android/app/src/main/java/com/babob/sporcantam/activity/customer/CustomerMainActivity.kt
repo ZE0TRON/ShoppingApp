@@ -29,19 +29,30 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     lateinit var dataset:ArrayList<Item>
+    var isLogged:Boolean = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_main)
+        isLogged = SessionUtil.isLogged(this)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val navMenu = navView.menu
         val toggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        if(isLogged){
+            navMenu.findItem(R.id.nav_login).isVisible = false
+        } else {
+            navMenu.findItem(R.id.nav_logout).isVisible = false
+        }
 
         title = "Items"
 
@@ -121,12 +132,6 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
             }
             R.id.nav_logout -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
 
             }
         }

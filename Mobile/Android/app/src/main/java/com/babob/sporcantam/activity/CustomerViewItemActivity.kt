@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_customer_view_item.*
 
 class CustomerViewItemActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class CustomerViewItemActivity : AppCompatActivity() {
         textView_viewItemShipping.text = item.shipping_info
         textView_itemViewCategory.text = item.category
         textView_viewItemStockCount.text = item.stock_count.toString()
+
+        val url = "${getString(R.string.base_url)}/customer/downloadFile/"+item.uuid
+        Glide.with(this).load(url).into(imageView_CustomerViewItemPhoto)
+
 
     }
 

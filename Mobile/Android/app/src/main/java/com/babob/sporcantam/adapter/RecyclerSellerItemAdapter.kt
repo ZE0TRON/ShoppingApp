@@ -26,7 +26,7 @@ class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Cont
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
-            imageViewPhoto = linearLayout.findViewById(R.id.imageView_SellerItemLayoutPhoto)
+            imageViewPhoto = linearLayout.findViewById(R.id.imageView2)
         }
     }
 

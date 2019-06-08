@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_login"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout

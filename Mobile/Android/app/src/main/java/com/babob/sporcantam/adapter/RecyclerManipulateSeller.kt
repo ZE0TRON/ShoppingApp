@@ -8,11 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
-import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.item.Order
 import com.babob.sporcantam.item.Seller
-import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
 
 class RecyclerManipulateSeller (var dataset: ArrayList<Seller>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateSeller.ViewHolder>(){
@@ -25,11 +21,11 @@ class RecyclerManipulateSeller (var dataset: ArrayList<Seller>, var context: Con
         var IBAN: TextView
         var phoneNumber: TextView
         init {
-            firstName = linearLayout.findViewById(R.id.textView47)
-            lastName = linearLayout.findViewById(R.id.textView48)
-            address = linearLayout.findViewWithTag(R.id.textView49)
-            IBAN = linearLayout.findViewWithTag(R.id.textView50)
-            phoneNumber = linearLayout.findViewWithTag(R.id.textView51)
+            firstName = linearLayout.findViewById(R.id.textView_seller_layout_first_name)
+            lastName = linearLayout.findViewById(R.id.textView_seller_layout_last_name)
+            address = linearLayout.findViewWithTag(R.id.textView_seller_layout_address)
+            IBAN = linearLayout.findViewWithTag(R.id.textView_seller_layout_iban)
+            phoneNumber = linearLayout.findViewWithTag(R.id.textView_seller_layout_phone_number)
         }
     }
 

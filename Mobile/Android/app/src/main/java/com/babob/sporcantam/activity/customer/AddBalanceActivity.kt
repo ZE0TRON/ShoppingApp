@@ -23,6 +23,8 @@ class AddBalanceActivity : AppCompatActivity() {
                 .mobileNumberRequired(true)
                 .mobileNumberExplanation("SMS is required on this number")
                 .setup(this)
+
+        addBalance.setOnClickListener {  }
     }
 
 

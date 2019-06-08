@@ -26,6 +26,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     lateinit var dataset:ArrayList<Item>
+    lateinit var navView: NavigationView
     var isLogged:Boolean = false
 
 
@@ -38,21 +39,14 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
         val navMenu = navView.menu
         val toggle = ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        if(isLogged){
-            navMenu.findItem(R.id.nav_login).isVisible = false
-        } else {
-            navMenu.findItem(R.id.nav_logout).isVisible = false
-            navMenu.findItem(R.id.nav_shopping_cart).isVisible = false
-            navMenu.findItem(R.id.nav_update_profile).isVisible = false
-        }
-
+        updateMenuItems()
         title = "Items"
 
         dataset = arrayListOf()
@@ -79,10 +73,22 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     override fun onResume() {
         super.onResume()
-        isLogged = SessionUtil.isLogged(this)
+        updateMenuItems()
         AsyncUtil{
             updateList()
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+
+    private fun updateMenuItems(){
+        val navMenu = navView.menu
+        isLogged = SessionUtil.isLogged(this)
+        if(isLogged){
+            navMenu.findItem(R.id.nav_login).isVisible = false
+        } else {
+            navMenu.findItem(R.id.nav_logout).isVisible = false
+            navMenu.findItem(R.id.nav_shopping_cart).isVisible = false
+            navMenu.findItem(R.id.nav_update_profile).isVisible = false
+        }
     }
 
     fun updateList(){
@@ -131,8 +137,15 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.nav_shopping_cart -> {
                 ActivityOpenerUtil.openShoppingCartActivity(this)
             }
+            R.id.nav_add_balance -> {
+                ActivityOpenerUtil.openAddBalanceActivity(this)
+            }
+            R.id.nav_view_history -> {
+                ActivityOpenerUtil.openViewHistoryActivity(this)
+            }
             R.id.nav_logout -> {
-                ActivityOpenerUtil.openLoginActivity(this)
+                SessionUtil.logOut(this)
+                updateMenuItems()
             }
             R.id.nav_login -> {
                 ActivityOpenerUtil.openLoginActivity(this)

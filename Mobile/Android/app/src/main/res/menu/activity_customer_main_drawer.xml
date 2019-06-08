@@ -12,6 +12,14 @@
         android:icon="@drawable/ic_shopping_cart_black_24dp"
         android:title="Shopping Cart" />
     <item
+        android:id="@+id/nav_add_balance"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="Add Balance" />
+    <item
+        android:id="@+id/nav_view_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="View History" />
+    <item
         android:id="@+id/nav_login"
         android:icon="@drawable/ic_account_box_black_24dp"
         android:title="Login" />

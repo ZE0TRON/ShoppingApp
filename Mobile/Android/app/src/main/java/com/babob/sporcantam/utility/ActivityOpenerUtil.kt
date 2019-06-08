@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import com.babob.sporcantam.activity.*
 import com.babob.sporcantam.activity.admin.*
+import com.babob.sporcantam.activity.customer.AddBalanceActivity
 import com.babob.sporcantam.activity.customer.CustomerMainActivity
+import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 
 class ActivityOpenerUtil {
@@ -76,6 +78,14 @@ class ActivityOpenerUtil {
 
         fun openAdminNavMainPage(context: Context){
             context.startActivity(Intent(context, AdminNavMainPage::class.java))
+        }
+
+        fun openAddBalanceActivity(context: Context){
+            context.startActivity(Intent(context, AddBalanceActivity::class.java))
+        }
+
+        fun openViewHistoryActivity(context: Context){
+            context.startActivity(Intent(context, ViewHistoryActivity::class.java))
         }
 
     }

@@ -19,16 +19,53 @@
 
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Categories">
         <menu>
+
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
+                android:id="@+id/nav_running"
+                android:icon="@drawable/ic_directions_run_black_24dp"
+                android:title="Running" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
+                android:id="@+id/nav_clothes"
+                android:icon="@drawable/ic_cloth"
+                android:title="Clothes" />
+            <item
+                android:id="@+id/nav_fitness"
+                android:icon="@drawable/ic_fitness"
+                android:title="Fitness" />
+            <item
+                android:id="@+id/nav_hiking"
+                android:icon="@drawable/ic_hike"
+                android:title="Hike" />
+            <item
+                android:id="@+id/nav_ski"
+                android:icon="@drawable/ic_ski"
+                android:title="Ski" />
+            <item
+                android:id="@+id/nav_snowboard"
+                android:icon="@drawable/ic_snowboard"
+                android:title="Snowboard" />
+            <item
+                android:id="@+id/nav_soccer"
+                android:icon="@drawable/ic_soccer"
+                android:title="Soccer" />
+            <item
+                android:id="@+id/nav_basketball"
+                android:icon="@drawable/ic_basketball"
+                android:title="Basketball" />
+            <item
+                android:id="@+id/nav_swimming"
+                android:icon="@drawable/ic_pool_black_24dp"
+                android:title="Swimming" />
+            <item
+                android:id="@+id/nav_cycle"
+                android:icon="@drawable/ic_directions_bike_black_24dp"
+                android:title="Cycling" />
+            <item
+                android:id="@+id/nav_tennis"
+                android:icon="@drawable/ic_tennis"
+                android:title="Tennis" />
         </menu>
     </item>
 

@@ -110,7 +110,5 @@ class HttpUtil {
 
             return returnValue
         }
-
-
     }
 }

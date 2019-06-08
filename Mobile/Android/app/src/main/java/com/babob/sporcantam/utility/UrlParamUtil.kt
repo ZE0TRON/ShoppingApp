@@ -61,5 +61,12 @@ class UrlParamUtil {
                     "&phone_number=${seller.phoneNumber}"
         }
 
+        fun paymentToUrlParam(card:String,cvc:String,expire:String, balance:Double  ):String{
+            return "cardNumber=$card" +
+                    "&cvc=$cvc"+
+                    "&expireDate=$expire"+
+                    "&balance=$balance"
+        }
+
     }
 }

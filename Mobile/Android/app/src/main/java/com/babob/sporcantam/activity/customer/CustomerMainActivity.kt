@@ -18,6 +18,7 @@ import com.babob.sporcantam.R
 import com.babob.sporcantam.adapter.RecyclerCustomerItemAdapter
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
+import kotlinx.android.synthetic.main.nav_header_admin_nav_main_page.*
 
 class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,9 +77,21 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         updateMenuItems()
         AsyncUtil{
             updateList()
+            val bal = getBalance()
+            runOnUiThread { textView_header_balance.text = bal }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
+    fun getBalance():String{
+        val response = HttpUtil.sendPoststr(
+                "", "${getString(R.string.base_url)}/customer/getBalance", SessionUtil.getSessionId(this)!!)
+        return if(! response.isEmpty()){
+            response
+        }
+        else {
+            "0"
+        }
+    }
     private fun updateMenuItems(){
         val navMenu = navView.menu
         isLogged = SessionUtil.isLogged(this)

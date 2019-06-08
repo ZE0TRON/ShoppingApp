@@ -20,6 +20,9 @@ class CustomerViewItemActivity : AppCompatActivity() {
         val item: Item = intent.getSerializableExtra("item") as Item
 
         fillFields(item)
+        AsyncUtil{
+            addToHistory(item)
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         button_viewItemAddToCart.setOnClickListener { addToCart(item) }
     }
@@ -50,5 +53,9 @@ class CustomerViewItemActivity : AppCompatActivity() {
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+    }
+
+    fun addToHistory(item: Item){
+        HttpUtil.sendPoststr("", "${getString(R.string.base_url)}/item/${item.uuid}", SessionUtil.getSessionId(this)!!)
     }
 }

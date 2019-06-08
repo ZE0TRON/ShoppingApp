@@ -47,7 +47,7 @@ class SellerItemListActivity : AppCompatActivity() {
 
         button_openAddItem.setOnClickListener { ActivityOpenerUtil.openItemCreateActivity(this) }
         button_updateSellerInfo.setOnClickListener { ActivityOpenerUtil.openUpdateSellerInfoActivity(this) }
-        button_sellerItemList_Logout.setOnClickListener { logout() }
+        button_sellerItemList_logout.setOnClickListener { logout() }
     }
 
     override fun onResume() {

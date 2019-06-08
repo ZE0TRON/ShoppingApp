@@ -137,6 +137,12 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.nav_shopping_cart -> {
                 ActivityOpenerUtil.openShoppingCartActivity(this)
             }
+            R.id.nav_add_balance -> {
+                ActivityOpenerUtil.openAddBalanceActivity(this)
+            }
+            R.id.nav_view_history -> {
+                ActivityOpenerUtil.openViewHistoryActivity(this)
+            }
             R.id.nav_logout -> {
                 SessionUtil.logOut(this)
                 updateMenuItems()

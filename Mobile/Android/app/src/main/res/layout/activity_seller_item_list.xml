@@ -9,38 +9,39 @@
 
     <Button
         android:id="@+id/button_openAddItem"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:background="@color/light_pink"
         android:text="Add Item"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_sellerItemList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_updateSellerInfo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button_openAddItem" />
 
     <TextView
         android:id="@+id/textView_sellerItemActivityNoItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="128dp"
         android:layout_marginEnd="8dp"
         android:text="No Item, Click add item to add a new one"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,49 +50,36 @@
 
     <Button
         android:id="@+id/button_updateSellerInfo"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@color/light_pink"
         android:text="Update My Info"
         android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="@+id/button_sellerItemList_Logout"
-        app:layout_constraintStart_toStartOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/button_sellerItemList_Logout"
-        app:layout_constraintVertical_bias="0.127" />
+        app:layout_constraintBottom_toBottomOf="@+id/button_openAddItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_openAddItem"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/imageButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        style="@android:style/Widget.DeviceDefault.Light.ImageButton"
+        android:layout_width="35dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/light_pink"
-        app:layout_constraintBottom_toBottomOf="@+id/button_openAddItem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_openAddItem"
-        app:layout_constraintTop_toTopOf="@+id/button_openAddItem"
+        app:layout_constraintEnd_toStartOf="@+id/textView59"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_monetization_on_black_24dp" />
 
     <TextView
         android:id="@+id/textView59"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
-        app:layout_constraintStart_toEndOf="@+id/imageButton3"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
-
-    <Button
-        android:id="@+id/button_sellerItemList_Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/light_pink"
-        android:text="Logout"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/button_openAddItem"
-        app:layout_constraintTop_toBottomOf="@+id/button_openAddItem" />
+        app:layout_constraintBottom_toTopOf="@+id/button_updateSellerInfo"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

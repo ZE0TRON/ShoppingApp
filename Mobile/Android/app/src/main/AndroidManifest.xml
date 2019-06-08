@@ -17,10 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.customer.AddBalanceActivity"></activity>
         <activity
             android:name=".activity.customer.CustomerMainActivity"
             android:label="@string/title_activity_customer_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.admin.ManipulateOrdersActivity" />
         <activity android:name=".activity.admin.ManipulateSellersActivity" />
         <activity android:name=".activity.admin.ManipulateCustomersActivity" />

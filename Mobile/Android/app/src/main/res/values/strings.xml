@@ -44,4 +44,14 @@
     <string name="item_create_page_title">NEW ITEM</string>
     <string name="shipping_tax"><![CDATA[Shipping & Tax :]]></string>
     <string name="title_activity_admin_nav_main_page">AdminNavMainPage</string>
+    <string name="title_activity_customer_main">Spor Cantam</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 </resources>

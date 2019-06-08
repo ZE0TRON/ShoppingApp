@@ -5,6 +5,7 @@ import android.content.Intent
 import com.babob.sporcantam.activity.*
 import com.babob.sporcantam.activity.admin.*
 import com.babob.sporcantam.activity.customer.CustomerMainActivity
+import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 
 class ActivityOpenerUtil {

@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.babob.sporcantam.R
-import com.babob.sporcantam.activity.ShoppingCartActivity
+import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
 

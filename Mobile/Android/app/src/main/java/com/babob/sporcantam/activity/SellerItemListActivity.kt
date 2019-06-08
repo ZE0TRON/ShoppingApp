@@ -47,6 +47,7 @@ class SellerItemListActivity : AppCompatActivity() {
 
         button_openAddItem.setOnClickListener { ActivityOpenerUtil.openItemCreateActivity(this) }
         button_updateSellerInfo.setOnClickListener { ActivityOpenerUtil.openUpdateSellerInfoActivity(this) }
+        button_sellerItemList_Logout.setOnClickListener { logout() }
     }
 
     override fun onResume() {
@@ -55,6 +56,12 @@ class SellerItemListActivity : AppCompatActivity() {
             updateList()
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+    }
+
+    fun logout(){
+        SessionUtil.logOut(this)
+        ActivityOpenerUtil.openCustomerMainActivitty(this)
+        finish()
     }
 
     fun updateList(){

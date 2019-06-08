@@ -40,7 +40,7 @@
         </activity>
         <activity android:name=".activity.ViewHistoryActivity" />
         <activity android:name=".activity.CustomerViewItemActivity" />
-        <activity android:name=".activity.ShoppingCartActivity" />
+        <activity android:name=".activity.customer.ShoppingCartActivity" />
         <activity android:name=".activity.UpdateCustomerInfoActivity" />
         <activity android:name=".activity.updateSellerInfoActivity" />
         <activity android:name=".activity.SellerItemListActivity" />

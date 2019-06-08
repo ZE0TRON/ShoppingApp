@@ -58,10 +58,12 @@
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
             android:text="Customer Email:"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView20"
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 

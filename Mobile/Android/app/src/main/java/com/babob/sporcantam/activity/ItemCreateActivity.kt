@@ -163,7 +163,7 @@ class ItemCreateActivity : AppCompatActivity() {
 
         val spinnerCategoryArray = ArrayList<String>()
         spinnerCategoryArray.add("Running")
-        spinnerCategoryArray.add("Cloths")
+        spinnerCategoryArray.add("Clothes")
         spinnerCategoryArray.add("Fitness")
         spinnerCategoryArray.add("Hiking")
         spinnerCategoryArray.add("Ski")

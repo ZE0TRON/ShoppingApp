@@ -38,5 +38,33 @@ class SessionUtil {
             editor.putString("sId", sessionId)
             editor.apply()
         }
+
+        fun login(context: Context){
+            val editor = context.getSharedPreferences("storage", Context.MODE_PRIVATE).edit()
+            editor.putBoolean("login", true)
+            editor.apply()
+        }
+
+        fun logOut(context: Context){
+            val editor = context.getSharedPreferences("storage", Context.MODE_PRIVATE).edit()
+            editor.putBoolean("login", false)
+            editor.apply()
+        }
+
+        fun isLogged(context: Context):Boolean{
+            val prefs = context.getSharedPreferences("storage", Context.MODE_PRIVATE)
+            return prefs.getBoolean("login", false)
+        }
+
+        fun saveUserType(context: Context, userType:Int){
+            val editor = context.getSharedPreferences("storage", Context.MODE_PRIVATE).edit()
+            editor.putInt("userType", userType)
+            editor.apply()
+        }
+
+        fun getUserType(context: Context):Int{
+            val prefs = context.getSharedPreferences("storage", Context.MODE_PRIVATE)
+            return prefs.getInt("userType", 1)
+        }
     }
 }

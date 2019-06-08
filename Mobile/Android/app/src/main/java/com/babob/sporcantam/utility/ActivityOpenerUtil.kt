@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.babob.sporcantam.activity.*
 import com.babob.sporcantam.activity.admin.*
+import com.babob.sporcantam.activity.customer.CustomerMainActivity
 import com.babob.sporcantam.item.Item
 
 class ActivityOpenerUtil {
@@ -37,8 +38,8 @@ class ActivityOpenerUtil {
             context.startActivity(Intent(context,SellerItemView_UpdateActivity::class.java).putExtra("item",item))
         }
 
-        fun openCustomerMainPageActivitty(context: Context){
-            context.startActivity(Intent(context, CustomerMainPageActivity::class.java))
+        fun openCustomerMainActivitty(context: Context){
+            context.startActivity(Intent(context, CustomerMainActivity::class.java))
         }
 
         fun openViewItemActivity(context: Context,item: Item){

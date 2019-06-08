@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.babob.sporcantam.R
 import com.babob.sporcantam.utility.ActivityOpenerUtil
+import com.babob.sporcantam.utility.SessionUtil
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        ActivityOpenerUtil.openLoginActivity(this)
+        if(SessionUtil.isLogged(this)){
+            val userType = SessionUtil.getUserType(this)
+            ActivityOpenerUtil.openMainPageActivity(this, userType)
+        } else {
+            ActivityOpenerUtil.openMainPageActivity(this, 1)
+        }
         finish()
 
     }

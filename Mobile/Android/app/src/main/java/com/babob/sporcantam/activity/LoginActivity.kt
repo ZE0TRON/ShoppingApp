@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getSId(){
+        SessionUtil.logOut(this)
         val id = SessionUtil.createSessionId(this)
         sessionId = id!!
     }
@@ -59,10 +60,13 @@ class LoginActivity : AppCompatActivity() {
         isSending = true
         AsyncUtil{
             if(sendLoginRequest(email, password)){
+                SessionUtil.login(this)
                 if(adminLogin){
+                    SessionUtil.saveUserType(this, 3)
                     ActivityOpenerUtil.openMainPageActivity(this, 3)
                 }
                 else {
+                    SessionUtil.saveUserType(this, loginType)
                     ActivityOpenerUtil.openMainPageActivity(this, loginType)
                 }
                 isSending = false

@@ -17,10 +17,7 @@ import android.view.Menu
 import com.babob.sporcantam.R
 import com.babob.sporcantam.adapter.RecyclerCustomerItemAdapter
 import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.utility.AsyncUtil
-import com.babob.sporcantam.utility.HttpUtil
-import com.babob.sporcantam.utility.JsonUtil
-import com.babob.sporcantam.utility.SessionUtil
+import com.babob.sporcantam.utility.*
 
 class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -52,6 +49,8 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             navMenu.findItem(R.id.nav_login).isVisible = false
         } else {
             navMenu.findItem(R.id.nav_logout).isVisible = false
+            navMenu.findItem(R.id.nav_shopping_cart).isVisible = false
+            navMenu.findItem(R.id.nav_update_profile).isVisible = false
         }
 
         title = "Items"
@@ -80,6 +79,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     override fun onResume() {
         super.onResume()
+        isLogged = SessionUtil.isLogged(this)
         AsyncUtil{
             updateList()
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -126,13 +126,16 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_update_profile -> {
-                // Handle the camera action
+                ActivityOpenerUtil.openUpdateCustomerInfoActivity(this)
             }
             R.id.nav_shopping_cart -> {
-
+                ActivityOpenerUtil.openShoppingCartActivity(this)
             }
             R.id.nav_logout -> {
-
+                ActivityOpenerUtil.openLoginActivity(this)
+            }
+            R.id.nav_login -> {
+                ActivityOpenerUtil.openLoginActivity(this)
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

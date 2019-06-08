@@ -69,13 +69,9 @@
             android:id="@+id/textView25"
             android:layout_width="63dp"
             android:layout_height="19dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.405"
-            app:layout_constraintStart_toEndOf="@+id/textView24"
+            app:layout_constraintStart_toStartOf="@+id/textView23"
             app:layout_constraintTop_toTopOf="@+id/textView24" />
 
     </android.support.constraint.ConstraintLayout>

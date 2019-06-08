@@ -15,8 +15,9 @@
         android:layout_marginTop="32dp"
         android:background="@color/light_pink"
         android:text="Add Item"
-        android:textStyle="bold"
         android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,11 +50,34 @@
         android:id="@+id/button_updateSellerInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/light_pink"
         android:text="Update My Info"
         android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerview_sellerItemList"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/imageButton3" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/light_pink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_openAddItem"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_monetization_on_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView59"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/button_updateSellerInfo"
+        app:layout_constraintStart_toEndOf="@+id/imageButton3" />
 </android.support.constraint.ConstraintLayout>

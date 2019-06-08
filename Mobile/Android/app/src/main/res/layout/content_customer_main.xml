@@ -9,7 +9,7 @@
     tools:context=".activity.customer.CustomerMainActivity"
     tools:showIn="@layout/app_bar_customer_main">
 
-    <item
+    <!--item
         android:id="@+id/action_search"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="ifRoom|collapseActionView" /-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycelerCustomerItemsView"

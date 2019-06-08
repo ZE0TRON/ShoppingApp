@@ -85,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView47"
+            android:id="@+id/textView_seller_layout_first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -99,42 +99,42 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView48"
+            android:id="@+id/textView_seller_layout_last_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView42"
-            app:layout_constraintStart_toStartOf="@+id/textView47"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
             app:layout_constraintTop_toTopOf="@+id/textView42"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView49"
+            android:id="@+id/textView_seller_layout_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView43"
-            app:layout_constraintStart_toStartOf="@+id/textView47"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
             app:layout_constraintTop_toTopOf="@+id/textView43" />
 
         <TextView
-            android:id="@+id/textView50"
+            android:id="@+id/textView_seller_layout_iban"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView44"
-            app:layout_constraintStart_toStartOf="@+id/textView47"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
             app:layout_constraintTop_toTopOf="@+id/textView44"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/textView51"
+            android:id="@+id/textView_seller_layout_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView45"
-            app:layout_constraintStart_toStartOf="@+id/textView47"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
             app:layout_constraintTop_toTopOf="@+id/textView45" />
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

@@ -27,14 +27,14 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
         var uuid: TextView
         var imageViewPhoto: ImageView
         init {
-            item_title = linearLayout.findViewById(R.id.textView33)
-            price = linearLayout.findViewById(R.id.textView34)
-            seller = linearLayout.findViewById(R.id.textView35)
-            description = linearLayout.findViewById(R.id.textView36)
-            shipping_info = linearLayout.findViewById(R.id.textView37)
-            stock_count = linearLayout.findViewById(R.id.textView38)
-            category = linearLayout.findViewById(R.id.textView39)
-            uuid = linearLayout.findViewById(R.id.textView40)
+            item_title = linearLayout.findViewById(R.id.textView_item_layout_item_title)
+            price = linearLayout.findViewById(R.id.textView_item_layout_price)
+            seller = linearLayout.findViewById(R.id.textView_item_layout_seller)
+            description = linearLayout.findViewById(R.id.textView_item_layout_description)
+            shipping_info = linearLayout.findViewById(R.id.textView_item_layout_shipping_info)
+            stock_count = linearLayout.findViewById(R.id.textView_item_layout_stock_count)
+            category = linearLayout.findViewById(R.id.textView_item_layout_category)
+            uuid = linearLayout.findViewById(R.id.textView_item_layout_uuid)
             imageViewPhoto = linearLayout.findViewById(R.id.imageView_ItemLayoutPhoto)
         }
     }

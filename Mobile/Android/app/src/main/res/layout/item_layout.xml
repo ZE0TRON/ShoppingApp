@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/imageView_ItemLayoutPhoto"
+            android:layout_width="271dp"
+            android:layout_height="185dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView40"
+            app:layout_constraintHorizontal_bias="0.421"
+            app:layout_constraintStart_toStartOf="@+id/textView32"
+            app:srcCompat="@drawable/sport"
+            tools:layout_editor_absoluteY="347dp" />
+
         <TextView
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
@@ -104,7 +115,7 @@
             android:id="@+id/textView32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:text="UUID:"
@@ -113,7 +124,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView22"
-            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+            app:layout_constraintTop_toBottomOf="@+id/textView31"
+            app:layout_constraintVertical_bias="0.114" />
 
         <TextView
             android:id="@+id/textView33"
@@ -199,4 +211,5 @@
             app:layout_constraintTop_toTopOf="@+id/textView32"
             app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
+
 </LinearLayout>

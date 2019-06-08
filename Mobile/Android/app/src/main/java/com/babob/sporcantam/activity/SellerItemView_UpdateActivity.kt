@@ -31,6 +31,7 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
     true-> view page
     false-> update page
     */
+    var isPhotoChecked = false
 
     private val PICK_IMAGE_REQUEST = 1
     private val STORAGE_PERMISSION_CODE = 123
@@ -151,7 +152,8 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
 
             AsyncUtil{
                 val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(updateItemRequest(tit,des,sto,pri,shi,cat,uuid)))
-                MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this,uuid)
+                if(isPhotoChecked)
+                    MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this,uuid)
 
                 runOnUiThread{
                     Toast.makeText(this,responseList[1],Toast.LENGTH_SHORT).show()
@@ -211,7 +213,7 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
                 imageView_ItemView_UpdatePhoto.setImageBitmap(bitmap)
-
+                isPhotoChecked=true
             } catch (e: IOException) {
                 e.printStackTrace()
             }

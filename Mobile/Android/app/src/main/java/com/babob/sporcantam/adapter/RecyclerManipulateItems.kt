@@ -5,13 +5,12 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.item.Order
-import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
+import com.bumptech.glide.Glide
 
 class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateItems.ViewHolder>(){
@@ -26,6 +25,7 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
         var stock_count: TextView
         var category: TextView
         var uuid: TextView
+        var imageViewPhoto: ImageView
         init {
             item_title = linearLayout.findViewById(R.id.textView33)
             price = linearLayout.findViewById(R.id.textView34)
@@ -35,6 +35,7 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
             stock_count = linearLayout.findViewById(R.id.textView38)
             category = linearLayout.findViewById(R.id.textView39)
             uuid = linearLayout.findViewById(R.id.textView40)
+            imageViewPhoto = linearLayout.findViewById(R.id.imageView_ItemLayoutPhoto)
         }
     }
 
@@ -64,6 +65,9 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
         holder.category.text = dataset[position].category
         holder.uuid.text = dataset[position].uuid
 
+        //TODO: sikinti burada olucak
+        val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid
+        Glide.with(context).load(url).into(holder.imageViewPhoto)
 
 
         holder.itemView.setOnClickListener {

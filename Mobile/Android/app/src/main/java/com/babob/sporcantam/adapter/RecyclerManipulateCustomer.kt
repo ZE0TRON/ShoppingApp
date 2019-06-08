@@ -9,11 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Customer
-import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.item.Order
-import com.babob.sporcantam.item.Seller
-import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
 
 class RecyclerManipulateCustomer (var dataset: ArrayList<Customer>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateCustomer.ViewHolder>() {
@@ -25,9 +20,9 @@ class RecyclerManipulateCustomer (var dataset: ArrayList<Customer>, var context:
         var address: TextView
 
         init {
-            firstName = linearLayout.findViewById(R.id.textView56)
-            lastName = linearLayout.findViewById(R.id.textView57)
-            address = linearLayout.findViewWithTag(R.id.textView58)
+            firstName = linearLayout.findViewById(R.id.textView_customer_layout_first_name)
+            lastName = linearLayout.findViewById(R.id.textView_customer_layout_last_name)
+            address = linearLayout.findViewWithTag(R.id.textView_customer_layout_address)
         }
     }
 

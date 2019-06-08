@@ -14,7 +14,7 @@
             android:layout_width="271dp"
             android:layout_height="185dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/textView40"
+            app:layout_constraintEnd_toEndOf="@+id/textView_item_layout_uuid"
             app:layout_constraintHorizontal_bias="0.421"
             app:layout_constraintStart_toStartOf="@+id/textView32"
             app:srcCompat="@drawable/sport"
@@ -128,7 +128,7 @@
             app:layout_constraintVertical_bias="0.114" />
 
         <TextView
-            android:id="@+id/textView33"
+            android:id="@+id/textView_item_layout_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -142,72 +142,72 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView34"
+            android:id="@+id/textView_item_layout_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView26"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView26" />
 
         <TextView
-            android:id="@+id/textView35"
+            android:id="@+id/textView_item_layout_seller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView27"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView27"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView36"
+            android:id="@+id/textView_item_layout_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView28"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView28" />
 
         <TextView
-            android:id="@+id/textView37"
+            android:id="@+id/textView_item_layout_shipping_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView29"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView29"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView38"
+            android:id="@+id/textView_item_layout_stock_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView30"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView30" />
 
         <TextView
-            android:id="@+id/textView39"
+            android:id="@+id/textView_item_layout_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView31"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView31"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/textView40"
+            android:id="@+id/textView_item_layout_uuid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView32"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
+            app:layout_constraintStart_toStartOf="@+id/textView_item_layout_item_title"
             app:layout_constraintTop_toTopOf="@+id/textView32"
             app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>

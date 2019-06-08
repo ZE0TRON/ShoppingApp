@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
-import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.item.Order
-import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
 
 class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateOrders.ViewHolder>(){
@@ -21,8 +18,8 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
         var sellerEmail: TextView
         var customerEmail: TextView
         init {
-            sellerEmail = linearLayout.findViewById(R.id.textView23)
-            customerEmail = linearLayout.findViewById(R.id.textView25)
+            sellerEmail = linearLayout.findViewById(R.id.textView_order_layout_seller_email)
+            customerEmail = linearLayout.findViewById(R.id.textView_order_layout_customer_email)
         }
     }
 

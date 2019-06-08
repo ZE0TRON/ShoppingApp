@@ -1,33 +1,24 @@
 package com.babob.sporcantam.activity
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.utility.*
 import kotlinx.android.synthetic.main.activity_item_create.*
-import java.util.*
-import android.graphics.Bitmap
-import android.net.Uri
-import android.content.Intent
-import android.provider.MediaStore
-import android.app.Activity
 import java.io.IOException
-import android.support.v4.app.ActivityCompat
-import android.content.pm.PackageManager
-import android.provider.SyncStateContract
-import android.support.v4.content.ContextCompat
-import java.util.UUID.randomUUID
-
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.HashMap
-import java.util.Locale
-import java.util.logging.Logger
+import java.util.*
 
 
 
@@ -49,34 +40,6 @@ class ItemCreateActivity : AppCompatActivity() {
 
         button_ItemCreateAddImage.setOnClickListener { showFileChooser() }
     }
-
-
-    /*fun uploadMultipart() {
-
-
-        //getting name for the image
-        val name = "okan".trim()
-
-        //getting the actual path of the image
-        val path = getPath(filePath)
-
-        //Uploading code
-        try {
-            val uploadId = randomUUID().toString()
-
-            //Creating a multi part request
-            MultipartUploadRequest(this, uploadId, SyncStateContract.Constants.UPLOAD_URL)
-                    .addFileToUpload(path, "image") //Adding file
-                    .addParameter("name", name) //Adding text parameter to the request
-                    .setNotificationConfig(UploadNotificationConfig())
-                    .setMaxRetries(2)
-                    .startUpload() //Starting the upload
-
-        } catch (exc: Exception) {
-            Toast.makeText(this, exc.message, Toast.LENGTH_SHORT).show()
-        }
-
-    }*/
 
     private fun showFileChooser() {
         val intent = Intent()
@@ -148,9 +111,7 @@ class ItemCreateActivity : AppCompatActivity() {
 
     fun initSpinners(){
         val spinnerShippingArray = ArrayList<String>()
-        spinnerShippingArray.add("Yurtdisi Kargo")
-        spinnerShippingArray.add("Keras Kargo")
-        spinnerShippingArray.add("BST Kargo")
+        SpinnerHelperUtil.transportationHelper(spinnerShippingArray)
 
         val adapter = ArrayAdapter(
                 this, android.R.layout.simple_spinner_item, spinnerShippingArray)
@@ -159,27 +120,17 @@ class ItemCreateActivity : AppCompatActivity() {
         val sItems = spinner_ItemCreateShippingInfo
         sItems.adapter = adapter
 
-        spinner_ItemCreateShippingInfo.setSelection(0)
+        sItems.setSelection(0)
 
         val spinnerCategoryArray = ArrayList<String>()
-        spinnerCategoryArray.add("Running")
-        spinnerCategoryArray.add("Clothes")
-        spinnerCategoryArray.add("Fitness")
-        spinnerCategoryArray.add("Hiking")
-        spinnerCategoryArray.add("Ski")
-        spinnerCategoryArray.add("Snowboard")
-        spinnerCategoryArray.add("Soccer")
-        spinnerCategoryArray.add("Basketball")
-        spinnerCategoryArray.add("Swimming")
-        spinnerCategoryArray.add("Cycling")
-        spinnerCategoryArray.add("Tennis")
+        SpinnerHelperUtil.categoryHelper(spinnerCategoryArray)
 
         val adapter2 = ArrayAdapter(this,android.R.layout.simple_spinner_item,spinnerCategoryArray)
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val sItems2=spinner_ItemCreateCategory
         sItems2.adapter=adapter2
 
-        spinner_ItemCreateCategory.setSelection(0)
+        sItems2.setSelection(0)
 
     }
 
@@ -223,7 +174,7 @@ class ItemCreateActivity : AppCompatActivity() {
         //TODO: add image checker
         AsyncUtil{
             val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(sendNewItemRequest(itemtitle,itemprice,itemdescription,itemshipping,itemstock,itemCategory,uuid)))
-            MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this)
+            MultiHttpSenderUtil.uploadToServer(getPath(this.filePath!!), this,uuid)
             runOnUiThread{
                 Toast.makeText(this,responseList[1],Toast.LENGTH_SHORT).show()
             }

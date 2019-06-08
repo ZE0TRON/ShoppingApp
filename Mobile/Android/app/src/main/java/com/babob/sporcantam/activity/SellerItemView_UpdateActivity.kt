@@ -3,6 +3,7 @@ package com.babob.sporcantam.activity
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.babob.sporcantam.R
@@ -72,7 +73,10 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
         val sItems2=spinner_ItemView_UpdateCategory
         sItems2.adapter=adapter2
 
-        spinner_ItemCreateCategory.setSelection(spinnerCategoryArray.indexOf(item.category))
+        Log.d("SellerItemView", item.category)
+        Log.d("SellerItemView", (spinnerCategoryArray.indexOf(item.category).toString()))
+
+        sItems2.setSelection(spinnerCategoryArray.indexOf(item.category))
 
     }
 

@@ -4,7 +4,6 @@ import android.util.Log
 import com.babob.sporcantam.item.Customer
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.item.Seller
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -92,6 +91,28 @@ class JsonUtil {
                 e.printStackTrace()
             }
             return Seller()
+        }
+
+        fun getGenerateSaleReport(response: String):HashMap<String,String>{
+
+            val soldItemCounts:HashMap<String,String> = hashMapOf()
+
+            val categories=ArrayList<String>()
+            SpinnerHelperUtil.categoryHelper(categories)
+
+            try {
+                val jsonObj = JSONObject(response)
+
+                var i=0
+                for(cat in categories) {
+                    soldItemCounts[cat.toLowerCase()]=jsonObj.getString(cat.toLowerCase())
+                }
+
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
+            return soldItemCounts
         }
 
 

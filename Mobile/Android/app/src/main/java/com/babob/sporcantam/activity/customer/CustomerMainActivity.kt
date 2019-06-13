@@ -2,23 +2,25 @@ package com.babob.sporcantam.activity.customer
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.view.MenuItem
-import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.SearchView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.adapter.RecyclerCustomerItemAdapter
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
+import kotlinx.android.synthetic.main.content_customer_main.*
 import kotlinx.android.synthetic.main.nav_header_admin_nav_main_page.*
+
 
 class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,6 +72,33 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         }
 
         navView.setNavigationItemSelectedListener(this)
+
+
+        //simpleSearchView.setOnSearchClickListener { search(simpleSearchView.query as String) }
+
+        simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //UserFeedback.show("SearchOnQueryTextSubmit: " + query);
+
+                Log.d("Customer Main Page", "query: $query")
+                updateList2(query)
+
+                return false
+            }
+
+            override fun onQueryTextChange(s: String): Boolean {
+                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
+                return false
+            }
+        })
+
+
+        Log.d("customer Main Page",simpleSearchView.query.toString())
+
+    }
+
+    fun search(query: String){
+
     }
 
     override fun onResume() {
@@ -105,9 +134,26 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     }
 
     fun updateList(){
-        dataset = JsonUtil.getItemResponseToList(
-                HttpUtil.sendPoststr(
-                        "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
+
+        if(simpleSearchView.query.length!=0)
+            dataset = JsonUtil.getItemResponseToList(
+                    HttpUtil.sendPoststr(
+                            UrlParamUtil.searchItem(simpleSearchView.query.toString()),"${getString(R.string.base_url)}/item/searchItems",SessionUtil.getSessionId(this)!!))
+        else
+            dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
+                            "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
+
+        //viewAdapter = RecyclerCallViewAdapter(dataset)
+        runOnUiThread {
+            (recyclerView.adapter as RecyclerCustomerItemAdapter).dataset = dataset
+            recyclerView.adapter.notifyDataSetChanged()
+        }
+    }
+
+    fun updateList2(query:String){
+            dataset = JsonUtil.getItemResponseToList(
+                    HttpUtil.sendPoststr(
+                            UrlParamUtil.searchItem(query),"${getString(R.string.base_url)}/item/searchItems",SessionUtil.getSessionId(this)!!))
 
         //viewAdapter = RecyclerCallViewAdapter(dataset)
         runOnUiThread {

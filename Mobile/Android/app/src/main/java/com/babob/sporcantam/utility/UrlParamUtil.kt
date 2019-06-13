@@ -3,7 +3,6 @@ package com.babob.sporcantam.utility
 import com.babob.sporcantam.item.Customer
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.item.Seller
-import java.util.Date
 
 class UrlParamUtil {
 
@@ -66,6 +65,10 @@ class UrlParamUtil {
                     "&cvc=$cvc"+
                     "&expireDate=$expire"+
                     "&balance=$balance"
+        }
+
+        fun searchItem(item_title: String):String{
+            return "item_title=$item_title"
         }
 
     }

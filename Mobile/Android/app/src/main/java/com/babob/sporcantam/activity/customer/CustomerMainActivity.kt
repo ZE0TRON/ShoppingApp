@@ -74,30 +74,28 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         navView.setNavigationItemSelectedListener(this)
 
 
-        //simpleSearchView.setOnSearchClickListener { search(simpleSearchView.query as String) }
-
         simpleSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+
             override fun onQueryTextSubmit(query: String): Boolean {
                 //UserFeedback.show("SearchOnQueryTextSubmit: " + query);
 
                 Log.d("Customer Main Page", "query: $query")
-                updateList2(query)
+                onResume()
 
                 return false
             }
 
             override fun onQueryTextChange(s: String): Boolean {
-                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
+                //SPANLog.d( "HEY HEY" , "$s")
+                //TODO: sorry bro, below code is very stupid
+                // carpiya basinca basa donsun die :(
+                if(s.length==0)
+                    onResume()
                 return false
             }
         })
 
-
-        Log.d("customer Main Page",simpleSearchView.query.toString())
-
-    }
-
-    fun search(query: String){
 
     }
 
@@ -135,28 +133,17 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
 
     fun updateList(){
 
-        if(simpleSearchView.query.length!=0)
-            dataset = JsonUtil.getItemResponseToList(
-                    HttpUtil.sendPoststr(
+        if(!simpleSearchView.query.isEmpty()){
+            dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
                             UrlParamUtil.searchItem(simpleSearchView.query.toString()),"${getString(R.string.base_url)}/item/searchItems",SessionUtil.getSessionId(this)!!))
+        }
         else
             dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
                             "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
 
         //viewAdapter = RecyclerCallViewAdapter(dataset)
         runOnUiThread {
-            (recyclerView.adapter as RecyclerCustomerItemAdapter).dataset = dataset
-            recyclerView.adapter.notifyDataSetChanged()
-        }
-    }
-
-    fun updateList2(query:String){
-            dataset = JsonUtil.getItemResponseToList(
-                    HttpUtil.sendPoststr(
-                            UrlParamUtil.searchItem(query),"${getString(R.string.base_url)}/item/searchItems",SessionUtil.getSessionId(this)!!))
-
-        //viewAdapter = RecyclerCallViewAdapter(dataset)
-        runOnUiThread {
+            recyclerView.removeAllViews()
             (recyclerView.adapter as RecyclerCustomerItemAdapter).dataset = dataset
             recyclerView.adapter.notifyDataSetChanged()
         }

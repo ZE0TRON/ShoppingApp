@@ -21,11 +21,13 @@ class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Cont
         var textTitle: TextView
         var textPrice: TextView
         var textCount: TextView
+        var textCategory: TextView
         var imageViewPhoto: ImageView
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
+            textCategory = linearLayout.findViewById(R.id.textView_recCategory)
             imageViewPhoto = linearLayout.findViewById(R.id.imageView2)
         }
     }
@@ -50,6 +52,7 @@ class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Cont
         holder.textTitle.text = dataset[position].item_title
         holder.textCount.text = dataset[position].stock_count.toString()
         holder.textPrice.text = dataset[position].price.toString()
+        holder.textCategory.text = dataset[position].category
 
         //TODO: sikinti burada olucak
         val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid

@@ -17,9 +17,11 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
     class ViewHolder(val linearLayout: LinearLayout) : RecyclerView.ViewHolder(linearLayout){
         var sellerEmail: TextView
         var customerEmail: TextView
+        var orderId:TextView
         init {
             sellerEmail = linearLayout.findViewById(R.id.textView_order_layout_seller_email)
             customerEmail = linearLayout.findViewById(R.id.textView_order_layout_customer_email)
+            orderId = linearLayout.findViewById(R.id.textView_ManipulateOrders_OrderId)
         }
     }
 
@@ -42,9 +44,12 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
         // - replace the contents of the view with that element
         holder.sellerEmail.text = dataset[position].seller_email
         holder.customerEmail.text = dataset[position].customer_email
+        holder.orderId.text = dataset[position].order_id.toString()
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].order_id.toString())
+            //ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
+
         }
 
 

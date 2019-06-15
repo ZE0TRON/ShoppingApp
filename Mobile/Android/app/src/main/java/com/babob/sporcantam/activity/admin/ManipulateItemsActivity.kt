@@ -2,7 +2,6 @@ package com.babob.sporcantam.activity.admin
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -22,7 +21,6 @@ class ManipulateItemsActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     lateinit var dataset:ArrayList<Item>
-    lateinit var navView: NavigationView
     var isLogged:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

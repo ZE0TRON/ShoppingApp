@@ -132,7 +132,6 @@ class JsonUtil {
                     val seller = Seller(sellerFirstName,sellerSecondName,sellerAddress,sellerIBAN,sellerPhone,sellerEmail)
                     retList.add(seller)
                     Log.d("Json",sellerJsonObj.toString())
-
                 }
                 return retList
 

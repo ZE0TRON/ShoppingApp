@@ -50,10 +50,23 @@ class SellerItemListActivity : AppCompatActivity() {
         button_sellerItemList_logout.setOnClickListener { logout() }
     }
 
+    fun getBalance():String{
+        val response = HttpUtil.sendPoststr(
+                "", "${getString(R.string.base_url)}/seller/getBalance", SessionUtil.getSessionId(this)!!)
+        return if(! response.isEmpty()){
+            response
+        }
+        else {
+            "0"
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         AsyncUtil{
             updateList()
+            val bal = getBalance()
+            runOnUiThread { textView59.text = bal }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
     }

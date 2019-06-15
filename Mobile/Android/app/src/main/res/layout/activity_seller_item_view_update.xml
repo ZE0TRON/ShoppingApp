@@ -199,11 +199,8 @@
                 android:id="@+id/spinner_ItemView_UpdateShipping"
                 android:layout_width="213dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="68dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView_ItemView_UpdateActivityLabelShipping"
                 app:layout_constraintTop_toTopOf="@+id/textView_ItemView_UpdateActivityLabelShipping" />
 

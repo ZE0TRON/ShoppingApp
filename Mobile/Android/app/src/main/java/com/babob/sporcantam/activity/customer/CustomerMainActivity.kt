@@ -32,6 +32,8 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
     lateinit var navView: NavigationView
     var isLogged:Boolean = false
 
+    var condition:String=""
+    var isQuery:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +83,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 //UserFeedback.show("SearchOnQueryTextSubmit: " + query);
 
                 Log.d("Customer Main Page", "query: $query")
+                isQuery=true
                 onResume()
 
                 return false
@@ -90,8 +93,11 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                 //SPANLog.d( "HEY HEY" , "$s")
                 //TODO: sorry bro, below code is very stupid
                 // carpiya basinca basa donsun die :(
-                if(s.length==0)
+                if(s.length==0) {
+                    condition=""
+                    isQuery=false
                     onResume()
+                }
                 return false
             }
         })
@@ -103,7 +109,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         super.onResume()
         updateMenuItems()
         AsyncUtil{
-            updateList()
+            updateList(condition,isQuery)
             val bal = getBalance()
             runOnUiThread { textView_header_balance.text = bal }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -131,16 +137,23 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         }
     }
 
-    fun updateList(){
+    fun updateList(condition:String, query:Boolean){
 
-        if(!simpleSearchView.query.isEmpty()){
+        if(query){
             dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
                             UrlParamUtil.searchItem(simpleSearchView.query.toString()),"${getString(R.string.base_url)}/item/searchItems",SessionUtil.getSessionId(this)!!))
         }
-        else
-            dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
-                            "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
-
+        else{
+            if(condition=="")
+                dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
+                        condition,"${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
+            else{
+                dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
+                        "","${getString(R.string.base_url)}/item/"+condition,SessionUtil.getSessionId(this)!!))
+            }
+        }
+        this.isQuery=false
+        this.condition =""
         //viewAdapter = RecyclerCallViewAdapter(dataset)
         runOnUiThread {
             recyclerView.removeAllViews()
@@ -196,6 +209,52 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             R.id.nav_login -> {
                 ActivityOpenerUtil.openLoginActivity(this)
             }
+
+            R.id.nav_running->{
+                condition="Running"
+                onResume()
+            }
+            R.id.nav_clothes->{
+                condition="Clothes"
+                onResume()
+            }
+            R.id.nav_fitness->{
+                condition="Fitness"
+                onResume()
+            }
+            R.id.nav_hiking->{
+                condition="Hiking"
+                onResume()
+            }
+            R.id.nav_ski->{
+                condition="Ski"
+                onResume()
+            }
+            R.id.nav_snowboard->{
+                condition="Snowboard"
+                onResume()
+            }
+            R.id.nav_soccer->{
+                condition="Soccer"
+                onResume()
+            }
+            R.id.nav_basketball->{
+                condition="Basketball"
+                onResume()
+            }
+            R.id.nav_swimming->{
+                condition="Swimming"
+                onResume()
+            }
+            R.id.nav_cycle->{
+                condition="Cycling"
+                onResume()
+            }
+            R.id.nav_tennis->{
+                condition="Tennis"
+                onResume()
+            }
+
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.admin.GenerateReport"></activity>
+        <activity android:name=".activity.admin.ManipulateSoloSellerActivity"></activity>
+        <activity android:name=".activity.admin.GenerateReport" />
         <activity android:name=".activity.customer.AddBalanceActivity" />
         <activity
             android:name=".activity.customer.CustomerMainActivity"

@@ -8,6 +8,7 @@ import com.babob.sporcantam.activity.customer.AddBalanceActivity
 import com.babob.sporcantam.activity.customer.CustomerMainActivity
 import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.item.Seller
 
 class ActivityOpenerUtil {
 
@@ -74,6 +75,10 @@ class ActivityOpenerUtil {
 
         fun openManipulateSellersActivity(context: Context){
             context.startActivity(Intent(context, ManipulateSellersActivity::class.java))
+        }
+
+        fun openManipulateSoloSellerActivty(context: Context, seller: Seller){
+            context.startActivity(Intent(context,ManipulateSoloSellerActivity::class.java).putExtra("seller",seller))
         }
 
         fun openAdminNavMainPage(context: Context){

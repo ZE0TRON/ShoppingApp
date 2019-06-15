@@ -1,14 +1,18 @@
 package com.babob.sporcantam.adapter
 
 import android.content.Context
+import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Order
+import com.babob.sporcantam.utility.*
 
 class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateOrders.ViewHolder>(){
@@ -18,10 +22,14 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
         var sellerEmail: TextView
         var customerEmail: TextView
         var orderId:TextView
+        var confirm:Button
+        var delete:Button
         init {
             sellerEmail = linearLayout.findViewById(R.id.textView_order_layout_seller_email)
             customerEmail = linearLayout.findViewById(R.id.textView_order_layout_customer_email)
             orderId = linearLayout.findViewById(R.id.textView_ManipulateOrders_OrderId)
+            confirm = linearLayout.findViewById(R.id.button_OrderLayout_OrderConfirm)
+            delete = linearLayout.findViewById(R.id.button_OrderLayout_DeleteOrder)
         }
     }
 
@@ -52,6 +60,46 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
         }
 
+        holder.confirm.setOnClickListener {
+            Log.d("Recycle Adapter", dataset[position].order_id.toString())
+
+
+            AsyncUtil{
+
+                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteOrderRequest(dataset[position].order_id.toString())))
+
+                Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                ActivityOpenerUtil.openManipulateOrdersActivity(context)
+
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+
+        }
+
+        holder.delete.setOnClickListener {
+            Log.d("Recycle Adapter", dataset[position].order_id.toString())
+
+
+            AsyncUtil{
+
+                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(confirmOrderRequest(dataset[position].order_id.toString())))
+
+                Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                ActivityOpenerUtil.openManipulateOrdersActivity(context)
+
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+        }
+
+
+    }
+
+    fun deleteOrderRequest(id:String):String{
+        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/order/delete",SessionUtil.getSessionId(context)!!)
+    }
+
+    fun confirmOrderRequest(id:String):String{
+        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/sale/confirm",SessionUtil.getSessionId(context)!!)
 
     }
 

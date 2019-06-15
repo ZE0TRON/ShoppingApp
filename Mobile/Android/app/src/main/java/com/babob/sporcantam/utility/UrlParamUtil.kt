@@ -57,7 +57,8 @@ class UrlParamUtil {
                     "&last_name=${seller.lastName}"+
                     "&company_address=${seller.address}"+
                     "&IBAN=${seller.IBAN}"+
-                    "&phone_number=${seller.phoneNumber}"
+                    "&phone_number=${seller.phoneNumber}"+
+                    "&email=${seller.email}"
         }
 
         fun paymentToUrlParam(card:String,cvc:String,expire:String, balance:Double  ):String{

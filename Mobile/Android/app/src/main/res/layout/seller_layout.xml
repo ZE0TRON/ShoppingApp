@@ -30,7 +30,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView46"
+            app:layout_constraintStart_toStartOf="@+id/textView41"
             app:layout_constraintTop_toBottomOf="@+id/textView41" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView46"
+            app:layout_constraintStart_toStartOf="@+id/textView42"
             app:layout_constraintTop_toBottomOf="@+id/textView42" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/textView46"
+            app:layout_constraintStart_toStartOf="@+id/textView43"
             app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView46"
+            app:layout_constraintStart_toStartOf="@+id/textView44"
             app:layout_constraintTop_toBottomOf="@+id/textView44" />
 
         <TextView
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView43"
-            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_last_name"
             app:layout_constraintTop_toTopOf="@+id/textView43" />
 
         <TextView
@@ -124,7 +124,7 @@
             android:layout_marginTop="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView44"
-            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_address"
             app:layout_constraintTop_toTopOf="@+id/textView44"
             app:layout_constraintVertical_bias="1.0" />
 
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView45"
-            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_first_name"
+            app:layout_constraintStart_toStartOf="@+id/textView_seller_layout_iban"
             app:layout_constraintTop_toTopOf="@+id/textView45" />
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

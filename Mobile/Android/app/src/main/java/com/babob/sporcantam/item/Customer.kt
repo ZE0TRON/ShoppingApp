@@ -1,6 +1,8 @@
 package com.babob.sporcantam.item
 
-class Customer {
+import java.io.Serializable
+
+class Customer:Serializable {
     var firstName:String = ""
     var lastName:String = ""
     var address:String = ""

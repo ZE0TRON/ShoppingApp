@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Customer
+import com.babob.sporcantam.utility.ActivityOpenerUtil
 
 class RecyclerManipulateCustomer (var dataset: ArrayList<Customer>, var context: Context) :
         RecyclerView.Adapter<RecyclerManipulateCustomer.ViewHolder>() {
@@ -50,6 +51,7 @@ class RecyclerManipulateCustomer (var dataset: ArrayList<Customer>, var context:
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].firstName)
+            ActivityOpenerUtil.openManipulateSoloCustomerActivty(context,dataset[position])
         }
 
 

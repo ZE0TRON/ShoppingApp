@@ -100,7 +100,8 @@ class JsonUtil {
                     val customerFirstName = customerJsonObj.get("first_name") as String
                     val customerSecondName = customerJsonObj.get("second_name") as String
                     val customerAddress = customerJsonObj.get("address") as String
-                    val customer = Customer(customerFirstName,customerSecondName,customerAddress)
+                    val customerEmail = customerJsonObj.get("email") as String
+                    val customer = Customer(customerFirstName,customerSecondName,customerAddress,customerEmail)
                     retList.add(customer)
                     Log.d("Json",customerJsonObj.toString())
 
@@ -127,7 +128,9 @@ class JsonUtil {
                     val sellerAddress = sellerJsonObj.get("address") as String
                     val sellerIBAN = sellerJsonObj.get("IBAN") as String
                     val sellerPhone = sellerJsonObj.get("phone_number") as String
-                    val seller = Seller(sellerFirstName,sellerSecondName,sellerAddress,sellerIBAN,sellerPhone)
+                    val sellerEmail = sellerJsonObj.get("email") as String
+                    val seller = Seller(sellerFirstName,sellerSecondName,sellerAddress,sellerIBAN,sellerPhone,sellerEmail)
+                    retList.add(seller)
                     Log.d("Json",sellerJsonObj.toString())
 
                 }

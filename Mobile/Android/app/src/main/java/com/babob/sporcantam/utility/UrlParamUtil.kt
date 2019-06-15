@@ -49,7 +49,8 @@ class UrlParamUtil {
         fun customerToUrlParam(customer: Customer):String{
             return "first_name=${customer.firstName}" +
                     "&last_name=${customer.lastName}"+
-                    "&address=${customer.address}"
+                    "&address=${customer.address}"+
+                    "&email=${customer.email}"
         }
 
         fun sellertoUrlParam(seller: Seller):String{

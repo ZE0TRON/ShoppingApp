@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
+import com.babob.sporcantam.utility.ActivityOpenerUtil
 import com.bumptech.glide.Glide
 
 class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Context) :
@@ -72,6 +73,7 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].uuid)
+            ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
         }
 
 

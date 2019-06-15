@@ -1,8 +1,8 @@
 package com.babob.sporcantam.activity.admin
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.babob.sporcantam.R
 import com.babob.sporcantam.utility.ActivityOpenerUtil
+import com.babob.sporcantam.utility.SessionUtil
 import kotlinx.android.synthetic.main.activity_admin_nav_main_page.*
 import kotlinx.android.synthetic.main.app_bar_admin_nav_main_page.*
 
@@ -71,6 +72,10 @@ class AdminNavMainPage : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
             R.id.nav_manipulate_orders -> {
                 ActivityOpenerUtil.openManipulateOrdersActivity(this)
+            }
+            R.id.nav_admin_logout->{
+                SessionUtil.logOut(this)
+                ActivityOpenerUtil.openLoginActivity(this)
             }
         }
 

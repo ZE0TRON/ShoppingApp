@@ -52,6 +52,8 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
         toggle.syncState()
 
         updateMenuItems()
+
+
         title = "Items"
 
         dataset = arrayListOf()

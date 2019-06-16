@@ -73,5 +73,9 @@ class UrlParamUtil {
             return "item_title=$item_title"
         }
 
+        fun categorySearchItem(cat:String):String{
+            return "category=$cat"
+        }
+
     }
 }

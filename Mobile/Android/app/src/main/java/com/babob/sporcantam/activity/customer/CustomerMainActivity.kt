@@ -154,7 +154,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                         condition,"${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
             else{
                 dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
-                        "","${getString(R.string.base_url)}/item/"+condition,SessionUtil.getSessionId(this)!!))
+                        UrlParamUtil.categorySearchItem(condition),"${getString(R.string.base_url)}/item/"+condition,SessionUtil.getSessionId(this)!!))
             }
         }
         this.isQuery=false

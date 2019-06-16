@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class Order {
+public class Orders {
     public Long getId() {
         return id;
     }
@@ -16,18 +16,18 @@ public class Order {
 
 
     public String getCustomerEmail() {
-        return customerEmail;
+        return customer_email;
     }
 
     public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
+        this.customer_email = customerEmail;
     }
 
-    public boolean isConfirmed() {
+    public int isConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(boolean confirmed) {
+    public void setConfirmed(int confirmed) {
         this.confirmed = confirmed;
     }
 
@@ -35,7 +35,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
-    private String customerEmail;
+    private String customer_email;
 
     public String getOrder_id() {
         return order_id;
@@ -46,6 +46,6 @@ public class Order {
     }
 
     private String order_id;
-    private boolean confirmed;
+    private int confirmed;
 
 }

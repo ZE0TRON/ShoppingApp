@@ -20,6 +20,26 @@ public class CartItem {
     protected LocalDate publish_date;
     protected String UUID;
     private Long shoppingCartID;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    protected String category;
+    private String picture;
+
     public String getItem_title() {
         return item_title;
     }
@@ -91,6 +111,8 @@ public class CartItem {
         return string;
     }
    public CartItem(Item item) {
+       this.picture = item.getPicture();
+       this.category = item.getCategory();
         this.item_description = item.getDescription();
         this.item_title = item.getItem_title();
         this.price = item.getPrice();

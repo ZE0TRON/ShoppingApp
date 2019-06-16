@@ -8,12 +8,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order, Integer> {
+public interface OrderRepository extends CrudRepository<Orders, Integer> {
     @Query(
             value = "SELECT * FROM admin u WHERE u.orderID = ?1",nativeQuery = true)
-    Collection<Order> findByOrderID(String orderID);
+    Collection<Orders> findByOrderID(String orderID);
 
     @Query(
             value = "SELECT * FROM order o WHERE o.order_id IN :sale_id_list", nativeQuery = true)
-    Collection<Order> findByOrderIDList(@Param("sale_id_list") Collection<String> sale_id_list);
+    Collection<Orders> findByOrderIDList(@Param("sale_id_list") Collection<String> sale_id_list);
 }

@@ -25,6 +25,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE'
     // Use MySQL Connector-J
     compile 'mysql:mysql-connector-java'
+    testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.4.RELEASE'
+    testCompile 'com.h2database:h2:1.4.194'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'

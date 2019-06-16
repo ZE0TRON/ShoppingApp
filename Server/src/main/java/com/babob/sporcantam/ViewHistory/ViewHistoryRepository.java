@@ -8,6 +8,6 @@ import java.util.Collection;
 @Repository
 public interface ViewHistoryRepository extends CrudRepository<ViewHistory, Integer> {
     @Query(
-        value = "SELECT UUID FROM viewhistory v WHERE v.customer_email = ?1",nativeQuery = true)
+        value = "SELECT UUID FROM view_history v WHERE v.customer_email = ?1",nativeQuery = true)
     Collection<String> findUUIDsByCustomerEmail(String customer_email);
 }

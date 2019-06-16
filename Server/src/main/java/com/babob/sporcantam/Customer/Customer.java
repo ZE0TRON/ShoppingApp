@@ -35,7 +35,7 @@ public class Customer extends User{
     @Override
     public String toString() {
         String string = "";
-        string = string + "CartItem ID :"+cartID+"\n Address: "+address+"\n Order List ID : "+orderListID+"\n CartItem ID: "+cartID+"\n";
+        string = string + "CartItem ID :"+cartID+"\n Address: "+address+"\n Orders List ID : "+orderListID+"\n CartItem ID: "+cartID+"\n";
         return super.toString()+string;
     }
 

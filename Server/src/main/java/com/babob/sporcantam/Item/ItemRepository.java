@@ -33,7 +33,7 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
 //    Collection<Item> findByUUIDList(Collection<String> UUID_list);
 
     @Query(
-            value = "SELECT * FROM item i WHERE i.UUID IN :UUID_list", nativeQuery = true)
+            value = "SELECT i FROM Item i WHERE i.UUID IN :UUID_list")
     Collection<Item> findByUUIDList(@Param("UUID_list") Collection<String> UUID_list);
 
     @Query(

@@ -4,21 +4,22 @@ import com.babob.sporcantam.Customer.Customer;
 import com.babob.sporcantam.Customer.CustomerRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
-import com.babob.sporcantam.Order.Order;
+import com.babob.sporcantam.Order.Orders;
 import com.babob.sporcantam.Order.OrderRepository;
 import com.babob.sporcantam.OrderItem.OrderItem;
 import com.babob.sporcantam.OrderItem.OrderItemRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
-import com.babob.sporcantam.Utils.OrderItemList;
-import com.babob.sporcantam.Utils.Response;
+import com.babob.sporcantam.Utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -71,10 +72,10 @@ public class AdminController {
         try{
             Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
             //get first (and oly) customer
-            Order order = orderRepository.findByOrderID(saleID).iterator().next();
-            order.setConfirmed(true);
-            orderRepository.save(order);
-            return new Response("Order confirmed",true);
+            Orders orders = orderRepository.findByOrderID(saleID).iterator().next();
+            orders.setConfirmed(1);
+            orderRepository.save(orders);
+            return new Response("Orders confirmed",true);
         }
         catch(Exception e){
             return new Response("No such admin",false);
@@ -116,6 +117,51 @@ public class AdminController {
             return new Response("Cannot update seller info!", false);
         }
     }
+
+    @RequestMapping(method=POST,path ="/customers/")
+    public @ResponseBody
+    CustomerList getCustomers(@CookieValue(name = "JSESSIONID") String sessionID
+    ) {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return null;
+            }
+            Collection<Customer> customers = new ArrayList<Customer>();
+             customerRepository.findAll().forEach((customer -> {
+                customers.add(customer);
+             }));
+            CustomerList customerList = new CustomerList(customers);
+            return customerList;
+
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+    @RequestMapping(method=POST,path ="/sellers/")
+    public @ResponseBody
+    SellerList getSellers(@CookieValue(name = "JSESSIONID") String sessionID
+    ) {
+
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return null;
+            }
+            Collection<Seller> sellers = new ArrayList<Seller>();
+            sellerRepository.findAll().forEach((seller -> {
+                sellers.add(seller);
+            }));
+            SellerList sellerList = new SellerList(sellers);
+            return sellerList;
+
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
     @RequestMapping(method=POST,path ="/customer/update")
     public @ResponseBody
     Response manipulateCustomer(@CookieValue(name = "JSESSIONID") String sessionID
@@ -147,7 +193,28 @@ public class AdminController {
             return new Response("Cannot update customer info!",false);
         }
     }
+    @RequestMapping(method=POST,path ="/orders/")
+    public @ResponseBody
+    OrderList getOrders(@CookieValue(name = "JSESSIONID") String sessionID
+    ) {
 
+        try{
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if(admin == null) {
+                return null;
+            }
+            Collection<Orders> orders = new ArrayList<Orders>();
+            orderRepository.findAll().forEach((order -> {
+                orders.add(order);
+            }));
+            OrderList orderList = new OrderList(orders);
+            return orderList;
+
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
     @RequestMapping(method = POST, path = "/item/update")
     public @ResponseBody
     Response manipulateItem(@CookieValue(name = "JSESSIONID") String sessionID
@@ -193,9 +260,9 @@ public class AdminController {
             if(admin == null) {
                 return new Response("Cannot update seller info!", false);
             }
-            Order order = orderRepository.findByOrderID(saleID).iterator().next();
-            orderRepository.delete(order);
-            return new Response("Order deleted", true);
+            Orders orders = orderRepository.findByOrderID(saleID).iterator().next();
+            orderRepository.delete(orders);
+            return new Response("Orders deleted", true);
         }
         catch (Exception e){
             return new Response("Cannot update customer info!",false);
@@ -279,6 +346,62 @@ public class AdminController {
         }
         catch (Exception e){
             return new Response(e.getMessage(),false);
+        }
+    }
+
+    @RequestMapping(method=POST,path ="/generateSaleReport")
+    public @ResponseBody
+    SalesReport generateSaleReport(@CookieValue(name = "JSESSIONID") String sessionID)
+    {
+        try {
+            Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
+            if (admin == null) {
+                return null;
+            }
+            SalesReport salesReport = new SalesReport();
+            orderItemRepository.findAll().forEach(orderItem -> {
+                switch (orderItem.getCategory()) {
+                    case "running":
+                        salesReport.running += 1;
+                        break;
+                    case "cloths":
+                        salesReport.cloths
+                                += 1;
+                        break;
+                    case "fitness":
+                        salesReport.fitness += 1;
+                        break;
+                    case "hiking":
+                        salesReport.hiking += 1;
+                        break;
+                    case "ski":
+                        salesReport.ski += 1;
+                        break;
+                    case "snowboard":
+                        salesReport.snowboard += 1;
+                        break;
+                    case "soccer":
+                        salesReport.soccer += 1;
+                        break;
+                    case "basketball":
+                        salesReport.basketball += 1;
+                        break;
+                    case "swimming":
+                        salesReport.swimming += 1;
+                        break;
+                    case "cycling":
+                        salesReport.cycling += 1;
+                        break;
+                    case "tennis":
+                        salesReport.tennis += 1;
+                        break;
+                }
+
+            });
+            return salesReport;
+        }
+        catch (Exception e){
+            return null;
         }
     }
 

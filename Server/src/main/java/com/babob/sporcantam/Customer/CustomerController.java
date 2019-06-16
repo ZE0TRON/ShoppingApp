@@ -3,9 +3,9 @@ import com.babob.sporcantam.CartItem.CartItem;
 import com.babob.sporcantam.CartItem.CartItemRepository;
 import com.babob.sporcantam.Item.Item;
 import com.babob.sporcantam.Item.ItemRepository;
+import com.babob.sporcantam.Order.Orders;
 import com.babob.sporcantam.OrderHistory.OrderHistory;
 import com.babob.sporcantam.OrderHistory.OrderHistoryRepository;
-import com.babob.sporcantam.Order.Order;
 import com.babob.sporcantam.Order.OrderRepository;
 import com.babob.sporcantam.OrderItem.OrderItem;
 import com.babob.sporcantam.OrderItem.OrderItemRepository;
@@ -14,26 +14,25 @@ import com.babob.sporcantam.Seller.SellerRepository;
 import com.babob.sporcantam.Utils.CartItemList;
 import com.babob.sporcantam.Utils.ItemList;
 import com.babob.sporcantam.Utils.OrderItemList;
-import com.babob.sporcantam.ViewHistory.ViewHistory;
 import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
-import com.babob.sporcantam.Utils.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.babob.sporcantam.Utils.Response;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -242,22 +241,23 @@ public class CustomerController {
 
     @RequestMapping(method=POST,path ="/showViewHistory")
     public @ResponseBody
-    Collection<Item> showViewHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+    ItemList showViewHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
         Collection<String> history_uuids = viewHistoryRepository.findUUIDsByCustomerEmail(customer_email);
         Collection<Item> history_items = itemRepository.findByUUIDList(history_uuids);
-        return history_items;
+        ItemList itemList = new ItemList(history_items);
+        return itemList;
     }
 
     @RequestMapping(method=POST,path ="/showOrderHistory")
     public @ResponseBody
-    Collection<Order> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+    Collection<Orders> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
         Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
-        Collection<Order> order_list = orderRepository.findByOrderIDList(history_sale_ids);
-        return order_list;
+        Collection<Orders> orders_list = orderRepository.findByOrderIDList(history_sale_ids);
+        return orders_list;
     }
 
     @RequestMapping(method=GET,path ="/showOrder/{order_id}")
@@ -265,8 +265,8 @@ public class CustomerController {
     OrderItemList showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
-        Order order = orderRepository.findByOrderID(order_id).iterator().next();
-        if(!order.getCustomerEmail().equals(customer_email)){
+        Orders orders = orderRepository.findByOrderID(order_id).iterator().next();
+        if(!orders.getCustomerEmail().equals(customer_email)){
             return null;
         }
         Collection<OrderItem> orderItems = orderItemRepository.getOrderItems(order_id);
@@ -277,17 +277,27 @@ public class CustomerController {
 
     @RequestMapping(method=POST,path ="/checkout")
     public @ResponseBody
-    Response checkout(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam Long cartID) {
+    Response checkout(@CookieValue(name = "JSESSIONID") String sessionID) {
+        Customer customer;
 
-        try{
-            Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
-            Collection<CartItem> items = cartItemRepository.getItemsById(cartID);
+        try {
+
+          customer  = customerRepository.findBySessionID(sessionID).iterator().next();
+        }
+        catch (Exception e){
+            System.out.println(e.toString());
+            System.out.println(e.getMessage());
+            return new Response("Cannot find the user",false);
+        }
+            Collection<CartItem> items = cartItemRepository.getItemsById(customer.getCartID());
             Iterator<CartItem> it = items.iterator();
             ArrayList<String> shipping_list =new  ArrayList<String>();
             ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
-            Order order = new Order();
-            order.setOrder_id(order.getId().toString());
+            Orders orders = new Orders();
+            double randomDouble = Math.random();
+            randomDouble = randomDouble * 1000 + 1;
+            int randomInt = (int) randomDouble;
+            orders.setOrder_id(customer.getEmail()+Integer.toString(randomInt));
             Set<Seller> sellerList = new HashSet<Seller>();
             ArrayList<String> itemIDs = new ArrayList<String>();
 
@@ -295,7 +305,11 @@ public class CustomerController {
             double total = 0;
             int shipping_count = 0;
             while(it.hasNext()){
+
                CartItem item = it.next();
+               if(item.getStock_count()> 1) {
+                   item.setStock_count(item.getStock_count()-1);
+               }
                if(!shipping_list.contains(item.getShipping_info())){
                    shipping_count+=1;
                    shipping_list.add(item.getShipping_info());
@@ -306,7 +320,7 @@ public class CustomerController {
                seller.setBalance(seller.getBalance()+item.getPrice());
                sellerList.add(seller);
                OrderItem orderItem = new OrderItem(item);
-               orderItem.setOrder_id(order.getOrder_id());
+               orderItem.setOrder_id(orders.getOrder_id());
                orderItems.add(orderItem);
 
             }
@@ -318,70 +332,76 @@ public class CustomerController {
                     Seller seller = sit.next();
                     sellerRepository.save(seller);
                 }
-                customerRepository.save(customer);
 
-                order.setCustomerEmail(customer.getEmail());
 
-                orderRepository.save(order);
+                orders.setCustomerEmail(customer.getEmail());
+
+                orderRepository.save(orders);
                 OrderHistory new_orderhistory = new OrderHistory();
                 new_orderhistory.setCustomer_email(customer.getEmail());
-                new_orderhistory.setSale_id(order.getOrder_id());
+                new_orderhistory.setSale_id(orders.getOrder_id());
                 orderHistoryRepository.save(new_orderhistory);
                 it = items.iterator();
                 while(it.hasNext()){
-                    cartItemRepository.delete(it.next()); //empty the cart.
+                    CartItem cartItem = it.next();
+                    Item item = itemRepository.findByUUID(cartItem.getUUID()).iterator().next();
+
+                    item.setStock_count(item.getStock_count()-1);
+
+                    itemRepository.save(item);
+                    //empty the cart.
+                    cartItemRepository.delete(cartItem);
+
                 }
 
                 Iterator<OrderItem> oit = orderItems.iterator();
                 while(oit.hasNext()){
                     orderItemRepository.save(oit.next());
                 }
-                return new Response("Order has given",true);
+                customerRepository.save(customer);
+                return new Response("Orders has given",true);
             }
             else {
                 return new Response("Insufficent balance",false);
             }
 
-        }
-        catch (Exception e){
-            return new Response("Cannot update customer info!",false);
-        }
+
     }
 
-    boolean isCardValid(String card){
-        if (card == null)
-            return false;
-        char checkDigit = card.charAt(card.length() - 1);
-        if (card == null)
-            return false;
-        String digit;
-        /* convert to array of int for simplicity */
-        int[] digits = new int[card.length()];
-        for (int i = 0; i < card.length(); i++) {
-            digits[i] = Character.getNumericValue(card.charAt(i));
-        }
-
-        /* double every other starting from right - jumping from 2 in 2 */
-        for (int i = digits.length - 1; i >= 0; i -= 2)	{
-            digits[i] += digits[i];
-
-            /* taking the sum of digits grater than 10 - simple trick by substract 9 */
-            if (digits[i] >= 10) {
-                digits[i] = digits[i] - 9;
-            }
-        }
-        int sum = 0;
-        for (int i = 0; i < digits.length; i++) {
-            sum += digits[i];
-        }
-        /* multiply by 9 step */
-        sum = sum * 9;
-
-        /* convert to string to be easier to take the last digit */
-        digit = sum + "";
-        digit =  digit.substring(digit.length() - 1);
-        return checkDigit == digit.charAt(0);
-    }
+//    boolean isCardValid(String card){
+//        if (card == null)
+//            return false;
+//        char checkDigit = card.charAt(card.length() - 1);
+//        if (card == null)
+//            return false;
+//        String digit;
+//        /* convert to array of int for simplicity */
+//        int[] digits = new int[card.length()];
+//        for (int i = 0; i < card.length(); i++) {
+//            digits[i] = Character.getNumericValue(card.charAt(i));
+//        }
+//
+//        /* double every other starting from right - jumping from 2 in 2 */
+//        for (int i = digits.length - 1; i >= 0; i -= 2)	{
+//            digits[i] += digits[i];
+//
+//            /* taking the sum of digits grater than 10 - simple trick by substract 9 */
+//            if (digits[i] >= 10) {
+//                digits[i] = digits[i] - 9;
+//            }
+//        }
+//        int sum = 0;
+//        for (int i = 0; i < digits.length; i++) {
+//            sum += digits[i];
+//        }
+//        /* multiply by 9 step */
+//        sum = sum * 9;
+//
+//        /* convert to string to be easier to take the last digit */
+//        digit = sum + "";
+//        digit =  digit.substring(digit.length() - 1);
+//        return checkDigit == digit.charAt(0);
+//    }
 
 
     @RequestMapping(method=POST,path ="/addBalance")
@@ -396,9 +416,9 @@ public class CustomerController {
             if(cvc.length()!=3){
                 return new Response("Invalid payment info", false);
             }
-            if(!isCardValid(cardNumber)){
-                return new Response("Invalid payment info", false);
-            }
+//            if(!isCardValid(cardNumber)){
+//                return new Response("Invalid payment info", false);
+//            }
             Date date = new Date();
             String expireString = "00-"+expireDate;
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -410,9 +430,43 @@ public class CustomerController {
             customerRepository.save(customer);
             return new Response("Balance successfully added",true);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new Response("Cannot update customer info!", false);
         }
     }
+
+    @RequestMapping("/downloadFile/{UUID}")
+    public void downloadPDFResource( HttpServletRequest request,
+                                     HttpServletResponse response,
+                                     @PathVariable("UUID") String UUID
+                                   )
+    {
+        //Check the renderer
+
+        //If user is not authorized - he should be thrown out from here itself
+
+        //Authorized user will download the file
+        String dataDirectory = "/root/uploads/";
+        String file = UUID+".jpg";
+        Path fileObj = Paths.get(dataDirectory, file);
+        if (Files.exists(fileObj))
+        {
+            response.setContentType("image/*");
+            response.addHeader("Content-Disposition", "attachment; filename="+file);
+            try
+            {
+                Files.copy(fileObj, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+
+
+
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String submit(@RequestParam("file") MultipartFile file) {
        // modelMap.addAttribute("file", file);
@@ -438,14 +492,15 @@ public class CustomerController {
         return "FileSaved";
     }
     @RequestMapping(method = POST, path = "/getBalance")
-    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+
+    public @ResponseBody String deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
     ) {
         try {
             Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
-            return customer.getBalance();
+            return Double.toString(customer.getBalance());
         }
         catch (Exception e) {
-            return 0.0;
+            return "0.0";
         }
     }
 }

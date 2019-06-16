@@ -20,7 +20,26 @@ public class OrderItem {
     protected Integer stock_count;
     protected LocalDate publish_date;
     protected String UUID;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     private String order_id;
+    protected String category;
+    private String picture;
     public String getItem_title() {
         return item_title;
     }
@@ -93,6 +112,8 @@ public class OrderItem {
         return string;
     }
    public OrderItem(CartItem item) {
+        this.picture = item.getPicture();
+        this.category = item.getCategory();
         this.item_description = item.getDescription();
         this.item_title = item.getItem_title();
         this.price = item.getPrice();

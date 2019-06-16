@@ -63,14 +63,17 @@ public class ItemController {
         }
     }
 
-    @RequestMapping(method = GET, path = "/{UUID}")
+    @RequestMapping(method = POST, path = "/{UUID}")
     public @ResponseBody Item showItem(@PathVariable("UUID") String UUID
             , @CookieValue(name = "JSESSIONID") String sessionID) {
         try{
             Item item = itemRepository.findByUUID(UUID).iterator().next();
+            System.out.println("I am Here");
             if(sessionID!=null){ //if its not non-registered user.
+                System.out.println("Session is not null");
                 Collection<Customer> customerList = customerRepository.findBySessionID(sessionID);
                 if(!customerList.isEmpty()){
+                    System.out.println("I am viewing item");
                     Customer customer =  customerList.iterator().next();
                     ViewHistory new_history = new ViewHistory();
                     new_history.setUUID(UUID);
@@ -89,7 +92,7 @@ public class ItemController {
     Response updateItemInfo(@PathVariable("UUID") String UUID
         , @RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
         , @RequestParam(value = "price", required = false, defaultValue = "-1.0") float price
-        , @RequestParam(value = "description", required = false, defaultValue = " ") String description
+        , @RequestParam(value = "item_description", required = false, defaultValue = " ") String description
         , @RequestParam(value = "stock_count", required = false, defaultValue = "-1") int stock_count
         , @RequestParam(value = "shipping_info", required = false, defaultValue = " ") String shipping_info
         , @RequestParam(value = "category", required = false, defaultValue = " ") String category) {

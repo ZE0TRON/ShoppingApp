@@ -60,7 +60,7 @@ class ManipulateOrdersActivity : AppCompatActivity() {
     fun updateList(){
 
         dataset = JsonUtil.getOrderResponseToList(HttpUtil.sendPoststr(
-                "","${getString(R.string.base_url)}/xxxxxx",SessionUtil.getSessionId(this)!!))
+                "","${getString(R.string.base_url)}/admin/orders",SessionUtil.getSessionId(this)!!))
 
 
         runOnUiThread {

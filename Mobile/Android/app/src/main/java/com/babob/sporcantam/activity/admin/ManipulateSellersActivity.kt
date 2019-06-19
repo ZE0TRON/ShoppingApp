@@ -61,7 +61,7 @@ class ManipulateSellersActivity : AppCompatActivity() {
 
         //TODO: recyclerView'lardaki
         dataset = JsonUtil.getSellerResponseToList(HttpUtil.sendPoststr(
-                "","${getString(R.string.base_url)}/xxxxxx",SessionUtil.getSessionId(this)!!))
+                "","${getString(R.string.base_url)}/admin/sellers",SessionUtil.getSessionId(this)!!))
 
 
         runOnUiThread {

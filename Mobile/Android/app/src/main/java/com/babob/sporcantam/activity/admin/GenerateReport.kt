@@ -18,24 +18,25 @@ class GenerateReport : AppCompatActivity() {
 
 
         AsyncUtil{
-            //TODO: reis su sales report linkini eklersin suraya
             val response = JsonUtil.getGenerateSaleReport(
-                    HttpUtil.sendPoststr("","${getString(R.string.base_url)}/nahandaburayayazlink",SessionUtil.getSessionId(this)!!)
+                    HttpUtil.sendPoststr("","${getString(R.string.base_url)}/admin/generateSaleReport",SessionUtil.getSessionId(this)!!)
             )
 
             for (key in response.keys){
-                when(key){
-                    "running" -> textView_generate_report_running.text = response[key]
-                    "clothes" -> textView_generate_report_clothes.text = response[key]
-                    "fitness" -> textView_generate_report_fitness.text = response[key]
-                    "hiking" -> textView_generate_report_hiking.text = response[key]
-                    "ski" -> textView_generate_report_ski.text = response[key]
-                    "snowboard" -> textView_generate_report_snowboard.text = response[key]
-                    "soccer" -> textView_generate_report_soccer.text = response[key]
-                    "basketball" -> textView_generate_report_basketball.text = response[key]
-                    "swimming" -> textView_generate_report_swimming.text = response[key]
-                    "cycling" -> textView_generate_report_cycling.text = response[key]
-                    "tennis" -> textView_generate_report_tennis.text = response[key]
+                runOnUiThread {
+                    when (key) {
+                        "running" -> textView_generate_report_running.text = response[key]
+                        "clothes" -> textView_generate_report_clothes.text = response[key]
+                        "fitness" -> textView_generate_report_fitness.text = response[key]
+                        "hiking" -> textView_generate_report_hiking.text = response[key]
+                        "ski" -> textView_generate_report_ski.text = response[key]
+                        "snowboard" -> textView_generate_report_snowboard.text = response[key]
+                        "soccer" -> textView_generate_report_soccer.text = response[key]
+                        "basketball" -> textView_generate_report_basketball.text = response[key]
+                        "swimming" -> textView_generate_report_swimming.text = response[key]
+                        "cycling" -> textView_generate_report_cycling.text = response[key]
+                        "tennis" -> textView_generate_report_tennis.text = response[key]
+                    }
                 }
             }
 

@@ -138,6 +138,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             navMenu.findItem(R.id.nav_update_profile).isVisible = false
             navMenu.findItem(R.id.nav_add_balance).isVisible = false
             navMenu.findItem(R.id.nav_view_history).isVisible = false
+            navMenu.findItem(R.id.nav_view_order_history).isVisible = false
             navMenu.findItem(R.id.nav_login).isVisible = true
         }
     }
@@ -206,6 +207,9 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
             R.id.nav_view_history -> {
                 ActivityOpenerUtil.openViewHistoryActivity(this)
+            }
+            R.id.nav_view_order_history -> {
+                ActivityOpenerUtil.openViewOrdersActivity(this)
             }
             R.id.nav_logout -> {
                 SessionUtil.logOut(this)

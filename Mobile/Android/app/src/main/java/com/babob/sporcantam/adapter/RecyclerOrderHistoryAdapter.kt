@@ -55,22 +55,9 @@ class RecyclerOrderHistoryAdapter (var dataset: ArrayList<Order>, var context: C
         holder.delete.visibility = View.GONE
 
         holder.itemView.setOnClickListener {
-            Log.d("Recycle adapter", dataset[position].order_id.toString())
-            //ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
-
+            Log.d("Recycle adapter", dataset[position].order_id)
+            ActivityOpenerUtil.openOrderHistoryItemListActivity(context,dataset[position].order_id)
         }
-
-
-
-    }
-
-    fun deleteOrderRequest(id:String):String{
-        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/order/delete",SessionUtil.getSessionId(context)!!)
-    }
-
-    fun confirmOrderRequest(id:String):String{
-        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/sale/confirm",SessionUtil.getSessionId(context)!!)
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

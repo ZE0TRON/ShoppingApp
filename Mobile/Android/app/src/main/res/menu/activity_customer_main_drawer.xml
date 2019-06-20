@@ -20,6 +20,10 @@
         android:icon="@drawable/ic_history_black_24dp"
         android:title="View History" />
     <item
+        android:id="@+id/nav_view_order_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="View Order History" />
+    <item
         android:id="@+id/nav_login"
         android:icon="@drawable/ic_account_box_black_24dp"
         android:title="Login" />

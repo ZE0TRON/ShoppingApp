@@ -16,7 +16,7 @@
             android:layout_width="91dp"
             android:layout_height="29dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:text="Order"
             android:textColor="@color/colorAccent"
@@ -28,11 +28,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView21"
-            android:layout_width="117dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="36dp"
-            android:text="Seller Email:"
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="21dp"
+            android:layout_marginTop="16dp"
+            android:text="Customer Email:"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -40,45 +40,26 @@
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         <TextView
-            android:id="@+id/textView_order_layout_seller_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="112dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/textView21"
-            app:layout_constraintStart_toEndOf="@+id/textView21"
-            app:layout_constraintTop_toTopOf="@+id/textView21"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Customer Email:"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView21"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-        <TextView
             android:id="@+id/textView_order_layout_customer_email"
             android:layout_width="63dp"
             android:layout_height="19dp"
+            android:layout_marginStart="16dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView24"
-            app:layout_constraintStart_toStartOf="@+id/textView_order_layout_seller_email"
+            app:layout_constraintStart_toEndOf="@+id/textView24"
             app:layout_constraintTop_toTopOf="@+id/textView24" />
 
         <TextView
             android:id="@+id/textView23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Order Id:"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView24"
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -86,7 +67,6 @@
             android:id="@+id/textView_ManipulateOrders_OrderId"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:layout_marginBottom="8dp"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView23"
             app:layout_constraintStart_toStartOf="@+id/textView_order_layout_customer_email"

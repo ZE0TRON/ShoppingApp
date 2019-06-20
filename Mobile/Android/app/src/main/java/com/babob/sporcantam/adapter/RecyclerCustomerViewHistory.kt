@@ -49,7 +49,7 @@ class RecyclerCustomerViewHistory(var dataset: ArrayList<Item>, var context: Con
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)
-            ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
+            ActivityOpenerUtil.openViewItemActivity(context, dataset[position])
         }
 
 

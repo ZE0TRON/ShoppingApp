@@ -73,8 +73,8 @@ class JsonUtil {
 
                     val orderJsonObj = arr.getJSONObject(i++)
                     //val orderSellerEmail = orderJsonObj.get("seller_email") as String
-                    val orderConfirmed = orderJsonObj.get("isconfirmed") as Int
-                    val orderCustomerEmail = orderJsonObj.get("customer_email") as String
+                    val orderConfirmed = orderJsonObj.get("is_confirmed") as Int
+                    val orderCustomerEmail = orderJsonObj.get("customerEmail") as String
                     val order_id = orderJsonObj.get("order_id") as String
                     val order = Order(orderConfirmed, orderCustomerEmail,order_id)
                     retList.add(order)
@@ -89,8 +89,31 @@ class JsonUtil {
             return arrayListOf()
         }
 
+        fun getOrderCustomerResponseToList(response: String):ArrayList<Order>{
+            try {
+                val jsonObj = JSONObject(response)
+                val retList = arrayListOf<Order>()
+                val arr = jsonObj.getJSONArray("items")
+                var i = 0
+                while (i < arr.length()){
+                    val orderJsonObj = arr.getJSONObject(i++)
+                    //val orderSellerEmail = orderJsonObj.get("seller_email") as String
+                    val orderCustomerEmail = orderJsonObj.get("customerEmail") as String
+                    val order_id = orderJsonObj.get("order_id") as String
+                    val order = Order(1, orderCustomerEmail,order_id)
+                    retList.add(order)
+                    Log.d("Json",orderJsonObj.toString())
+
+                }
+                return retList
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            return arrayListOf()
+        }
+
         fun getCustomerResponseToList(response: String):ArrayList<Customer>{
-            print("RESPO:::"+response)
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Customer>()
@@ -117,8 +140,6 @@ class JsonUtil {
         }
 
         fun getSellerResponseToList(response: String):ArrayList<Seller>{
-            print("wwwww::"+response)
-            Log.d("ANAN",response)
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Seller>()
@@ -195,8 +216,7 @@ class JsonUtil {
 
             try {
                 val jsonObj = JSONObject(response)
-
-                var i=0
+                Log.d("json util", jsonObj.toString())
                 for(cat in categories) {
                     soldItemCounts[cat.toLowerCase()]=jsonObj.getString(cat.toLowerCase())
                 }

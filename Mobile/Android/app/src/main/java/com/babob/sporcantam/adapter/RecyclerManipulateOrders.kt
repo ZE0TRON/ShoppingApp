@@ -19,13 +19,11 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
 
     class ViewHolder(val linearLayout: LinearLayout) : RecyclerView.ViewHolder(linearLayout){
-        var sellerEmail: TextView
         var customerEmail: TextView
         var orderId:TextView
         var confirm:Button
         var delete:Button
         init {
-            sellerEmail = linearLayout.findViewById(R.id.textView_order_layout_seller_email)
             customerEmail = linearLayout.findViewById(R.id.textView_order_layout_customer_email)
             orderId = linearLayout.findViewById(R.id.textView_ManipulateOrders_OrderId)
             confirm = linearLayout.findViewById(R.id.button_OrderLayout_OrderConfirm)
@@ -50,7 +48,6 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.sellerEmail.text = dataset[position].isConfirmed.toString()
         holder.customerEmail.text = dataset[position].customer_email
         holder.orderId.text = dataset[position].order_id.toString()
 

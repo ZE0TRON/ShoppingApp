@@ -7,6 +7,7 @@ import com.babob.sporcantam.activity.admin.*
 import com.babob.sporcantam.activity.customer.AddBalanceActivity
 import com.babob.sporcantam.activity.customer.CustomerMainActivity
 import com.babob.sporcantam.activity.customer.ShoppingCartActivity
+import com.babob.sporcantam.activity.customer.ViewOrdersActivity
 import com.babob.sporcantam.item.Customer
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.item.Seller
@@ -99,7 +100,21 @@ class ActivityOpenerUtil {
         }
 
         fun openViewHistoryActivity(context: Context){
-            context.startActivity(Intent(context, ViewHistoryActivity::class.java))
+            context.startActivity(Intent(context, ViewHistoryActivity::class.java).putExtra("title","History"))
+        }
+
+        fun openOrderHistoryItemListActivity(context: Context, orderId:String){
+            context.startActivity(Intent(context, ViewHistoryActivity::class.java)
+                    .putExtra("title","Order Items")
+                    .putExtra("id",orderId))
+        }
+
+        fun openViewOrdersActivity(context: Context){
+            context.startActivity(Intent(context, ViewOrdersActivity::class.java))
+        }
+
+        fun openGenerateReportActivity(context: Context){
+            context.startActivity(Intent(context, GenerateReport::class.java))
         }
 
     }

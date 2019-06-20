@@ -21,12 +21,18 @@ class ViewHistoryActivity : AppCompatActivity() {
 
     lateinit var dataset:ArrayList<Item>
 
+    private var urlExt = "/customer/showViewHistory"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_history)
 
-        title = "History"
+        title = intent.getSerializableExtra("title") as String
+
+        if (title != "History"){
+            urlExt = "/customer/showOrder/${intent.getSerializableExtra("id") as String}"
+        }
 
         dataset = arrayListOf()
 
@@ -60,7 +66,7 @@ class ViewHistoryActivity : AppCompatActivity() {
     fun updateList(){
         dataset = JsonUtil.getItemResponseToList(
                 HttpUtil.sendPoststr(
-                        "","${getString(R.string.base_url)}/customer/showViewHistory", SessionUtil.getSessionId(this)!!))
+                        "","${getString(R.string.base_url)}$urlExt", SessionUtil.getSessionId(this)!!))
 
         runOnUiThread {
             (recyclerView.adapter as RecyclerCustomerViewHistory).dataset = dataset

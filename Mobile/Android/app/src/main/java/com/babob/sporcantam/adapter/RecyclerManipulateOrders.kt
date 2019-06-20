@@ -1,5 +1,6 @@
 package com.babob.sporcantam.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
@@ -65,7 +66,9 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
                 val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteOrderRequest(dataset[position].order_id.toString())))
 
-                Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                (context as Activity).runOnUiThread {
+                    Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                }
                 ActivityOpenerUtil.openManipulateOrdersActivity(context)
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -81,7 +84,9 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
                 val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(confirmOrderRequest(dataset[position].order_id.toString())))
 
-                Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                (context as Activity).runOnUiThread {
+                    Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
+                }
                 ActivityOpenerUtil.openManipulateOrdersActivity(context)
 
             }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -92,11 +97,11 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
     }
 
     fun deleteOrderRequest(id:String):String{
-        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/order/delete",SessionUtil.getSessionId(context)!!)
+        return HttpUtil.sendPoststr(UrlParamUtil.saleIdToUrlParam(id),"http://134.209.226.138:8080/admin/order/delete",SessionUtil.getSessionId(context)!!)
     }
 
     fun confirmOrderRequest(id:String):String{
-        return HttpUtil.sendPoststr(id,"${R.string.base_url}/admin/sale/confirm",SessionUtil.getSessionId(context)!!)
+        return HttpUtil.sendPoststr(UrlParamUtil.saleIdToUrlParam(id),"http://134.209.226.138:8080/admin/sale/confirm",SessionUtil.getSessionId(context)!!)
 
     }
 

@@ -95,5 +95,9 @@ class UrlParamUtil {
             return "email=$email"
         }
 
+        fun saleIdToUrlParam(id:String):String{
+            return "saleID=$id"
+        }
+
     }
 }

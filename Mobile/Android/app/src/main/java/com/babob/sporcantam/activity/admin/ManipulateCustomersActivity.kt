@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import com.babob.sporcantam.R
 import com.babob.sporcantam.adapter.RecyclerManipulateCustomer
 import com.babob.sporcantam.item.Customer
@@ -57,8 +58,10 @@ class ManipulateCustomersActivity : AppCompatActivity() {
 
     fun updateList(){
 
-        dataset = JsonUtil.getCustomerResponseToList(HttpUtil.sendPoststr(
-                "","${getString(R.string.base_url)}/admin/customers", SessionUtil.getSessionId(this)!!))
+        val rr = HttpUtil.sendPoststr(
+                "","${getString(R.string.base_url)}/admin/customers", SessionUtil.getSessionId(this)!!)
+        Log.d("ANAN",rr)
+        dataset = JsonUtil.getCustomerResponseToList(rr)
 
 
         //viewAdapter = RecyclerCallViewAdapter(dataset)

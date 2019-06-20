@@ -77,5 +77,19 @@ class UrlParamUtil {
             return "category=$cat"
         }
 
+        fun UUIDtoUrlParam(uuid:String):String{
+            return "UUID=$uuid"
+        }
+
+        fun itemtoUrlParam(t:String,d:String,st:Int,p:Float,sh:String,c:String,uu:String):String{
+            return "item_title=$t"+
+                    "&description=$d"+
+                    "&stock_count=$st"+
+                    "&price=$p"+
+                    "&shipping_info=$sh"+
+                    "&category=$c"+
+                    "&UUID=$uu"
+        }
+
     }
 }

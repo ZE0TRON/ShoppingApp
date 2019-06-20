@@ -73,7 +73,7 @@ class JsonUtil {
 
                     val orderJsonObj = arr.getJSONObject(i++)
                     //val orderSellerEmail = orderJsonObj.get("seller_email") as String
-                    val orderConfirmed = orderJsonObj.get("confirmed") as Int
+                    val orderConfirmed = orderJsonObj.get("isconfirmed") as Int
                     val orderCustomerEmail = orderJsonObj.get("customer_email") as String
                     val order_id = orderJsonObj.get("order_id") as String
                     val order = Order(orderConfirmed, orderCustomerEmail,order_id)
@@ -90,6 +90,7 @@ class JsonUtil {
         }
 
         fun getCustomerResponseToList(response: String):ArrayList<Customer>{
+            print("RESPO:::"+response)
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Customer>()
@@ -98,10 +99,10 @@ class JsonUtil {
                 while (i < arr.length()){
 
                     val customerJsonObj = arr.getJSONObject(i++)
-                    val customerFirstName = customerJsonObj.get("first_name") as String
-                    val customerSecondName = customerJsonObj.get("last_name") as String
-                    val customerAddress = customerJsonObj.get("address") as String
-                    val customerEmail = customerJsonObj.get("email") as String
+                    val customerFirstName = customerJsonObj.getString("first_name")
+                    val customerSecondName = customerJsonObj.getString("last_name")
+                    val customerAddress = customerJsonObj.getString("address")
+                    val customerEmail = customerJsonObj.getString("email")
                     val customer = Customer(customerFirstName,customerSecondName,customerAddress,customerEmail)
                     retList.add(customer)
                     Log.d("Json",customerJsonObj.toString())
@@ -116,6 +117,8 @@ class JsonUtil {
         }
 
         fun getSellerResponseToList(response: String):ArrayList<Seller>{
+            print("wwwww::"+response)
+            Log.d("ANAN",response)
             try {
                 val jsonObj = JSONObject(response)
                 val retList = arrayListOf<Seller>()

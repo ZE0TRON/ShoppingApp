@@ -43,7 +43,7 @@ class ManipulateSoloSellerActivity : AppCompatActivity() {
         seller.address = editText_AdminSoloSeller_Address.text.toString()
         seller.IBAN = editText_AdminSoloSeller_iban.text.toString()
         seller.phoneNumber = editText_AdminSoloSeller_phone.text.toString()
-        seller.email = editText_AdminSoloSeller_email.toString()
+        seller.email = editText_AdminSoloSeller_email.text.toString()
 
         AsyncUtil{
             val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(saveRequest(seller)))
@@ -61,7 +61,7 @@ class ManipulateSoloSellerActivity : AppCompatActivity() {
     }
 
     fun saveRequest(se:Seller):String{
-        return HttpUtil.sendPoststr(UrlParamUtil.sellertoUrlParam(se),"${R.string.base_url}/admin/seller/update",SessionUtil.getSessionId(this)!!)
+        return HttpUtil.sendPoststr(UrlParamUtil.sellertoUrlParam(se),"${getString(R.string.base_url)}/admin/seller/update",SessionUtil.getSessionId(this)!!)
     }
 
     fun delete(){
@@ -81,6 +81,6 @@ class ManipulateSoloSellerActivity : AppCompatActivity() {
     }
 
     fun deleteRequest(em:String):String{
-        return HttpUtil.sendPoststr(em,"${R.string.base_url}/admin/seller/delete",SessionUtil.getSessionId(this)!!)
+        return HttpUtil.sendPoststr(em,"${getString(R.string.base_url)}/admin/seller/delete",SessionUtil.getSessionId(this)!!)
     }
 }

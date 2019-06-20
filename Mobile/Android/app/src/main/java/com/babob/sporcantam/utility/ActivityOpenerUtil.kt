@@ -39,7 +39,7 @@ class ActivityOpenerUtil {
         }
 
         fun openItemView_UpdateActivity(context: Context,item: Item){
-            context.startActivity(Intent(context,SellerItemView_UpdateActivity::class.java).putExtra("item",item))
+            context.startActivity(Intent(context,SellerItemView_UpdateActivity::class.java).putExtra("item",item).putExtra("admin",false))
         }
 
         fun openCustomerMainActivitty(context: Context){
@@ -76,6 +76,10 @@ class ActivityOpenerUtil {
 
         fun openManipulateSellersActivity(context: Context){
             context.startActivity(Intent(context, ManipulateSellersActivity::class.java))
+        }
+
+        fun openManipulateSoloItemActivity(context: Context, item: Item, admin: Boolean){
+            context.startActivity((Intent(context,SellerItemView_UpdateActivity::class.java).putExtra("item",item).putExtra("admin",admin)))
         }
 
         fun openManipulateSoloSellerActivty(context: Context, seller: Seller){

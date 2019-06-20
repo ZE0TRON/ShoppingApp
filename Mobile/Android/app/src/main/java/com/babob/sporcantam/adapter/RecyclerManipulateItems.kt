@@ -73,7 +73,7 @@ class RecyclerManipulateItems (var dataset: ArrayList<Item>, var context: Contex
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].uuid)
-            ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
+            ActivityOpenerUtil.openManipulateSoloItemActivity(context, dataset[position],true)
         }
 
 

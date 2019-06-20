@@ -37,6 +37,7 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
     private val STORAGE_PERMISSION_CODE = 123
     private var bitmap: Bitmap? = null
     private var filePath: Uri? = null
+    var isadmin:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
 
 
         val item: Item = intent.getSerializableExtra("item") as Item
+        isadmin = intent.getSerializableExtra("admin") as Boolean
 
         initSpinners(item)
         requestStoragePermission()
@@ -190,10 +192,16 @@ class SellerItemView_UpdateActivity : AppCompatActivity() {
 
 
     fun deleteItemRequest(uu:String):String{
+        if(isadmin){
+            return HttpUtil.sendPoststr(UrlParamUtil.UUIDtoUrlParam(uu),"${getString(R.string.base_url)}/admin/item/delete",SessionUtil.getSessionId(this)!!)
+        }
         return HttpUtil.sendPoststr("", "${getString(R.string.base_url)}/seller/my-items/"+uu+"/delete", SessionUtil.getSessionId(this)!!)
     }
 
     fun updateItemRequest(t:String,d:String,st:Int,p:Float,sh:String,c:String,uu:String):String{
+        if(isadmin){
+            return HttpUtil.sendPoststr(UrlParamUtil.itemtoUrlParam(t,d,st,p,sh,c,uu),"${getString(R.string.base_url)}/admin/item/update",SessionUtil.getSessionId(this)!!)
+        }
         return HttpUtil.sendPoststr(UrlParamUtil.updateItemToUrlParam(t,p,d,sh,st,c), "${getString(R.string.base_url)}/seller/my-items/"+uu+"/update", SessionUtil.getSessionId(this)!!)
     }
 

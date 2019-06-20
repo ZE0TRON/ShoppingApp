@@ -154,7 +154,7 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
                         condition,"${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
             else{
                 dataset = JsonUtil.getItemResponseToList(HttpUtil.sendPoststr(
-                        UrlParamUtil.categorySearchItem(condition),"${getString(R.string.base_url)}/item/"+condition,SessionUtil.getSessionId(this)!!))
+                        UrlParamUtil.categorySearchItem(condition),"${getString(R.string.base_url)}/item/category/"+condition,SessionUtil.getSessionId(this)!!))
             }
         }
         this.isQuery=false
@@ -216,47 +216,47 @@ class CustomerMainActivity : AppCompatActivity(), NavigationView.OnNavigationIte
             }
 
             R.id.nav_running->{
-                condition="Running"
+                condition="running"
                 onResume()
             }
             R.id.nav_clothes->{
-                condition="Clothes"
+                condition="clothes"
                 onResume()
             }
             R.id.nav_fitness->{
-                condition="Fitness"
+                condition="fitness"
                 onResume()
             }
             R.id.nav_hiking->{
-                condition="Hiking"
+                condition="hiking"
                 onResume()
             }
             R.id.nav_ski->{
-                condition="Ski"
+                condition="ski"
                 onResume()
             }
             R.id.nav_snowboard->{
-                condition="Snowboard"
+                condition="snowboard"
                 onResume()
             }
             R.id.nav_soccer->{
-                condition="Soccer"
+                condition="soccer"
                 onResume()
             }
             R.id.nav_basketball->{
-                condition="Basketball"
+                condition="basketball"
                 onResume()
             }
             R.id.nav_swimming->{
-                condition="Swimming"
+                condition="swimming"
                 onResume()
             }
             R.id.nav_cycle->{
-                condition="Cycling"
+                condition="cycling"
                 onResume()
             }
             R.id.nav_tennis->{
-                condition="Tennis"
+                condition="tennis"
                 onResume()
             }
 

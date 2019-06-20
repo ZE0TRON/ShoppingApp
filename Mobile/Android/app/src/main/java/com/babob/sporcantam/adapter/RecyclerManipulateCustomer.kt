@@ -23,7 +23,7 @@ class RecyclerManipulateCustomer (var dataset: ArrayList<Customer>, var context:
         init {
             firstName = linearLayout.findViewById(R.id.textView_customer_layout_first_name)
             lastName = linearLayout.findViewById(R.id.textView_customer_layout_last_name)
-            address = linearLayout.findViewWithTag(R.id.textView_customer_layout_address)
+            address = linearLayout.findViewById(R.id.textView_customer_layout_address)
         }
     }
 

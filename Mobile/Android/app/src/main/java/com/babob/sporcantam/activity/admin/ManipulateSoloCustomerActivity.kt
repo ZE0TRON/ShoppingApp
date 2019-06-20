@@ -40,7 +40,7 @@ class ManipulateSoloCustomerActivity : AppCompatActivity() {
         customer.firstName = editText_ManipulateSoloCustomer_firstname.text.toString()
         customer.lastName = editText_ManipulateSoloCustomer_lastname.text.toString()
         customer.address = editText_ManipulateSoloCustomer_address.text.toString()
-        customer.email = editText_ManipulateSoloCustomer_email.toString()
+        customer.email = editText_ManipulateSoloCustomer_email.text.toString()
 
         AsyncUtil{
             val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(saveRequest(customer)))
@@ -58,7 +58,7 @@ class ManipulateSoloCustomerActivity : AppCompatActivity() {
     }
 
     fun saveRequest(cu:Customer):String{
-        return HttpUtil.sendPoststr(UrlParamUtil.customerToUrlParam(cu),"${R.string.base_url}/admin/customer/update", SessionUtil.getSessionId(this)!!)
+        return HttpUtil.sendPoststr(UrlParamUtil.customerToUrlParam(cu),"${getString(R.string.base_url)}/admin/customer/update", SessionUtil.getSessionId(this)!!)
     }
 
     fun delete(){
@@ -78,6 +78,6 @@ class ManipulateSoloCustomerActivity : AppCompatActivity() {
     }
 
     fun deleteRequest(em:String):String{
-        return HttpUtil.sendPoststr(em,"${R.string.base_url}/admin/customer/delete", SessionUtil.getSessionId(this)!!)
+        return HttpUtil.sendPoststr(em,"${getString(R.string.base_url)}/admin/customer/delete", SessionUtil.getSessionId(this)!!)
     }
 }

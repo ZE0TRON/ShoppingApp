@@ -23,6 +23,7 @@ class JsonUtil {
 
         fun generalServerResponseToList(response: String):List<String>{
             try {
+                Log.i("Json Util", response)
                 val jsonObj = JSONObject(response)
                 val res1 = jsonObj.get("success") as Boolean
                 val res2 = jsonObj.get("msg") as String

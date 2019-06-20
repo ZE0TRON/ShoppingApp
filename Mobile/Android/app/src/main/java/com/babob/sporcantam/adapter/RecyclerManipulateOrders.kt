@@ -64,7 +64,7 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
             AsyncUtil{
 
-                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteOrderRequest(dataset[position].order_id.toString())))
+                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(confirmOrderRequest(dataset[position].order_id.toString())))
 
                 (context as Activity).runOnUiThread {
                     Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
@@ -82,7 +82,7 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
 
             AsyncUtil{
 
-                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(confirmOrderRequest(dataset[position].order_id.toString())))
+                val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteOrderRequest(dataset[position].order_id.toString())))
 
                 (context as Activity).runOnUiThread {
                     Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()

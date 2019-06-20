@@ -24,9 +24,9 @@ class RecyclerManipulateSeller (var dataset: ArrayList<Seller>, var context: Con
         init {
             firstName = linearLayout.findViewById(R.id.textView_seller_layout_first_name)
             lastName = linearLayout.findViewById(R.id.textView_seller_layout_last_name)
-            address = linearLayout.findViewWithTag(R.id.textView_seller_layout_address)
-            IBAN = linearLayout.findViewWithTag(R.id.textView_seller_layout_iban)
-            phoneNumber = linearLayout.findViewWithTag(R.id.textView_seller_layout_phone_number)
+            address = linearLayout.findViewById(R.id.textView_seller_layout_address)
+            IBAN = linearLayout.findViewById(R.id.textView_seller_layout_iban)
+            phoneNumber = linearLayout.findViewById(R.id.textView_seller_layout_phone_number)
         }
     }
 

@@ -19,6 +19,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activity.admin.ManipulateSoloCustomerActivity"></activity>
         <activity android:name=".activity.admin.ManipulateSoloSellerActivity" />
+        <activity android:name=".activity.customer.ViewOrdersActivity"></activity>
         <activity android:name=".activity.admin.GenerateReport" />
         <activity android:name=".activity.customer.AddBalanceActivity" />
         <activity

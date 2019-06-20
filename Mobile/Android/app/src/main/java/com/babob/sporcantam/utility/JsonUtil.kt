@@ -122,17 +122,26 @@ class JsonUtil {
                 val arr = jsonObj.getJSONArray("items")
                 var i = 0
                 while (i < arr.length()){
-
                     val sellerJsonObj = arr.getJSONObject(i++)
+                    Log.d("Json",sellerJsonObj.toString())
                     val sellerFirstName = sellerJsonObj.get("first_name") as String
                     val sellerSecondName = sellerJsonObj.get("last_name") as String
-                    val sellerAddress = sellerJsonObj.get("company_address") as String
-                    val sellerIBAN = sellerJsonObj.get("iban") as String
-                    val sellerPhone = sellerJsonObj.get("phone_number") as String
+                    var sellerAddress = sellerJsonObj.getString("company_address")
+                    if(sellerAddress == null){
+                        sellerAddress = "-"
+                    }
+                    var sellerIBAN = sellerJsonObj.getString("iban")
+                    if(sellerIBAN == null){
+                        sellerIBAN = "-"
+                    }
+                    var sellerPhone = sellerJsonObj.getString("phone_number")
+                    if(sellerPhone == null){
+                        sellerPhone = "-"
+                    }
                     val sellerEmail = sellerJsonObj.get("email") as String
+
                     val seller = Seller(sellerFirstName,sellerSecondName,sellerAddress,sellerIBAN,sellerPhone,sellerEmail)
                     retList.add(seller)
-                    Log.d("Json",sellerJsonObj.toString())
                 }
                 return retList
 

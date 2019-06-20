@@ -9,6 +9,6 @@ import java.util.Collection;
 @Repository
 public interface OrderHistoryRepository extends CrudRepository<OrderHistory, Integer>  {
     @Query(
-            value = "SELECT sale_id FROM orderhistory o WHERE o.customer_email = ?1",nativeQuery = true)
+            value = "SELECT sale_id FROM order_history o WHERE o.customer_email = ?1",nativeQuery = true)
     Collection<String> findSaleIdsByCustomerEmail(String customer_email);
 }

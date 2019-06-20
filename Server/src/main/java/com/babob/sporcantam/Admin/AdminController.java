@@ -84,7 +84,7 @@ public class AdminController {
     @RequestMapping(method = POST, path = "/seller/update")
     public @ResponseBody
     Response manipulateSeller(@CookieValue(name = "JSESSIONID") String sessionID
-            , @RequestParam(value = "seller_email", required = false, defaultValue = " ") String seller_email
+            , @RequestParam(value = "email", required = false, defaultValue = " ") String seller_email
             , @RequestParam(value = "password", required = false, defaultValue = " ") String password
             , @RequestParam(value = "first_name", required = false, defaultValue = " ") String first_name
             , @RequestParam(value = "last_name", required = false, defaultValue = " ") String last_name
@@ -118,7 +118,7 @@ public class AdminController {
         }
     }
 
-    @RequestMapping(method=POST,path ="/customers/")
+    @RequestMapping(method=POST,path ="/customers")
     public @ResponseBody
     CustomerList getCustomers(@CookieValue(name = "JSESSIONID") String sessionID
     ) {
@@ -140,14 +140,15 @@ public class AdminController {
             return null;
         }
     }
-    @RequestMapping(method=POST,path ="/sellers/")
+    @RequestMapping(method=POST,path ="/sellers")
     public @ResponseBody
     SellerList getSellers(@CookieValue(name = "JSESSIONID") String sessionID
     ) {
-
+        System.out.println("I am here yeaaa");
         try{
             Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
             if(admin == null) {
+                System.out.println("Returned null no admin");
                 return null;
             }
             Collection<Seller> sellers = new ArrayList<Seller>();
@@ -159,13 +160,15 @@ public class AdminController {
 
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Exception yeaah null");
             return null;
         }
     }
     @RequestMapping(method=POST,path ="/customer/update")
     public @ResponseBody
     Response manipulateCustomer(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam(value = "customer_email", required = false, defaultValue = " ") String customer_email
+            ,@RequestParam(value = "email", required = false, defaultValue = " ") String customer_email
             ,@RequestParam(value="password", required = false, defaultValue=" ") String password
             ,@RequestParam(value="first_name", required = false, defaultValue=" ") String first_name
             ,@RequestParam(value="last_name", required = false, defaultValue=" ") String last_name
@@ -193,7 +196,7 @@ public class AdminController {
             return new Response("Cannot update customer info!",false);
         }
     }
-    @RequestMapping(method=POST,path ="/orders/")
+    @RequestMapping(method=POST,path ="/orders")
     public @ResponseBody
     OrderList getOrders(@CookieValue(name = "JSESSIONID") String sessionID
     ) {
@@ -218,7 +221,7 @@ public class AdminController {
     @RequestMapping(method = POST, path = "/item/update")
     public @ResponseBody
     Response manipulateItem(@CookieValue(name = "JSESSIONID") String sessionID
-            ,@RequestParam(value = "item_UUID", required = false, defaultValue = " ") String UUID
+            ,@RequestParam(value = "UUID", required = false, defaultValue = " ") String UUID
             , @RequestParam(value = "item_title", required = false, defaultValue = " ") String item_title
             , @RequestParam(value = "price", required = false, defaultValue = "-1.0") float price
             , @RequestParam(value = "description", required = false, defaultValue = " ") String description
@@ -353,19 +356,20 @@ public class AdminController {
     public @ResponseBody
     SalesReport generateSaleReport(@CookieValue(name = "JSESSIONID") String sessionID)
     {
-        try {
+
             Admin admin = adminRepository.findBySessionID(sessionID).iterator().next();
             if (admin == null) {
+                System.out.println("Returning null admin");
                 return null;
             }
             SalesReport salesReport = new SalesReport();
             orderItemRepository.findAll().forEach(orderItem -> {
-                switch (orderItem.getCategory()) {
+                switch (orderItem.getCategory().toLowerCase()) {
                     case "running":
                         salesReport.running += 1;
                         break;
-                    case "cloths":
-                        salesReport.cloths
+                    case "clothes":
+                        salesReport.clothes
                                 += 1;
                         break;
                     case "fitness":
@@ -398,11 +402,14 @@ public class AdminController {
                 }
 
             });
+            System.out.println("Returning sales report");
             return salesReport;
-        }
-        catch (Exception e){
-            return null;
-        }
+
+//        catch (Exception e){
+//            System.out.println("Returning null");
+//            System.out.println(e.getMessage());
+//            return null;
+//        }
     }
 
     @RequestMapping(method=GET,path ="/showOrder/{order_id}")

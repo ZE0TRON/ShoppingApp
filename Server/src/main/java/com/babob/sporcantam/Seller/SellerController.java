@@ -39,6 +39,9 @@ public class SellerController {
     Response addNewUser(@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
             , @RequestParam String password, @RequestParam String first_name, @RequestParam String last_name
             , @RequestParam(value = "company_name") String company_name) {
+        if(sellerRepository.findByEmail(email).iterator().hasNext()){
+            return new Response("Seller Exists",false);
+        }
         Seller seller = new Seller();
         seller.setEmail(email);
         seller.setFirst_name(first_name);
@@ -149,7 +152,7 @@ public class SellerController {
     }
 
     @RequestMapping(method = POST, path = "/my-items/{UUID}/update")
-    public String updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID,
+    public @ResponseBody String updateItemInfo(@CookieValue(name = "JSESSIONID") String sessionID,
                                                  @PathVariable("UUID") String UUID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Item item = findItem(seller,UUID);
@@ -162,7 +165,7 @@ public class SellerController {
     }
 
     @RequestMapping(method = POST, path = "/my-items/{UUID}/delete")
-    public String deleteItem(@CookieValue(name = "JSESSIONID") String sessionID,
+    public  @ResponseBody String deleteItem(@CookieValue(name = "JSESSIONID") String sessionID,
                                  @PathVariable("UUID") String UUID) {
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
         Item item = findItem(seller,UUID);
@@ -173,13 +176,12 @@ public class SellerController {
         else{
             return "You have no item with id "+ UUID;
         }
-
-
     }
 
 
     @RequestMapping(method = POST, path = "/withdraw")
-    public Response deleteItem(@CookieValue(name = "JSESSIONID") String sessionID,
+
+    public  @ResponseBody Response withdraw(@CookieValue(name = "JSESSIONID") String sessionID,
                              @RequestParam Double balance) {
         try{
         Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
@@ -196,14 +198,14 @@ public class SellerController {
         }
     }
     @RequestMapping(method = POST, path = "/getBalance")
-    public Double deleteItem(@CookieValue(name = "JSESSIONID") String sessionID
+    public  @ResponseBody String getBalance(@CookieValue(name = "JSESSIONID") String sessionID
                                ) {
         try {
             Seller seller = sellerRepository.findBySessionID(sessionID).iterator().next();
-            return seller.getBalance();
+            return Double.toString(seller.getBalance());
         }
         catch (Exception e) {
-            return 0.0;
+            return "0.0";
         }
     }
 }

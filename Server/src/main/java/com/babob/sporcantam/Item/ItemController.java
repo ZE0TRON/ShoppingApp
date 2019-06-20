@@ -139,7 +139,7 @@ public class ItemController {
         return itemList;
     }
 
-    @RequestMapping(method = GET, path = "/{category}")
+    @RequestMapping(method = POST, path = "/category/{category}")
     public @ResponseBody
     ItemList getItemsByCategory(@PathVariable("category") String category) {
         Collection<Item> items = itemRepository.getItemsByCategory(category);

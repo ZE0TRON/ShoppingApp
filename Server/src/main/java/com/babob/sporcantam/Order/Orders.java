@@ -14,7 +14,9 @@ public class Orders {
         this.id = id;
     }
 
-
+    public Orders(){
+        this.is_confirmed = 0;
+    }
     public String getCustomerEmail() {
         return customer_email;
     }
@@ -23,12 +25,10 @@ public class Orders {
         this.customer_email = customerEmail;
     }
 
-    public int isConfirmed() {
-        return confirmed;
-    }
+
 
     public void setConfirmed(int confirmed) {
-        this.confirmed = confirmed;
+        this.is_confirmed = confirmed;
     }
 
     @Id
@@ -46,6 +46,11 @@ public class Orders {
     }
 
     private String order_id;
-    private int confirmed;
+
+    public Integer getIs_confirmed() {
+        return is_confirmed;
+    }
+
+    private Integer is_confirmed;
 
 }

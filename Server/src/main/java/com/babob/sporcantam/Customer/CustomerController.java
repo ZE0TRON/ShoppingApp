@@ -11,15 +11,12 @@ import com.babob.sporcantam.OrderItem.OrderItem;
 import com.babob.sporcantam.OrderItem.OrderItemRepository;
 import com.babob.sporcantam.Seller.Seller;
 import com.babob.sporcantam.Seller.SellerRepository;
-import com.babob.sporcantam.Utils.CartItemList;
-import com.babob.sporcantam.Utils.ItemList;
-import com.babob.sporcantam.Utils.OrderItemList;
+import com.babob.sporcantam.Utils.*;
 import com.babob.sporcantam.ViewHistory.ViewHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.babob.sporcantam.Utils.Response;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +67,9 @@ public class CustomerController {
     public @ResponseBody
     Response addCustomer (@CookieValue(name = "JSESSIONID") String sessionID, @RequestParam String email
             ,@RequestParam String password, @RequestParam String first_name,@RequestParam String last_name){
+        if(customerRepository.findByEmail(email).iterator().hasNext()){
+            return new Response("Customer Exists",false);
+        }
         Customer customer = new Customer();
         customer.setEmail(email);
         customer.setFirst_name(first_name);
@@ -252,15 +252,16 @@ public class CustomerController {
 
     @RequestMapping(method=POST,path ="/showOrderHistory")
     public @ResponseBody
-    Collection<Orders> showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
+    OrderList showOrderHistory(@CookieValue(name = "JSESSIONID") String sessionID) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
         String customer_email = customer.getEmail();
         Collection<String> history_sale_ids = orderHistoryRepository.findSaleIdsByCustomerEmail(customer_email);
         Collection<Orders> orders_list = orderRepository.findByOrderIDList(history_sale_ids);
-        return orders_list;
+        OrderList orderList = new OrderList(orders_list);
+        return orderList;
     }
 
-    @RequestMapping(method=GET,path ="/showOrder/{order_id}")
+    @RequestMapping(method=POST,path ="/showOrder/{order_id}")
     public @ResponseBody
     OrderItemList showOrder(@CookieValue(name = "JSESSIONID") String sessionID, @PathVariable("order_id") String order_id) {
         Customer customer = customerRepository.findBySessionID(sessionID).iterator().next();
@@ -309,6 +310,9 @@ public class CustomerController {
                CartItem item = it.next();
                if(item.getStock_count()> 1) {
                    item.setStock_count(item.getStock_count()-1);
+               }
+               else {
+                   return new  Response("No stocks",false);
                }
                if(!shipping_list.contains(item.getShipping_info())){
                    shipping_count+=1;

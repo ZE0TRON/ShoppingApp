@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.support.constraint.ConstraintSet
+import android.util.Log
 import com.babob.sporcantam.utility.*
 
 
@@ -129,9 +130,6 @@ class SignUpActivity : AppCompatActivity() {
                 finish()
             }
             else{
-                runOnUiThread {
-                    Toast.makeText(this, "Cannot connect to the server. Please try again later", Toast.LENGTH_SHORT).show()
-                }
             }
             isSending = false
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
@@ -139,7 +137,15 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun sendDataToApi(n:String, s:String, cn:String, eml:String, psw:String, typ:String):Boolean{
-        return HttpUtil.sendPost(UrlParamUtil.signUpDataToUrlParam(n,s,cn,eml,psw,typ), "${getString(R.string.base_url)}/user/add", sessionId)
+        val res = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(UrlParamUtil.signUpDataToUrlParam(n,s,cn,eml,psw,typ), "${getString(R.string.base_url)}/user/add", sessionId)))
+        if(res[0] != "true"){
+            Log.i("Sign_up", "same email")
+            runOnUiThread {
+                Toast.makeText(this, res[1], Toast.LENGTH_SHORT).show()
+            }
+            return false
+        }
+        return true
     }
 
 

@@ -1,5 +1,6 @@
 package com.babob.sporcantam.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
@@ -64,7 +65,6 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
             AsyncUtil{
 
                 val responseList = CheckerUtil.responseListChecker(JsonUtil.generalServerResponseToList(deleteOrderRequest(dataset[position].order_id.toString())))
-
                 Toast.makeText(context,responseList[1],Toast.LENGTH_SHORT).show()
                 ActivityOpenerUtil.openManipulateOrdersActivity(context)
 

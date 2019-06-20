@@ -7,13 +7,13 @@ import java.io.Serializable
 
 class Order: Serializable {
 
-    var seller_email:String
+    var isConfirmed:Int
     var customer_email:String
-    var order_id: Int
+    var order_id: String
 
 
-    constructor(seller_email: String, customer_email:String, order_id: Int) {
-        this.seller_email = seller_email
+    constructor(isConfirmed:Int, customer_email:String, order_id: String) {
+        this.isConfirmed = isConfirmed
         this.customer_email = customer_email
         this.order_id = order_id
     }

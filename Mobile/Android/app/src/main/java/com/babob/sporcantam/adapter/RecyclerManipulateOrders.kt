@@ -50,7 +50,7 @@ class RecyclerManipulateOrders (var dataset: ArrayList<Order>, var context: Cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.sellerEmail.text = dataset[position].seller_email
+        holder.sellerEmail.text = dataset[position].isConfirmed.toString()
         holder.customerEmail.text = dataset[position].customer_email
         holder.orderId.text = dataset[position].order_id.toString()
 

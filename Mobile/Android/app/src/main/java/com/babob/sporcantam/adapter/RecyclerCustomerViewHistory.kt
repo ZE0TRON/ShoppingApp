@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.ActivityOpenerUtil
+import com.bumptech.glide.Glide
 
 class RecyclerCustomerViewHistory(var dataset: ArrayList<Item>, var context: Context):
         RecyclerView.Adapter<RecyclerCustomerViewHistory.ViewHolder>() {
@@ -19,10 +21,12 @@ class RecyclerCustomerViewHistory(var dataset: ArrayList<Item>, var context: Con
         var textTitle: TextView
         var textPrice: TextView
         var textCount: TextView
+        var photoItem: ImageView
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
+            photoItem = linearLayout.findViewById(R.id.imageView_rec_seller_item_layout_photo)
         }
     }
 
@@ -46,6 +50,10 @@ class RecyclerCustomerViewHistory(var dataset: ArrayList<Item>, var context: Con
         holder.textTitle.text = dataset[position].item_title
         holder.textCount.text = dataset[position].stock_count.toString()
         holder.textPrice.text = dataset[position].price.toString()
+
+        //TODO: sikinti burada olucak
+        val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid
+        Glide.with(context).load(url).into(holder.photoItem)
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)

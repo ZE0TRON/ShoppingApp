@@ -91,5 +91,9 @@ class UrlParamUtil {
                     "&UUID=$uu"
         }
 
+        fun emailToUrlParam(email:String):String{
+            return "email=$email"
+        }
+
     }
 }

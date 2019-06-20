@@ -81,6 +81,6 @@ class ManipulateSoloSellerActivity : AppCompatActivity() {
     }
 
     fun deleteRequest(em:String):String{
-        return HttpUtil.sendPoststr(em,"${getString(R.string.base_url)}/admin/seller/delete",SessionUtil.getSessionId(this)!!)
+        return HttpUtil.sendPoststr(UrlParamUtil.emailToUrlParam(em),"${getString(R.string.base_url)}/admin/seller/delete",SessionUtil.getSessionId(this)!!)
     }
 }

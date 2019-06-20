@@ -1,7 +1,6 @@
 package com.babob.sporcantam.adapter
 
 import android.content.Context
-import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Order
-import com.babob.sporcantam.utility.*
+import com.babob.sporcantam.utility.ActivityOpenerUtil
 
 class RecyclerOrderHistoryAdapter (var dataset: ArrayList<Order>, var context: Context) :
         RecyclerView.Adapter<RecyclerOrderHistoryAdapter.ViewHolder>(){

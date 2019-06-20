@@ -9,14 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.babob.sporcantam.R
 import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
+import com.bumptech.glide.Glide
 
 class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Context) :
         RecyclerView.Adapter<RecyclerShoppingCartAdapter.ViewHolder>(){
@@ -27,11 +25,13 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         var textPrice: TextView
         var textCount: TextView
         var checkBox: CheckBox
+        var photoItem: ImageView
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
             checkBox = linearLayout.findViewById(R.id.checkBox_shoppingCart)
+            photoItem = linearLayout.findViewById(R.id.imageView_rec_seller_item_layout_photo)
             checkBox.visibility = View.VISIBLE
         }
     }
@@ -56,6 +56,10 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         holder.textTitle.text = dataset[position].item_title
         holder.textCount.text = dataset[position].stock_count.toString()
         holder.textPrice.text = dataset[position].price.toString()
+
+        //TODO: sikinti burada olucak
+        val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid
+        Glide.with(context).load(url).into(holder.photoItem)
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)

@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.ActivityOpenerUtil
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
+import com.bumptech.glide.Glide
 
 class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Context) :
         RecyclerView.Adapter<RecyclerSellerItemAdapter.ViewHolder>(){
@@ -20,10 +21,14 @@ class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Cont
         var textTitle: TextView
         var textPrice: TextView
         var textCount: TextView
+        var textCategory: TextView
+        var imageViewPhoto: ImageView
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
+            textCategory = linearLayout.findViewById(R.id.textView_recCategory)
+            imageViewPhoto = linearLayout.findViewById(R.id.imageView_rec_seller_item_layout_photo)
         }
     }
 
@@ -47,11 +52,19 @@ class RecyclerSellerItemAdapter (var dataset: ArrayList<Item>, var context: Cont
         holder.textTitle.text = dataset[position].item_title
         holder.textCount.text = dataset[position].stock_count.toString()
         holder.textPrice.text = dataset[position].price.toString()
+        holder.textCategory.text = dataset[position].category
+
+        //TODO: sikinti burada olucak
+        val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid
+        Glide.with(context).load(url).into(holder.imageViewPhoto)
+
 
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)
             ActivityOpenerUtil.openItemView_UpdateActivity(context, dataset[position])
         }
+
+
 
 
     }

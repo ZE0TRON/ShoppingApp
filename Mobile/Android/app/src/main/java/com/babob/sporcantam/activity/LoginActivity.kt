@@ -13,6 +13,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     var isSending = false
+    var adminLogin = false
     var loginType = 1
     var TAG = "LOGIN_ACTIVITY"
     lateinit var sessionId:String
@@ -26,11 +27,13 @@ class LoginActivity : AppCompatActivity() {
         getSId()
         checkSignedUP()
         button_login.setOnClickListener { loginUser() }
-        button_switch_login_type.setOnClickListener{ changeLoginType() }
+        button_switch_login_type.setOnClickListener{ changeLoginType(false) }
+        button_switch_adminLogin.setOnClickListener { changeLoginType(true) }
         button_switchToSIgnUp.setOnClickListener { ActivityOpenerUtil.openSignUpActivity(this) }
     }
 
     private fun getSId(){
+        SessionUtil.logOut(this)
         val id = SessionUtil.createSessionId(this)
         sessionId = id!!
     }
@@ -57,7 +60,15 @@ class LoginActivity : AppCompatActivity() {
         isSending = true
         AsyncUtil{
             if(sendLoginRequest(email, password)){
-                ActivityOpenerUtil.openMainPageActivity(this, loginType)
+                SessionUtil.login(this)
+                if(adminLogin){
+                    SessionUtil.saveUserType(this, 3)
+                    ActivityOpenerUtil.openMainPageActivity(this, 3)
+                }
+                else {
+                    SessionUtil.saveUserType(this, loginType)
+                    ActivityOpenerUtil.openMainPageActivity(this, loginType)
+                }
                 isSending = false
                 runOnUiThread { finish() }
             }
@@ -71,17 +82,25 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun changeLoginType(){
-        if(loginType == 1){
-            loginType = 2
-            textView_login_info.text = getString(R.string.sign_up_activity_info_seller)
-            button_switch_login_type.text = getString(R.string.sign_up_activity_info_customer)
+    private fun changeLoginType(isAdmin:Boolean){
+
+        if(isAdmin){
+            adminLogin=true
+            textView_login_info.text = getString(R.string.sign_up_activity_info_admin)
         }
         else{
-            loginType = 1
-            textView_login_info.text = getString(R.string.sign_up_activity_info_customer)
-            button_switch_login_type.text = getString(R.string.sign_up_activity_info_seller)
+            adminLogin=false
+            if(loginType == 1){
+                loginType = 2
+                textView_login_info.text = getString(R.string.sign_up_activity_info_seller)
+                button_switch_login_type.text = getString(R.string.sign_up_activity_info_customer)
+            }
+            else{
+                loginType = 1
+                textView_login_info.text = getString(R.string.sign_up_activity_info_customer)
+                button_switch_login_type.text = getString(R.string.sign_up_activity_info_seller)
 
+            }
         }
     }
 
@@ -93,11 +112,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun sendLoginRequest(email: String, password:String):Boolean{
         val response: String
-        if(loginType == 1){
-            response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+        if(adminLogin){
+            response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email,password),"${getString(R.string.base_url)}/admin/login",sessionId)
         }
         else{
-            response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+            if (loginType == 1) {
+                response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/customer/login", sessionId)
+            } else {
+                response = HttpUtil.sendPoststr(UrlParamUtil.loginDataToUrlParam(email, password), "${getString(R.string.base_url)}/seller/login", sessionId)
+            }
         }
         Log.d(TAG, response + JsonUtil.handleStringResponse(response))
         return JsonUtil.handleStringResponse(response)

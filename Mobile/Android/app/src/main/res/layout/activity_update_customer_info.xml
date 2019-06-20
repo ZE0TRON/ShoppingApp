@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
     tools:context=".activity.UpdateCustomerInfoActivity">
 
     <EditText
         android:id="@+id/editText_updateCustomerFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="192dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="First Name"
@@ -42,15 +43,22 @@
 
     <Button
         android:id="@+id/button_updateCustomerUpdate"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Update"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_updateCustomerAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_updateCustomerAddress"
+        app:layout_constraintVertical_bias="0.35" />
 
     <TextView
         android:id="@+id/textView13"
@@ -58,6 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="First Name: "
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateCustomerFirstName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editText_updateCustomerFirstName" />
@@ -67,6 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Last Name: "
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateCustomerLastName"
         app:layout_constraintStart_toStartOf="@+id/textView13"
         app:layout_constraintTop_toTopOf="@+id/editText_updateCustomerLastName" />
@@ -76,6 +88,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Address: "
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/editText_updateCustomerAddress"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toTopOf="@+id/editText_updateCustomerAddress" />

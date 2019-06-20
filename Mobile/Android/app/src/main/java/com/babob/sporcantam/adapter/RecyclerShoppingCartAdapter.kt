@@ -7,14 +7,14 @@ import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.babob.sporcantam.R
+import com.babob.sporcantam.activity.customer.ShoppingCartActivity
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.recycler_seller_item_layout.view.*
+import com.bumptech.glide.Glide
 
 class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Context) :
         RecyclerView.Adapter<RecyclerShoppingCartAdapter.ViewHolder>(){
@@ -24,10 +24,15 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         var textTitle: TextView
         var textPrice: TextView
         var textCount: TextView
+        var checkBox: CheckBox
+        var photoItem: ImageView
         init {
             textTitle = linearLayout.findViewById(R.id.textView_recItemTitle)
             textPrice = linearLayout.findViewById(R.id.textView_recItemPrice)
             textCount = linearLayout.findViewById(R.id.textView_recStockCount)
+            checkBox = linearLayout.findViewById(R.id.checkBox_shoppingCart)
+            photoItem = linearLayout.findViewById(R.id.imageView_rec_seller_item_layout_photo)
+            checkBox.visibility = View.VISIBLE
         }
     }
 
@@ -52,26 +57,40 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         holder.textCount.text = dataset[position].stock_count.toString()
         holder.textPrice.text = dataset[position].price.toString()
 
+        //TODO: sikinti burada olucak
+        val url = "http://134.209.226.138:8080/customer/downloadFile/"+dataset[position].uuid
+        Glide.with(context).load(url).into(holder.photoItem)
+
         holder.itemView.setOnClickListener {
             Log.d("Recycle adapter", dataset[position].item_title)
-            showAlertDialog(dataset[position], position)
+            showAlertDialog(dataset[position], position, holder.checkBox.isChecked)
         }
-
+        holder.checkBox.setOnClickListener {
+            Log.d("Recycle adapter", dataset[position].item_title + " Checkbox")
+            if(holder.checkBox.isChecked){
+                ShoppingCartActivity.addToList(dataset[position])
+            } else {
+                ShoppingCartActivity.deleteFromList(dataset[position])
+            }
+        }
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataset.size
 
-    private fun deleteItem(item: Item, position: Int){
+    private fun deleteItem(item: Item, position: Int, isChecked: Boolean){
         AsyncUtil{
             val response = JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
-                    UrlParamUtil.itemToAddCartParam(item),
+                    UrlParamUtil.itemUUIDParam(item),
                     "${context.getString(R.string.base_url)}/customer/removeFromCart", SessionUtil.getSessionId(context)!!))
             when {
                 response.size < 2 -> (context as Activity).runOnUiThread{ Toast.makeText(context, "Cannot connect to the server", Toast.LENGTH_SHORT).show() }
                 response[0] == "true" -> (context as Activity).runOnUiThread {
                     Toast.makeText(context, "Item deleted from cart", Toast.LENGTH_SHORT).show()
+                    if(isChecked){
+                        ShoppingCartActivity.deleteFromList(item)
+                    }
                     dataset.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, dataset.size)
@@ -81,7 +100,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 
-    fun showAlertDialog(item: Item, position: Int){
+    fun showAlertDialog(item: Item, position: Int, isChecked:Boolean){
         // Initialize a new instance of
         val builder = AlertDialog.Builder(context)
 
@@ -94,7 +113,7 @@ class RecyclerShoppingCartAdapter (var dataset: ArrayList<Item>, var context: Co
         // Set a positive button and its click listener on alert dialog
         builder.setPositiveButton("YES"){ dialog, which ->
             // Do something when user press the positive button
-            deleteItem(item, position)
+            deleteItem(item, position, isChecked)
         }
 
         // Display a negative button on alert dialog

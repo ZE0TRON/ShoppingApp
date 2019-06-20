@@ -1,25 +1,29 @@
 package com.babob.sporcantam.activity
 
 import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.babob.sporcantam.R
 import com.babob.sporcantam.item.Item
 import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.activity_view_item.*
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_customer_view_item.*
 
-class ViewItemActivity : AppCompatActivity() {
+class CustomerViewItemActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_item)
+        setContentView(R.layout.activity_customer_view_item)
 
         title = "View Item"
 
         val item: Item = intent.getSerializableExtra("item") as Item
 
         fillFields(item)
+        AsyncUtil{
+            addToHistory(item)
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
         button_viewItemAddToCart.setOnClickListener { addToCart(item) }
     }
@@ -30,14 +34,19 @@ class ViewItemActivity : AppCompatActivity() {
         textView_viewItemPriceNum.text = item.price.toString()
         textView_viewItemSeller.text = item.seller
         textView_viewItemShipping.text = item.shipping_info
+        textView_itemViewCategory.text = item.category
         textView_viewItemStockCount.text = item.stock_count.toString()
+
+        val url = "${getString(R.string.base_url)}/customer/downloadFile/"+item.uuid
+        Glide.with(this).load(url).into(imageView_CustomerViewItemPhoto)
+
 
     }
 
     fun addToCart(item:Item){
         AsyncUtil{
             val response = JsonUtil.generalServerResponseToList(HttpUtil.sendPoststr(
-                    UrlParamUtil.itemToAddCartParam(item),
+                    UrlParamUtil.itemUUIDParam(item),
                     "${getString(R.string.base_url)}/customer/addToCart", SessionUtil.getSessionId(this)!!))
             when {
                 response.size < 2 -> runOnUiThread { Toast.makeText(this, "Cannot connect to the server", Toast.LENGTH_SHORT).show() }
@@ -49,5 +58,9 @@ class ViewItemActivity : AppCompatActivity() {
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
 
+    }
+
+    fun addToHistory(item: Item){
+        HttpUtil.sendPoststr("", "${getString(R.string.base_url)}/item/${item.uuid}", SessionUtil.getSessionId(this)!!)
     }
 }

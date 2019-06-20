@@ -1,4 +1,4 @@
-package com.babob.sporcantam.activity
+package com.babob.sporcantam.activity.customer
 
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -6,32 +6,36 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.babob.sporcantam.R
-import com.babob.sporcantam.adapter.RecyclerCustomerItemAdapter
+import com.babob.sporcantam.adapter.RecyclerOrderHistoryAdapter
+import com.babob.sporcantam.adapter.RecyclerShoppingCartAdapter
 import com.babob.sporcantam.item.Item
-import com.babob.sporcantam.utility.*
-import kotlinx.android.synthetic.main.activity_customer_main_page.*
+import com.babob.sporcantam.item.Order
+import com.babob.sporcantam.utility.AsyncUtil
+import com.babob.sporcantam.utility.HttpUtil
+import com.babob.sporcantam.utility.JsonUtil
+import com.babob.sporcantam.utility.SessionUtil
 
-class CustomerMainPageActivity : AppCompatActivity() {
+class ViewOrdersActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    lateinit var dataset:ArrayList<Item>
+    lateinit var dataset:ArrayList<Order>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_main_page)
+        setContentView(R.layout.activity_view_orders)
 
-        title = "Items"
+        title = "Order History"
 
         dataset = arrayListOf()
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = RecyclerCustomerItemAdapter(dataset, this)
+        viewAdapter = RecyclerOrderHistoryAdapter(dataset, this)
 
 
-        recyclerView = findViewById<RecyclerView>(R.id.recycelerCustomerItemsView).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.recyclerview_viewOrder).apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
 
@@ -43,9 +47,6 @@ class CustomerMainPageActivity : AppCompatActivity() {
 
 
         }
-
-        button_showShoppingCart.setOnClickListener { ActivityOpenerUtil.openShoppingCartActivity(this) }
-        button_updateCustomerProfile.setOnClickListener { ActivityOpenerUtil.openUpdateCustomerInfoActivity(this) }
     }
 
     override fun onResume() {
@@ -53,17 +54,15 @@ class CustomerMainPageActivity : AppCompatActivity() {
         AsyncUtil{
             updateList()
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-
     }
 
     fun updateList(){
-        dataset = JsonUtil.getItemResponseToList(
+        dataset = JsonUtil.getOrderCustomerResponseToList(
                 HttpUtil.sendPoststr(
-                        "","${getString(R.string.base_url)}/item/getItems", SessionUtil.getSessionId(this)!!))
-
+                        "","${getString(R.string.base_url)}/customer/showOrderHistory", SessionUtil.getSessionId(this)!!))
         //viewAdapter = RecyclerCallViewAdapter(dataset)
         runOnUiThread {
-            (recyclerView.adapter as RecyclerCustomerItemAdapter).dataset = dataset
+            (recyclerView.adapter as RecyclerOrderHistoryAdapter).dataset = dataset
             recyclerView.adapter.notifyDataSetChanged()
         }
     }

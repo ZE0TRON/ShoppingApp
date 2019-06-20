@@ -1,15 +1,12 @@
 package com.babob.sporcantam.utility
 
-import android.content.Context
-import android.os.SystemClock
 import android.util.Log
-import org.json.JSONObject
+import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.charset.StandardCharsets
-import java.io.BufferedReader
 
 
 class HttpUtil {
@@ -47,7 +44,7 @@ class HttpUtil {
                 os.flush()
                 os.close()
                 Log.i("STATUS", conn.responseCode.toString())
-                Log.i("MSG", conn.responseMessage)
+                Log.i("MSG", conn.responseMessage.toString())
 
                 conn.disconnect()
 
@@ -89,8 +86,7 @@ class HttpUtil {
                 os.flush()
                 os.close()
                 Log.i("STATUS", conn.responseCode.toString())
-                Log.i("MSG", conn.responseMessage)
-
+                Log.i("MSG", conn.responseMessage.toString())
 
                 val br = BufferedReader(InputStreamReader(conn.getInputStream()))
                 val sb = StringBuilder()
@@ -110,7 +106,5 @@ class HttpUtil {
 
             return returnValue
         }
-
-
     }
 }
